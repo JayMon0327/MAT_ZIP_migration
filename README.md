@@ -15,10 +15,10 @@
     - [x] Security Config 생성
     - [x] UserDetails 클래스 생성
 
-- [ ] 유저 권한 설정
+- [x] 유저 권한 설정
     - [x] UserEntity 생성
     - [x] 유저 권한 설정을 위한 Role Enum 생성
-    - [ ] UserDetailsService 생성
+    - [x] UserDetailsService 생성
 
 - [ ] 기본 로그인 구현
     - [ ] UserController 생성
