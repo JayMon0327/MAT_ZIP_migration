@@ -21,8 +21,8 @@
     - [x] UserDetailsService 생성
 
 - [ ] 기본 로그인 구현
+    - [x] UserRepository에 회원찾기 로직 구현
     - [ ] UserController 생성
-    - [ ] UserRepository에 회원찾기 로직 구현
     - [ ] UserDetails 클래스에 Auntentication 객체생성 로직 구현
     - [ ] loginForm 파일 생성
 
