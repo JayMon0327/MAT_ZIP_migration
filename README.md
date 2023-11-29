@@ -27,9 +27,8 @@
 
 - [ ] 구글, 카카오, 네이버 로그인 구현
     - [x] OAuth2설정 Secutiry Config에 추가
-    - [x] OAuth2UserService 생성
-    - [ ] loadUser 메서드로 principal 객체 생성
-    - [ ] OAuth2UserInfo 생성
+    - [x] OAuth2UserService에 loadUser 메서드로 principal 객체 생성
+    - [x] OAuth유저 정보 조회를 위한 UserInfo 생성
     - [ ] 사용자 정보 응답 파라미터에 맞게 UserInfo 생성
     - [ ] OAuth 로그인 요청 함수 생성
 
