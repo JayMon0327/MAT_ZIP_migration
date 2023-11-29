@@ -11,13 +11,13 @@
 
 **[로그인 기능]**
 ### OAuth 2.0
-- [ ] 스프링 시큐리티 적용
-    - [ ] Security Config 생성
-    - [ ] UserDetails 클래스 생성
+- [x] 스프링 시큐리티 적용
+    - [x] Security Config 생성
+    - [x] UserDetails 클래스 생성
 
 - [ ] 유저 권한 설정
-    - [ ] UserEntity 생성
-    - [ ] Role Enum 생성
+    - [x] UserEntity 생성
+    - [x] 유저 권한 설정을 위한 Role Enum 생성
     - [ ] UserDetailsService 생성
 
 - [ ] 기본 로그인 구현
