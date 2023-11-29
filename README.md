@@ -20,11 +20,10 @@
     - [x] 유저 권한 설정을 위한 Role Enum 생성
     - [x] UserDetailsService 생성
 
-- [ ] 기본 로그인 구현
+- [x] 기본 로그인 구현
     - [x] UserRepository에 회원찾기 로직 구현
-    - [ ] UserController 생성
-    - [ ] UserDetails 클래스에 Auntentication 객체생성 로직 구현
-    - [ ] loginForm 파일 생성
+    - [x] UserController 생성
+    - [x] loginForm 파일 생성
 
 - [ ] 구글, 카카오, 네이버 로그인 구현
     - [ ] OAuth2설정 Secutiry Config에 추가
