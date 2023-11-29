@@ -30,7 +30,7 @@
     - [x] OAuth2UserService에 loadUser 메서드로 principal 객체 생성
     - [x] OAuth유저 정보 조회를 위한 UserInfo 생성
     - [x] 구글, 카카오, 네이버, 페이스북 사용자 정보 응답 파라미터에 맞게 UserInfo 생성
-    - [ ] OAuth 로그인 요청 함수 생성
+    - [ ] OAuth userDetails 클래스에 OAuth 로그인 요청 함수 생성
     - [ ] loginForm에 소셜 로그인 버튼 생성
 
 - [ ] 미등록 사용자 자동 회원가입 구현
