@@ -93,5 +93,16 @@ public class Member {
 		restaurants.add(restaurant);
 		restaurant.setMember(this);
 	}
+
+	/**
+	 * 포인트 처리 로직
+	 */
+	public void addPoints(int points) {
+		this.point += points; // 포인트 충전
+	}
+
+	public void subtractPoints(int points) {
+		this.point -= points; // 포인트 사용
+	}
 }
 
