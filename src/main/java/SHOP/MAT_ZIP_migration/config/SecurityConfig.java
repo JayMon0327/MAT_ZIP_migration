@@ -1,14 +1,12 @@
 package SHOP.MAT_ZIP_migration.config;
 
 import SHOP.MAT_ZIP_migration.config.oauth.PrincipalOauth2UserService;
-import SHOP.MAT_ZIP_migration.model.Role;
+import SHOP.MAT_ZIP_migration.domain.Role;
 import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

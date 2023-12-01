@@ -1,9 +1,8 @@
 package SHOP.MAT_ZIP_migration.config.auth;
 
-import SHOP.MAT_ZIP_migration.model.User;
+import SHOP.MAT_ZIP_migration.domain.Member;
 import SHOP.MAT_ZIP_migration.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,11 +23,11 @@ public class PrincipalDetailsService implements UserDetailsService{
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.findByUsername(username);
-		if(user == null) {
+		Member member = userRepository.findByUsername(username);
+		if(member == null) {
 			return null;
 		}else {
-			return new PrincipalDetails(user);
+			return new PrincipalDetails(member);
 		}
 		
 	}

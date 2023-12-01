@@ -1,8 +1,8 @@
 package SHOP.MAT_ZIP_migration.controller;
 
 import SHOP.MAT_ZIP_migration.config.auth.PrincipalDetails;
-import SHOP.MAT_ZIP_migration.model.Role;
-import SHOP.MAT_ZIP_migration.model.User;
+import SHOP.MAT_ZIP_migration.domain.Role;
+import SHOP.MAT_ZIP_migration.domain.Member;
 import SHOP.MAT_ZIP_migration.repository.UserRepository;
 import SHOP.MAT_ZIP_migration.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import java.util.Iterator;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-public class UserController {
+public class MemberController {
 
     private final UserRepository userRepository;
 
@@ -74,13 +74,13 @@ public class UserController {
     }
 
     @PostMapping("/joinProc")
-    public String joinProc(User user) {
-        System.out.println("회원가입 진행 : " + user);
-        String rawPassword = user.getPassword();
+    public String joinProc(Member member) {
+        System.out.println("회원가입 진행 : " + member);
+        String rawPassword = member.getPassword();
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-        user.setPassword(encPassword);
-        user.setRole(Role.USER);
-        userRepository.save(user);
+        member.setPassword(encPassword);
+        member.setRole(Role.USER);
+        userRepository.save(member);
         return "redirect:/";
     }
 

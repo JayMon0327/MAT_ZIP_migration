@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import SHOP.MAT_ZIP_migration.config.auth.PrincipalDetails;
 import SHOP.MAT_ZIP_migration.config.oauth.provider.*;
-import SHOP.MAT_ZIP_migration.model.Role;
-import SHOP.MAT_ZIP_migration.model.User;
+import SHOP.MAT_ZIP_migration.domain.Member;
+import SHOP.MAT_ZIP_migration.domain.Role;
 import SHOP.MAT_ZIP_migration.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,31 +47,31 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 					String.valueOf(oAuth2User.getAttributes().get("id")));
 		}
 
-		Optional<User> userOptional =
+		Optional<Member> userOptional =
 				userRepository.findByProviderAndProviderId(oAuth2UserInfo.getProvider(), oAuth2UserInfo.getProviderId());
 
 		/**
 		 * 자동 회원가입 로직
 		 * 분리 예정
 		 */
-		User user;
+		Member member;
 		if (userOptional.isPresent()) {
-			user = userOptional.get();
+			member = userOptional.get();
 			// user가 존재하면 update 해주기
-			user.setEmail(oAuth2UserInfo.getEmail());
-			userRepository.save(user);
+			member.setEmail(oAuth2UserInfo.getEmail());
+			userRepository.save(member);
 		} else {
 			// user의 패스워드가 null이기 때문에 OAuth 유저는 일반적인 로그인을 할 수 없음.
-			user = User.builder()
+			member = Member.builder()
 					.username(oAuth2UserInfo.getProvider() + "_" + oAuth2UserInfo.getProviderId())
 					.email(oAuth2UserInfo.getEmail())
 					.role(Role.USER)
 					.provider(oAuth2UserInfo.getProvider())
 					.providerId(oAuth2UserInfo.getProviderId())
 					.build();
-			userRepository.save(user);
+			userRepository.save(member);
 		}
 
-		return new PrincipalDetails(user, oAuth2User.getAttributes());
+		return new PrincipalDetails(member, oAuth2User.getAttributes());
 	}
 }
