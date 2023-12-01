@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -25,12 +26,12 @@ public class Menu {
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
-    private String name;
-    private Double price;
+    private String menuName;
+    private int price;
     private String option1;
     private String option2;
 
     @OneToMany(mappedBy = "menu")
-    private List<OrderItem> orderItems;
+    private List<OrderItem> orderItems = new ArrayList<>();
 
 }

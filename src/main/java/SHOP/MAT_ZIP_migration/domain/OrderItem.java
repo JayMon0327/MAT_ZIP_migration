@@ -27,8 +27,6 @@ public class OrderItem {
     @JoinColumn(name = "menu_id")
     private Menu menu;
 
-    private Double price;
-    private String option1;
-    private String option2;
+    private int quantity;
 
 }

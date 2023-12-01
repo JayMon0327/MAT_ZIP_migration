@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -28,7 +29,13 @@ public class Restaurant {
     private String storeName;
 
     @OneToMany(mappedBy = "restaurant")
-    private List<Menu> menus;
+    private List<Menu> menus = new ArrayList<>();
 
-
+    /**
+     * 연관관계 편의 메서드
+     */
+    public void addMenu(Menu menu) {
+        menus.add(menu);
+        menu.setRestaurant(this);
+    }
 }
