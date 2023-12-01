@@ -1,5 +1,5 @@
 # 맛집 migration 
-## [📚 프로젝트 작업일지](https://jaymon.notion.site/96d0b84674ce4bed8244263be3d947f6?pvs=4](https://jaymon.notion.site/5c86177f92e649639e4fa40fa5befac1?pvs=4))
+## [📚 프로젝트 작업일지](https://jaymon.notion.site/5c86177f92e649639e4fa40fa5befac1?pvs=4)
 ### `Back-end`
 * Java 8 ➡️  Java 17
 * Spring Framework 5 ➡️  Spring Boot 3.1.6
