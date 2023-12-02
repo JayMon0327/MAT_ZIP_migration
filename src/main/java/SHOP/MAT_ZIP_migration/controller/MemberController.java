@@ -3,8 +3,8 @@ package SHOP.MAT_ZIP_migration.controller;
 import SHOP.MAT_ZIP_migration.config.auth.PrincipalDetails;
 import SHOP.MAT_ZIP_migration.domain.Role;
 import SHOP.MAT_ZIP_migration.domain.Member;
-import SHOP.MAT_ZIP_migration.repository.UserRepository;
-import SHOP.MAT_ZIP_migration.service.UserService;
+import SHOP.MAT_ZIP_migration.repository.MemberRepository;
+import SHOP.MAT_ZIP_migration.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
@@ -23,11 +23,11 @@ import java.util.Iterator;
 @Slf4j
 public class MemberController {
 
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    private final UserService userService;
+    private final MemberService memberService;
 
     @GetMapping("/loginForm")
     public String login() {
@@ -36,7 +36,6 @@ public class MemberController {
 
     @GetMapping("/auth/joinForm")
     public String joinForm() {
-
         return "user/joinForm";
     }
 
@@ -80,7 +79,7 @@ public class MemberController {
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
         member.setPassword(encPassword);
         member.setRole(Role.USER);
-        userRepository.save(member);
+        memberRepository.save(member);
         return "redirect:/";
     }
 
