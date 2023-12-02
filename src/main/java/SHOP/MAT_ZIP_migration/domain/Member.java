@@ -1,29 +1,22 @@
 package SHOP.MAT_ZIP_migration.domain;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
-// ORM - Object Relation Mapping
-
+@Builder
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-@Builder
 @Entity
 @Table(name = "member")
-public class Member {
+public class Member extends AuditBaseEntity{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,12 +37,6 @@ public class Member {
 
 	@Column(columnDefinition = "integer default 0", nullable = false)
 	private int point;
-
-	@CreatedDate
-	private LocalDateTime createDate;
-
-	@LastModifiedDate
-	private Timestamp updateDate;
 
 	@OneToMany(mappedBy = "member")
 	private List<Order> orders = new ArrayList<>();

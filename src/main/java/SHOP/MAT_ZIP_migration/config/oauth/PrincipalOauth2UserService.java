@@ -7,7 +7,7 @@ import SHOP.MAT_ZIP_migration.config.auth.PrincipalDetails;
 import SHOP.MAT_ZIP_migration.config.oauth.provider.*;
 import SHOP.MAT_ZIP_migration.domain.Member;
 import SHOP.MAT_ZIP_migration.domain.Role;
-import SHOP.MAT_ZIP_migration.repository.UserRepository;
+import SHOP.MAT_ZIP_migration.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
-	private final UserRepository userRepository;
+	private final MemberRepository memberRepository;
 
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -48,7 +48,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 		}
 
 		Optional<Member> userOptional =
-				userRepository.findByProviderAndProviderId(oAuth2UserInfo.getProvider(), oAuth2UserInfo.getProviderId());
+				memberRepository.findByProviderAndProviderId(oAuth2UserInfo.getProvider(), oAuth2UserInfo.getProviderId());
 
 		/**
 		 * 자동 회원가입 로직
@@ -59,7 +59,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 			member = userOptional.get();
 			// user가 존재하면 update 해주기
 			member.setEmail(oAuth2UserInfo.getEmail());
-			userRepository.save(member);
+			memberRepository.save(member);
 		} else {
 			// user의 패스워드가 null이기 때문에 OAuth 유저는 일반적인 로그인을 할 수 없음.
 			member = Member.builder()
@@ -69,7 +69,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 					.provider(oAuth2UserInfo.getProvider())
 					.providerId(oAuth2UserInfo.getProviderId())
 					.build();
-			userRepository.save(member);
+			memberRepository.save(member);
 		}
 
 		return new PrincipalDetails(member, oAuth2User.getAttributes());

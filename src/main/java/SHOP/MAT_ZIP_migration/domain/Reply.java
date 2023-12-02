@@ -13,12 +13,11 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "reply")
-public class Reply {
+public class Reply extends AuditBaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,12 +34,6 @@ public class Reply {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
-
-    @CreatedDate
-    private LocalDateTime createDate;
-
-    @LastModifiedDate
-    private LocalDateTime updateDate;
 
     private int star;
 

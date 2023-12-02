@@ -11,13 +11,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Order extends AuditBaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,9 +30,6 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
-
-    @CreatedDate
-    private LocalDateTime requestAt;
 
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();

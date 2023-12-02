@@ -19,10 +19,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "board")
-public class Board {
+public class Board extends AuditBaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,12 +37,6 @@ public class Board {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
-
-    @CreatedDate
-    private LocalDateTime createDate;
-
-    @LastModifiedDate
-    private LocalDateTime updateDate;
 
     @Column(columnDefinition = "integer default 0", nullable = false) //조회수 디폴트값 0, int타입이므로 null방지
     private int viewCounts; //조회수
