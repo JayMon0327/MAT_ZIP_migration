@@ -7,13 +7,13 @@ import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Builder
 @AllArgsConstructor
-@Data
 @NoArgsConstructor
+@Getter
 @Entity
 @Table(name = "member")
 public class Member extends AuditBaseEntity{
@@ -97,6 +97,13 @@ public class Member extends AuditBaseEntity{
 	 */
 	public void updateMember(String password, String email) {
 		this.password = password;
+		this.email = email;
+	}
+
+	/**
+	 * OAuth2 로그인 유저 이메일 등록
+	 */
+	public void updateEmail(String email) {
 		this.email = email;
 	}
 }

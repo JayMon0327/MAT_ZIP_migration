@@ -21,7 +21,7 @@ public class OAuthMemberService {
 
         if (userProvider.isPresent()) {
             Member member = userProvider.get();
-            member.setEmail(oAuth2UserInfo.getEmail());
+            member.updateEmail(oAuth2UserInfo.getEmail());
             return memberRepository.save(member);
         }
         else {
