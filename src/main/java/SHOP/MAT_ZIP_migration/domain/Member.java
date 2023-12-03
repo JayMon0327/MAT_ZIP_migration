@@ -91,5 +91,13 @@ public class Member extends AuditBaseEntity{
 	public void subtractPoints(int points) {
 		this.point -= points; // 포인트 사용
 	}
+
+	/**
+	 * 회원 수정
+	 */
+	public void updateMember(String password, String email) {
+		this.password = password;
+		this.email = email;
+	}
 }
 

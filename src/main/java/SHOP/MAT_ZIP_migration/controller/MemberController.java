@@ -41,7 +41,6 @@ public class MemberController {
 
     @GetMapping("/user/updateForm")
     public String updateForm() {
-
         return "user/updateForm";
     }
 
