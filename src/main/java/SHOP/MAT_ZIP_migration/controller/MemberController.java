@@ -23,12 +23,6 @@ import java.util.Iterator;
 @Slf4j
 public class MemberController {
 
-    private final MemberRepository memberRepository;
-
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    private final MemberService memberService;
-
     @GetMapping("/loginForm")
     public String login() {
         return "user/loginForm";
@@ -42,44 +36,6 @@ public class MemberController {
     @GetMapping("/user/updateForm")
     public String updateForm() {
         return "user/updateForm";
-    }
-
-    @GetMapping("/user")
-    public @ResponseBody String user(@AuthenticationPrincipal PrincipalDetails principal) {
-        // iterator 순차 출력 해보기
-        Iterator<? extends GrantedAuthority> iter = principal.getAuthorities().iterator();
-        while (iter.hasNext()) {
-            GrantedAuthority auth = iter.next();
-            System.out.println(auth.getAuthority());
-        }
-        return "유저 페이지입니다.";
-    }
-
-    @GetMapping("/admin")
-    public @ResponseBody String admin() {
-        return "어드민 페이지입니다.";
-    }
-
-    @Secured("ROLE_MANAGER")
-    @GetMapping("/manager")
-    public @ResponseBody String manager() {
-        return "매니저 페이지입니다.";
-    }
-
-    @GetMapping("/join")
-    public String join() {
-        return "join";
-    }
-
-    @PostMapping("/joinProc")
-    public String joinProc(Member member) {
-        System.out.println("회원가입 진행 : " + member);
-        String rawPassword = member.getPassword();
-        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-        member.setPassword(encPassword);
-        member.setRole(Role.USER);
-        memberRepository.save(member);
-        return "redirect:/";
     }
 
 }
