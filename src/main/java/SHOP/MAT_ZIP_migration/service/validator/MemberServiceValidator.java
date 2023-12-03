@@ -1,12 +1,15 @@
-package SHOP.MAT_ZIP_migration.service.exception;
+package SHOP.MAT_ZIP_migration.service.validator;
 
+import SHOP.MAT_ZIP_migration.domain.Member;
 import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
 import SHOP.MAT_ZIP_migration.exception.CustomException;
 import SHOP.MAT_ZIP_migration.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
-public class MemberServiceException {
+@Service
+public class MemberServiceValidator {
 
     private final MemberRepository memberRepository;
 

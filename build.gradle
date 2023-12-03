@@ -29,9 +29,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
-	//쿼리 파라미터 p6spy
-	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.8'
-
 	//jsp 사용 추가
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper' // 추가
 	implementation 'jakarta.servlet:jakarta.servlet-api' //스프링부트 3.0 이상

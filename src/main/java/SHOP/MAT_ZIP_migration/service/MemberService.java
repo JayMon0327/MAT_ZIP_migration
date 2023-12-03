@@ -4,6 +4,7 @@ import SHOP.MAT_ZIP_migration.domain.Role;
 import SHOP.MAT_ZIP_migration.domain.Member;
 import SHOP.MAT_ZIP_migration.dto.JoinMemberDto;
 import SHOP.MAT_ZIP_migration.repository.MemberRepository;
+import SHOP.MAT_ZIP_migration.service.validator.MemberServiceValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,9 +19,12 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder encoder;
+    private final MemberServiceValidator memberServiceValidator;
 
     @Transactional
     public void 회원가입(JoinMemberDto joinMemberDto) {
+        memberServiceValidator.DuplicatedJoinMember(joinMemberDto.getUsername(), joinMemberDto.getEmail());
+
         String endPassword = encoder.encode(joinMemberDto.getPassword());
         Member member = Member.builder()
                 .username(joinMemberDto.getUsername())
@@ -28,6 +32,7 @@ public class MemberService {
                 .email(joinMemberDto.getEmail())
                 .role(Role.USER)
                 .build();
+
         memberRepository.save(member);
     }
 

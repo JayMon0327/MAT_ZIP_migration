@@ -7,7 +7,7 @@ gradlew
 gradle
 out
 spy.properties
-.META-INF
+/META-INF
 
 .gradle
 **/build/
