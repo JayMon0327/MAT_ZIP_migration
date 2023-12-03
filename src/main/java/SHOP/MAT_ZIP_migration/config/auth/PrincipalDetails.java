@@ -6,6 +6,7 @@ import java.util.Map;
 
 import SHOP.MAT_ZIP_migration.domain.Member;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
@@ -33,7 +34,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User{
 		this.attributes = attributes;
 	}
 	
-	public Member getUser() {
+	public Member getMember() {
 		return member;
 	}
 
@@ -72,9 +73,9 @@ public class PrincipalDetails implements UserDetails, OAuth2User{
 	//유저의 권한을 리턴하는 곳
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Collection<GrantedAuthority> collet = new ArrayList<GrantedAuthority>();
-		collet.add(()->{ return member.getRole().toString();});
-		return collet;
+		Collection<GrantedAuthority> authorities = new ArrayList<>();
+		authorities.add(new SimpleGrantedAuthority(member.getRole().getKey()));
+		return authorities;
 	}
 
 	// 리소스 서버로 부터 받는 회원정보
