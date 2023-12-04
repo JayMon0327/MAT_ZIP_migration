@@ -1,6 +1,5 @@
 package SHOP.MAT_ZIP_migration.dto;
 
-import SHOP.MAT_ZIP_migration.domain.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

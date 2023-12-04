@@ -1,26 +1,24 @@
-package SHOP.MAT_ZIP_migration.domain.item;
+package SHOP.MAT_ZIP_migration.domain.order;
 
 import SHOP.MAT_ZIP_migration.handler.NotEnoughStockException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
-@Getter @Setter
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "dtype")
-public abstract class Item {
+import static jakarta.persistence.GenerationType.*;
 
-    @Id @GeneratedValue
+@Entity
+@Getter
+@Table(name = "item")
+public class Item {
+
+    @Id @GeneratedValue(strategy = IDENTITY)
     @Column(name = "item_id")
     private Long id;
 
     private String name;
     private int price;
     private int stockQuantity;
-
-
-    // == 비즈니스 로직 ==
 
     /**
      * stock 증가(재고증가)

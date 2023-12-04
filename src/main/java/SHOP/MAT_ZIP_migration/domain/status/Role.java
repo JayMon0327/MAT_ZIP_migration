@@ -1,4 +1,4 @@
-package SHOP.MAT_ZIP_migration.domain;
+package SHOP.MAT_ZIP_migration.domain.status;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package SHOP.MAT_ZIP_migration.service;
 
-import SHOP.MAT_ZIP_migration.domain.Role;
+import SHOP.MAT_ZIP_migration.domain.status.Role;
 import SHOP.MAT_ZIP_migration.domain.Member;
 import SHOP.MAT_ZIP_migration.dto.JoinMemberDto;
 import SHOP.MAT_ZIP_migration.dto.UpdateMemberDto;
@@ -8,7 +8,6 @@ import SHOP.MAT_ZIP_migration.repository.MemberRepository;
 import SHOP.MAT_ZIP_migration.service.validator.MemberValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

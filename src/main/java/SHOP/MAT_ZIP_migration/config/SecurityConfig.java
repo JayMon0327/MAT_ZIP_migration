@@ -1,7 +1,6 @@
 package SHOP.MAT_ZIP_migration.config;
 
 import SHOP.MAT_ZIP_migration.config.oauth.PrincipalOauth2UserService;
-import SHOP.MAT_ZIP_migration.domain.Role;
 import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

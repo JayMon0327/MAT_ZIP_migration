@@ -1,11 +1,12 @@
 package SHOP.MAT_ZIP_migration.domain;
 
+import SHOP.MAT_ZIP_migration.domain.baseentity.CreateDateBaseEntity;
+import SHOP.MAT_ZIP_migration.domain.order.Order;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 import static jakarta.persistence.FetchType.*;
 import static jakarta.persistence.GenerationType.*;
@@ -14,10 +15,12 @@ import static jakarta.persistence.GenerationType.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@EqualsAndHashCode(callSuper=false)
 @Table(name = "payment")
-public class Payment {
+public class Payment extends CreateDateBaseEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "payment_id")
     private Long id;
 
     @OneToOne(fetch = LAZY)
@@ -25,6 +28,4 @@ public class Payment {
     private Order order;
 
     private int amount;
-    private LocalDateTime paymentDate;
-
 }

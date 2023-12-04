@@ -1,4 +1,4 @@
-package SHOP.MAT_ZIP_migration.domain;
+package SHOP.MAT_ZIP_migration.domain.baseentity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
@@ -8,15 +8,12 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class AuditBaseEntity {
+public abstract class CreateDateBaseEntity {
 
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createDate;
-
-    @LastModifiedDate
-    @Column(updatable = false)
-    private LocalDateTime updateDate;
 }

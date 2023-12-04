@@ -2,7 +2,7 @@ package SHOP.MAT_ZIP_migration.config.oauth;
 
 import SHOP.MAT_ZIP_migration.config.oauth.provider.OAuth2UserInfo;
 import SHOP.MAT_ZIP_migration.domain.Member;
-import SHOP.MAT_ZIP_migration.domain.Role;
+import SHOP.MAT_ZIP_migration.domain.status.Role;
 import SHOP.MAT_ZIP_migration.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

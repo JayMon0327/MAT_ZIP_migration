@@ -1,6 +1,8 @@
-package SHOP.MAT_ZIP_migration.domain;
+package SHOP.MAT_ZIP_migration.domain.order;
 
-import com.sun.jdi.PrimitiveValue;
+import SHOP.MAT_ZIP_migration.domain.baseentity.CreateDateBaseEntity;
+import SHOP.MAT_ZIP_migration.domain.Member;
+import SHOP.MAT_ZIP_migration.domain.status.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "orders")
-public class Order extends AuditBaseEntity{
+public class Order extends CreateDateBaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +28,7 @@ public class Order extends AuditBaseEntity{
     private OrderStatus status;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
     @OneToMany(mappedBy = "order")

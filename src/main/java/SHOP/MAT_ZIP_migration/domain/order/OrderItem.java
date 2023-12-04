@@ -1,14 +1,13 @@
-package SHOP.MAT_ZIP_migration.domain;
+package SHOP.MAT_ZIP_migration.domain.order;
 
-import SHOP.MAT_ZIP_migration.domain.item.Item;
+import SHOP.MAT_ZIP_migration.domain.Product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import static jakarta.persistence.FetchType.*;
 
 @Getter
 @NoArgsConstructor
@@ -23,21 +22,18 @@ public class OrderItem {
     private Long id;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "item_id")
     private Item item;
-
-    @OneToMany(mappedBy = "product")
-    private List<OrderItem> orderItemList = new ArrayList<>();
 
     private int orderPrice;
     private int count;
-    private int quantity;
-
 }
