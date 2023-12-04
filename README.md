@@ -19,6 +19,9 @@
 * Spring Secutiry
 * Spring Data JPA, QueryDSL
 
+<hr>
+
+# Docs 문서
 
 **[로그인]**
 ### OAuth 2.0
@@ -64,16 +67,32 @@
 **[차트]**
 ### Google Chart
 - [ ] 매출 차트
-  - [ ] 매출차트를 막대 그래프로 변경
-  - [ ] 매출에 null값도 허용되도록 수정
+  - [ ] Payment 테이블 JPA 엔티티로 구현
+  - [ ] MyBatis 쿼리를 JPQL과 QueryDSL로 구현
+  - [ ] 엔티티 그래프와 패치조인으로 성능 향상
   - [ ] 프론트의 데이터 계산 로직 서버로 분리
+  - [ ] 구글 차트를 막대 그래프로 변경
 
 - [ ] 재방문 차트
   - [ ] 이번달, 지난달 재방문율
+    - [ ] Payment 테이블 JPA 엔티티로 구현
+    - [ ] MyBatis 쿼리를 JPQL과 QueryDSL로 구현
+    - [ ] 엔티티 그래프와 패치조인으로 성능 향상
+
   - [ ] 주문 횟수별 고객 수
+    - [ ] Payment 테이블 JPA 엔티티로 구현
+    - [ ] MyBatis 쿼리를 JPQL과 QueryDSL로 구현
+    - [ ] 엔티티 그래프와 패치조인으로 성능 향상
+
   - [ ] 이번달, 지난달 신규 고객과 재방문 고객의 주문 총액
+    - [ ] Payment 테이블 JPA 엔티티로 구현
+    - [ ] MyBatis 쿼리를 JPQL과 QueryDSL로 구현
+    - [ ] 엔티티 그래프와 패치조인으로 성능 향상
 
 - [ ] 리뷰 감정분석 차트
+  - [ ] Payment 테이블 JPA 엔티티로 구현
+  - [ ] MyBatis 쿼리를 JPQL과 QueryDSL로 구현
+  - [ ] 엔티티 그래프와 패치조인으로 성능 향상
 
 **[커뮤니티 게시판 ➡️ 판매 스토어]**
 - [ ] 상품 게시판
