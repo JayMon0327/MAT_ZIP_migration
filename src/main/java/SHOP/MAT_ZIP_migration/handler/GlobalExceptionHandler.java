@@ -24,4 +24,5 @@ public class GlobalExceptionHandler {
         log.info("사용자 정의 예외 발생: "+ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
+
 }

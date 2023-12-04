@@ -49,9 +49,4 @@ public class MemberService {
             persistance.updateMember(encodePassword, updateMemberDto.getEmail());
         }
     }
-
-    public Member 회원찾기(String username) {
-        Member member = memberRepository.findByUsername(username); // 값이 없을 경우에 대한 예외처리 추가해야함
-        return member;
-    }
 }
