@@ -6,8 +6,8 @@ settings.gradle
 gradlew
 gradle
 out
-spy.properties
-/META-INF
+/src/main/resources/META-INF
+/src/main/resources/spy.properties
 
 .gradle
 **/build/
