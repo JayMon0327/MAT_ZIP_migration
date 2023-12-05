@@ -47,6 +47,5 @@ public class Image {
         this.storeFileName = storeFileName;
         this.filePath = filePath;
     }
-
 }
 

@@ -56,4 +56,7 @@ public class Product {
         image.setProduct(this);
     }
 
+    public void clearImages() {
+        this.images.clear();
+    }
 }
