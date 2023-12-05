@@ -1,5 +1,6 @@
 package SHOP.MAT_ZIP_migration.dto.product;
 
+import SHOP.MAT_ZIP_migration.domain.Image;
 import SHOP.MAT_ZIP_migration.domain.Member;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -29,4 +34,6 @@ public class RequestProductDto {
     private int stock;
 
     private Member member;
+
+    private List<MultipartFile> imageFiles = new ArrayList<>();
 }

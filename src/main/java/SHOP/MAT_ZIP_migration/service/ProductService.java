@@ -1,5 +1,6 @@
 package SHOP.MAT_ZIP_migration.service;
 
+import SHOP.MAT_ZIP_migration.domain.Image;
 import SHOP.MAT_ZIP_migration.domain.Member;
 import SHOP.MAT_ZIP_migration.domain.Product;
 import SHOP.MAT_ZIP_migration.dto.product.RequestProductDto;
@@ -9,6 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -16,11 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final FileStore fileStore;
 
     @Transactional
-    public void save(RequestProductDto requestProductDto, Member member) {
-        //예외 처리 추가해야함
-
+    public void save(RequestProductDto requestProductDto, Member member) throws IOException {
         Product product = Product.builder()
                 .member(member)
                 .title(requestProductDto.getTitle())
@@ -28,6 +31,9 @@ public class ProductService {
                 .price(requestProductDto.getPrice())
                 .stock(requestProductDto.getStock())
                 .build();
+
+        List<Image> images = fileStore.storeFiles(requestProductDto.getImageFiles());
+        images.forEach(product::addImage);
         productRepository.save(product);
     }
 

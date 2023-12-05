@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -20,7 +22,7 @@ public class ProductApiController {
     private final ProductService productService;
 
     @PostMapping("/product")
-    public ResponseDto<Integer> save(@RequestBody RequestProductDto requestProductDto, @AuthenticationPrincipal PrincipalDetails principal) {
+    public ResponseDto<Integer> save(@RequestBody RequestProductDto requestProductDto, @AuthenticationPrincipal PrincipalDetails principal) throws IOException {
         productService.save(requestProductDto, principal.getMember());
         return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
     }
