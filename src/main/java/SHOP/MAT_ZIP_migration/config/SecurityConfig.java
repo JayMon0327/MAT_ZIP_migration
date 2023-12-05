@@ -39,6 +39,7 @@ public class SecurityConfig {
 				.authorizeHttpRequests(auth -> auth
 						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
 						.requestMatchers(new AntPathRequestMatcher("/user/**")).hasRole("USER")
+						.requestMatchers(new AntPathRequestMatcher("/seller/**")).hasRole("SELLER")
 						.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
 						.anyRequest().permitAll()
 				)
