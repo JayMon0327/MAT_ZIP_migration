@@ -1,14 +1,12 @@
 package SHOP.MAT_ZIP_migration.service;
 
 import SHOP.MAT_ZIP_migration.domain.Member;
-import SHOP.MAT_ZIP_migration.dto.JoinMemberDto;
-import SHOP.MAT_ZIP_migration.dto.UpdateMemberDto;
+import SHOP.MAT_ZIP_migration.dto.member.JoinMemberDto;
+import SHOP.MAT_ZIP_migration.dto.member.UpdateMemberDto;
 import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
 import SHOP.MAT_ZIP_migration.exception.CustomException;
 import SHOP.MAT_ZIP_migration.repository.MemberRepository;
 import SHOP.MAT_ZIP_migration.service.validator.MemberValidator;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional

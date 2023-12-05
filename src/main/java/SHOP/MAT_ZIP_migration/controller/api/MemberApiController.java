@@ -1,8 +1,8 @@
 package SHOP.MAT_ZIP_migration.controller.api;
 
-import SHOP.MAT_ZIP_migration.dto.JoinMemberDto;
+import SHOP.MAT_ZIP_migration.dto.member.JoinMemberDto;
 import SHOP.MAT_ZIP_migration.dto.ResponseDto;
-import SHOP.MAT_ZIP_migration.dto.UpdateMemberDto;
+import SHOP.MAT_ZIP_migration.dto.member.UpdateMemberDto;
 import SHOP.MAT_ZIP_migration.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,5 @@
-package SHOP.MAT_ZIP_migration.dto;
+package SHOP.MAT_ZIP_migration.dto.member;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -11,10 +10,9 @@ import org.hibernate.validator.constraints.Length;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateMemberDto {
+public class JoinMemberDto {
 
-    private Long id;
-
+    @NotBlank(message = "아이디는 빈칸일 수 없습니다.")
     private String username;
 
     @NotBlank(message = "비밀번호는 빈칸일 수 없습니다.")

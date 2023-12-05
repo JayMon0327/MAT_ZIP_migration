@@ -1,6 +1,5 @@
 package SHOP.MAT_ZIP_migration.handler;
 
-import SHOP.MAT_ZIP_migration.dto.ResponseDto;
 import SHOP.MAT_ZIP_migration.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

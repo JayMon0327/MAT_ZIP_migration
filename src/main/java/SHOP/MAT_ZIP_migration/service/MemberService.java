@@ -2,8 +2,8 @@ package SHOP.MAT_ZIP_migration.service;
 
 import SHOP.MAT_ZIP_migration.domain.status.Role;
 import SHOP.MAT_ZIP_migration.domain.Member;
-import SHOP.MAT_ZIP_migration.dto.JoinMemberDto;
-import SHOP.MAT_ZIP_migration.dto.UpdateMemberDto;
+import SHOP.MAT_ZIP_migration.dto.member.JoinMemberDto;
+import SHOP.MAT_ZIP_migration.dto.member.UpdateMemberDto;
 import SHOP.MAT_ZIP_migration.repository.MemberRepository;
 import SHOP.MAT_ZIP_migration.service.validator.MemberValidator;
 import lombok.RequiredArgsConstructor;
