@@ -2,8 +2,8 @@ package SHOP.MAT_ZIP_migration.controller.api;
 
 import SHOP.MAT_ZIP_migration.config.auth.PrincipalDetails;
 import SHOP.MAT_ZIP_migration.domain.Product;
-import SHOP.MAT_ZIP_migration.dto.ReviewSaveRequestDto;
 import SHOP.MAT_ZIP_migration.dto.ResponseDto;
+import SHOP.MAT_ZIP_migration.dto.product.RequestProductDto;
 import SHOP.MAT_ZIP_migration.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,21 +20,20 @@ public class ProductApiController {
     private final ProductService productService;
 
     @PostMapping("/product")
-    public ResponseDto<Integer> save(@RequestBody Product product, @AuthenticationPrincipal PrincipalDetails principal) {
-        productService.save(product, principal.getMember());
+    public ResponseDto<Integer> save(@RequestBody RequestProductDto requestProductDto, @AuthenticationPrincipal PrincipalDetails principal) {
+        productService.save(requestProductDto, principal.getMember());
+        return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
+    }
+
+    @PutMapping("/product/{id}")
+    public ResponseDto<Integer> update(@PathVariable Long id, @RequestBody RequestProductDto requestProductDto) {
+        productService.update(id, requestProductDto);
         return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
     }
 
     @DeleteMapping("/product/{id}")
     public ResponseDto<Integer> deleteById(@PathVariable Long id) {
         productService.delete(id);
-        System.out.println("아이디는 이거야"+id);
-        return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
-    }
-
-    @PutMapping("/product/{id}")
-    public ResponseDto<Integer> update(@PathVariable Long id, @RequestBody Product product) {
-        productService.update(id, product);
         return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
     }
 }

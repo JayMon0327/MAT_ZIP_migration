@@ -3,6 +3,8 @@ package SHOP.MAT_ZIP_migration.service;
 import SHOP.MAT_ZIP_migration.domain.Image;
 import SHOP.MAT_ZIP_migration.domain.Member;
 import SHOP.MAT_ZIP_migration.domain.Product;
+import SHOP.MAT_ZIP_migration.dto.product.RequestProductDto;
+import SHOP.MAT_ZIP_migration.repository.MemberRepository;
 import SHOP.MAT_ZIP_migration.repository.ProductRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,28 +28,35 @@ class ProductServiceTest {
     private ProductService productService;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private MemberRepository memberRepository;
 
     private Member member;
-    private Product product;
+    private RequestProductDto ProductDto;
+    private Long savedProductId;
 
     @BeforeEach
     void setUp() {
         member = Member.builder()
                 .username("김철수")
                 .build();
-        product = Product.builder()
+        memberRepository.save(member);
+        ProductDto = RequestProductDto.builder()
                 .title("제목1")
                 .description("내용1")
                 .price(1000)
                 .stock(10)
                 .build();
-        productService.save(product,member);
+        productService.save(ProductDto,member);
+
+        Product savedProduct = productRepository.findAll().stream().findFirst().orElseThrow();
+        savedProductId = savedProduct.getId();
     }
 
     @DisplayName("상품 등록")
     @Test
     void save() {
-        Product savedProduct = productRepository.findById(product.getId()).orElseThrow();
+        Product savedProduct = productRepository.findById(savedProductId).orElseThrow();
         String memberName = savedProduct.getMember().getUsername();
 
         assertThat(memberName).isEqualTo("김철수");
@@ -60,15 +69,13 @@ class ProductServiceTest {
     @DisplayName("상품 수정")
     @Test
     void update() {
-        Long savedProductId = product.getId();
-
-        Product updateProduct = Product.builder()
+        RequestProductDto updatedto = RequestProductDto.builder()
                 .title("제목2")
                 .description("내용2")
                 .price(2000)
                 .stock(20)
                 .build();
-        productService.update(savedProductId,updateProduct);
+        productService.update(savedProductId,updatedto);
 
         Product resultProduct = productRepository.findById(savedProductId).orElseThrow();
         assertThat(resultProduct.getTitle()).isEqualTo("제목2");
@@ -80,10 +87,9 @@ class ProductServiceTest {
     @DisplayName("상품 삭제")
     @Test
     void delete() {
-        Long productId = product.getId();
-        productService.delete(productId);
+        productService.delete(savedProductId);
 
-        Optional<Product> deletedProduct = productRepository.findById(productId);
+        Optional<Product> deletedProduct = productRepository.findById(savedProductId);
         assertThat(deletedProduct.isPresent()).isFalse();
     }
 }
