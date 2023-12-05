@@ -30,7 +30,8 @@ public class Product {
     private int price;
     private int stock;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    @OneToMany(mappedBy = "product")
     private List<Image> images = new ArrayList<>();
 
     @OneToMany(mappedBy = "product")
@@ -39,9 +40,6 @@ public class Product {
     /**
      * 사용자 정의 생성자
      */
-    public void addMember(Member member) {
-        this.member = member;
-    }
 
     public void updateProduct(String title, String description, int price, int stock) {
         this.title = title;
