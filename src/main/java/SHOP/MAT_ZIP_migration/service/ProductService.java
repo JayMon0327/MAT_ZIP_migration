@@ -38,12 +38,16 @@ public class ProductService {
     }
 
     @Transactional
-    public void update(Long id, RequestProductDto requestProductDto) {
+    public void update(Long id, RequestProductDto requestProductDto) throws IOException {
         Product savedProduct = productRepository.findById(id).orElseThrow(()->{
             return new IllegalArgumentException("상품 찾기 실패");
         });
         savedProduct.updateProduct(requestProductDto.getTitle(), requestProductDto.getDescription(),
                 requestProductDto.getPrice(), requestProductDto.getStock());
+
+        savedProduct.clearImages();
+        List<Image> images = fileStore.storeFiles(requestProductDto.getImageFiles());
+        images.forEach(savedProduct::addImage);
     }
 
     @Transactional

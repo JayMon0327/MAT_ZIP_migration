@@ -28,7 +28,7 @@ public class ProductApiController {
     }
 
     @PutMapping("/product/{id}")
-    public ResponseDto<Integer> update(@PathVariable Long id, @RequestBody RequestProductDto requestProductDto) {
+    public ResponseDto<Integer> update(@PathVariable Long id, @RequestBody RequestProductDto requestProductDto) throws IOException {
         productService.update(id, requestProductDto);
         return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
     }

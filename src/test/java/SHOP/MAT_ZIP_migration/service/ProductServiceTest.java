@@ -12,9 +12,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,7 +81,7 @@ class ProductServiceTest {
 
     @DisplayName("상품 수정 테스트")
     @Test
-    void update() {
+    void update() throws IOException {
         RequestProductDto updatedto = RequestProductDto.builder()
                 .title("제목2")
                 .description("내용2")
@@ -106,26 +108,16 @@ class ProductServiceTest {
 
     @DisplayName("상품 및 이미지 저장 테스트")
     @Test
-    void testSaveProductWithImages() throws IOException {
-        RequestProductDto productDto = RequestProductDto.builder()
-                .title("제목1")
-                .description("내용1")
-                .price(1000)
-                .stock(10)
-                .imageFiles(null) // 실제 파일 업로드는 생략
-                .build();
-
-        Member savedMember = memberRepository.findById(member.getId()).orElseThrow();
-        productService.save(productDto, savedMember);
+    void SaveProductWithImages() throws IOException {
 
         Product savedProduct = productRepository.findAll().stream()
-                .filter(product -> product.getTitle().equals(productDto.getTitle()))
+                .filter(product -> product.getTitle().equals(ProductDto.getTitle()))
                 .findFirst()
                 .orElseThrow();
+
 
         assertThat(savedProduct.getImages()).hasSize(2);
         assertThat(savedProduct.getImages().get(0).getUploadFileName()).isEqualTo("test1.jpg");
         assertThat(savedProduct.getImages().get(1).getUploadFileName()).isEqualTo("test2.jpg");
     }
-
 }

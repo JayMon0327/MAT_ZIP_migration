@@ -1,6 +1,5 @@
 package SHOP.MAT_ZIP_migration.dto.product;
 
-import SHOP.MAT_ZIP_migration.domain.Image;
 import SHOP.MAT_ZIP_migration.domain.Member;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
