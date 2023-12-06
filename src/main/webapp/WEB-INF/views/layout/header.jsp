@@ -45,7 +45,7 @@
             <c:otherwise>
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                           <li><a href="/" class="nav-link px-2 text-secondary">Home</a></li>
-                          <li><a href="/seller/saveForm" class="nav-link px-2 text-white">상품등록</a></li>
+                          <li><a href="/product/saveForm" class="nav-link px-2 text-white">상품등록</a></li>
                           <li><a href="/user/updateForm" class="nav-link px-2 text-white">회원정보</a></li>
                           <li><a href="/logout" class="nav-link px-2 text-white">로그아웃</a></li>
                           <li><a href="#" class="nav-link px-2 text-white">About</a></li>

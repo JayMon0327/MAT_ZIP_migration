@@ -8,7 +8,7 @@
         </a>
 
         <ul class="nav col-md-4 justify-content-end">
-          <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">제이몬 블로그</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">제이몬 쇼핑몰</a></li>
           <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">010-8223-6982</a></li>
           <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">부산 수영구 댕댕동</a></li>
           <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
