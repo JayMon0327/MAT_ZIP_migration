@@ -12,4 +12,10 @@ import lombok.NoArgsConstructor;
 public class ResponseDto<T> {
     int status;
     T data;
+    Long id;
+
+    public ResponseDto(int status, T data) {
+        this.status = status;
+        this.data = data;
+    }
 }
