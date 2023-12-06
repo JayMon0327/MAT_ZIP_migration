@@ -3,7 +3,10 @@ package SHOP.MAT_ZIP_migration.service;
 import SHOP.MAT_ZIP_migration.domain.Image;
 import SHOP.MAT_ZIP_migration.domain.Member;
 import SHOP.MAT_ZIP_migration.domain.Product;
+import SHOP.MAT_ZIP_migration.domain.order.Item;
+import SHOP.MAT_ZIP_migration.dto.product.RequestItemDto;
 import SHOP.MAT_ZIP_migration.dto.product.RequestProductDto;
+import SHOP.MAT_ZIP_migration.repository.ItemRepository;
 import SHOP.MAT_ZIP_migration.repository.MemberRepository;
 import SHOP.MAT_ZIP_migration.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,13 +36,16 @@ class ProductServiceTest {
     private ProductRepository productRepository;
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private ItemRepository itemRepository;
 
     @MockBean
     private FileStore fileStore;
 
     private Member member;
-    private RequestProductDto ProductDto;
+    private RequestProductDto productDto;
     private Long savedProductId;
+    private List<RequestItemDto> requestItemDtos;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -52,11 +59,16 @@ class ProductServiceTest {
                 new Image(2L, "test2.jpg","22322.jpg", "/path/to/test2.jpg", null, null)
         ));
 
-        ProductDto = RequestProductDto.builder()
+        productDto = RequestProductDto.builder()
                 .title("제목1")
                 .description("내용1")
                 .build();
-        productService.save(ProductDto,member);
+        productService.saveProduct(productDto,member);
+
+        //아이템 정보 설정
+        requestItemDtos = new ArrayList<>();
+        requestItemDtos.add(new RequestItemDto("Test Item 1", 10000, 10));
+        requestItemDtos.add(new RequestItemDto("Test Item 2", 20000, 5));
 
         Product savedProduct = productRepository.findAll().stream().findFirst().orElseThrow();
         savedProductId = savedProduct.getId();
@@ -80,7 +92,7 @@ class ProductServiceTest {
                 .title("제목2")
                 .description("내용2")
                 .build();
-        productService.update(savedProductId,updatedto);
+        productService.updateProduct(savedProductId,updatedto);
 
         Product resultProduct = productRepository.findById(savedProductId).orElseThrow();
         assertThat(resultProduct.getTitle()).isEqualTo("제목2");
@@ -101,7 +113,7 @@ class ProductServiceTest {
     void SaveProductWithImages() throws IOException {
 
         Product savedProduct = productRepository.findAll().stream()
-                .filter(product -> product.getTitle().equals(ProductDto.getTitle()))
+                .filter(product -> product.getTitle().equals(productDto.getTitle()))
                 .findFirst()
                 .orElseThrow();
 
@@ -109,5 +121,23 @@ class ProductServiceTest {
         assertThat(savedProduct.getImages()).hasSize(2);
         assertThat(savedProduct.getImages().get(0).getUploadFileName()).isEqualTo("test1.jpg");
         assertThat(savedProduct.getImages().get(1).getUploadFileName()).isEqualTo("test2.jpg");
+    }
+
+    @DisplayName("상품과 아이템 등록 테스트")
+    @Test
+    void saveProductWithItemsTest() throws IOException {
+        Long productId = productService.saveProductAndItem(productDto, requestItemDtos, member);
+
+        // 상품 조회 및 검증
+        Product savedProduct = productRepository.findById(productId).orElseThrow();
+
+        // 상품에 연결된 아이템 검증
+        List<Item> items = itemRepository.findByProduct(savedProduct);
+
+        assertThat(savedProduct.getItems().size()).isEqualTo(2);
+        assertThat(savedProduct.getItems().get(0).getName()).isEqualTo("Test Item 1");
+        assertThat(savedProduct.getItems().get(0).getPrice()).isEqualTo(10000);
+        assertThat(savedProduct.getItems().get(1).getName()).isEqualTo("Test Item 2");
+        assertThat(savedProduct.getItems().get(1).getPrice()).isEqualTo(20000);
     }
 }
