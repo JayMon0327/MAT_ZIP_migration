@@ -15,18 +15,14 @@ let index = {
 		},
 
 		save: function(){
-			let data = {
-                title: $("#title").val(),
-                content: $("#description").val(),
-                content: $("#price").val(),
-                content: $("#stock").val()
-			};
+			let formData = new FormData(document.getElementById("product-form"));
 
 			$.ajax({
 				type: "POST",
 				url: "/api/product",
-				data: JSON.stringify(data),
-				contentType: "application/json; charset=utf-8",
+				data: formData,
+				processData: false, // 데이터를 query string으로 변환하지 않음 -> s3 배포시 해제
+				contentType: false, // multipart/form-data로 설정 -> s3 배포시 해제
 				dataType: "json"
 			}).done(function(resp){
 				alert("상품 등록이 완료되었습니다.");

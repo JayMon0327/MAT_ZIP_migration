@@ -3,6 +3,7 @@ package SHOP.MAT_ZIP_migration.controller.api;
 import SHOP.MAT_ZIP_migration.config.auth.PrincipalDetails;
 import SHOP.MAT_ZIP_migration.domain.Product;
 import SHOP.MAT_ZIP_migration.dto.ResponseDto;
+import SHOP.MAT_ZIP_migration.dto.product.ProductAndItemDto;
 import SHOP.MAT_ZIP_migration.dto.product.RequestItemDto;
 import SHOP.MAT_ZIP_migration.dto.product.RequestProductDto;
 import SHOP.MAT_ZIP_migration.service.ItemService;
@@ -25,17 +26,20 @@ public class ProductApiController {
 
     private final ProductService productService;
 
+    /**
+      *  multipart/form-data 전송문제로 @ModelAttribute 사용
+      *  추후 이미지 파일을 S3로 전송하는 로직으로 변경해서 REST API를 유지할 것임
+      */
     @PostMapping("/product")
-    public ResponseDto<Integer> save(@Valid @RequestBody RequestProductDto requestProductDto,
-                                     @Valid @RequestBody List<RequestItemDto> requestItemDtos,
+    public ResponseDto<Integer> save(@Valid @ModelAttribute ProductAndItemDto productAndItemDto,
                                      @AuthenticationPrincipal PrincipalDetails principal) throws IOException {
-        Long productId = productService.saveProductAndItem(requestProductDto, requestItemDtos, principal.getMember());
+        Long productId = productService.saveProductAndItem(productAndItemDto, principal.getMember());
         return new ResponseDto<Integer>(HttpStatus.OK.value(),1, productId);
     }
 
     @PutMapping("/product/{id}")
-    public ResponseDto<Integer> update(@PathVariable Long id, @RequestBody RequestProductDto requestProductDto) throws IOException {
-        productService.updateProduct(id, requestProductDto);
+    public ResponseDto<Integer> update(@PathVariable Long id, @Valid @ModelAttribute ProductAndItemDto productAndItemDto) throws IOException {
+        productService.updateProductAndItem(id, productAndItemDto);
         return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
     }
 
