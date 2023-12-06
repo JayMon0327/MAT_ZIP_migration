@@ -26,5 +26,6 @@ public class RequestProductDto {
 
     private Member member;
 
+    @Builder.Default
     private List<MultipartFile> imageFiles = new ArrayList<>();
 }
