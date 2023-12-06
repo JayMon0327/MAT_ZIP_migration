@@ -18,11 +18,11 @@ public class UpdateMemberDto {
     private String username;
 
     @NotBlank(message = "비밀번호는 빈칸일 수 없습니다.")
-    @Length(min = 10, max = 20)
+    @Length(min = 10, max = 20, message = "비밀번호는 10자이상 20자이하입니다.")
     private String password;
 
     @NotBlank(message = "비밀번호는 빈칸일 수 없습니다.")
-    @Length(min = 10, max = 20)
+    @Length(min = 10, max = 20, message = "비밀번호는 10자이상 20자이하입니다.")
     private String passwordCheck;
 
     @Email
