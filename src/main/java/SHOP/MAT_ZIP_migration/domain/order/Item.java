@@ -1,5 +1,6 @@
 package SHOP.MAT_ZIP_migration.domain.order;
 
+import SHOP.MAT_ZIP_migration.domain.Product;
 import SHOP.MAT_ZIP_migration.handler.NotEnoughStockException;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -19,6 +20,10 @@ public class Item {
     private String name;
     private int price;
     private int stockQuantity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     /**
      * stock 증가(재고증가)

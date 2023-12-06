@@ -12,11 +12,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,8 +55,6 @@ class ProductServiceTest {
         ProductDto = RequestProductDto.builder()
                 .title("제목1")
                 .description("내용1")
-                .price(1000)
-                .stock(10)
                 .build();
         productService.save(ProductDto,member);
 
@@ -75,8 +71,6 @@ class ProductServiceTest {
         assertThat(memberName).isEqualTo("김철수");
         assertThat(savedProduct.getTitle()).isEqualTo("제목1");
         assertThat(savedProduct.getDescription()).isEqualTo("내용1");
-        assertThat(savedProduct.getPrice()).isEqualTo(1000);
-        assertThat(savedProduct.getStock()).isEqualTo(10);
     }
 
     @DisplayName("상품 수정 테스트")
@@ -85,16 +79,12 @@ class ProductServiceTest {
         RequestProductDto updatedto = RequestProductDto.builder()
                 .title("제목2")
                 .description("내용2")
-                .price(2000)
-                .stock(20)
                 .build();
         productService.update(savedProductId,updatedto);
 
         Product resultProduct = productRepository.findById(savedProductId).orElseThrow();
         assertThat(resultProduct.getTitle()).isEqualTo("제목2");
         assertThat(resultProduct.getDescription()).isEqualTo("내용2");
-        assertThat(resultProduct.getPrice()).isEqualTo(2000);
-        assertThat(resultProduct.getStock()).isEqualTo(20);
     }
 
     @DisplayName("상품 삭제 테스트")

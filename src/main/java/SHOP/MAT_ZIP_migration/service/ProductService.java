@@ -28,8 +28,6 @@ public class ProductService {
                 .member(member)
                 .title(requestProductDto.getTitle())
                 .description(requestProductDto.getDescription())
-                .price(requestProductDto.getPrice())
-                .stock(requestProductDto.getStock())
                 .build();
 
         List<Image> images = fileStore.storeFiles(requestProductDto.getImageFiles());
@@ -42,8 +40,7 @@ public class ProductService {
         Product savedProduct = productRepository.findById(id).orElseThrow(()->{
             return new IllegalArgumentException("상품 찾기 실패");
         });
-        savedProduct.updateProduct(requestProductDto.getTitle(), requestProductDto.getDescription(),
-                requestProductDto.getPrice(), requestProductDto.getStock());
+        savedProduct.updateProduct(requestProductDto.getTitle(), requestProductDto.getDescription());
 
         savedProduct.clearImages();
         List<Image> images = fileStore.storeFiles(requestProductDto.getImageFiles());

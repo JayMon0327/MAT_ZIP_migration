@@ -24,14 +24,6 @@ public class RequestProductDto {
     @NotBlank(message = "내용은 빈칸일 수 없습니다.")
     private String description;
 
-    @NotBlank(message = "가격을 입력해주세요.")
-    @Length(min =10000, max = 100000, message = "가격은 10,000원 이상 100,000원 미만입니다.")
-    private int price;
-
-    @NotBlank(message = "수량을 입력해주세요.")
-    @Length(min =1, max = 100, message = "수량은 1개이상 100개 미만입니다.")
-    private int stock;
-
     private Member member;
 
     private List<MultipartFile> imageFiles = new ArrayList<>();

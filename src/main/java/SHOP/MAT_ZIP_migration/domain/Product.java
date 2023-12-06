@@ -1,5 +1,6 @@
 package SHOP.MAT_ZIP_migration.domain;
 
+import SHOP.MAT_ZIP_migration.domain.order.Item;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,8 +28,9 @@ public class Product {
 
     private String title;
     private String description;
-    private int price;
-    private int stock;
+
+    @OneToMany(mappedBy = "product")
+    private List<Item> items = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "product")
@@ -41,11 +43,9 @@ public class Product {
      * 사용자 정의 생성자
      */
 
-    public void updateProduct(String title, String description, int price, int stock) {
+    public void updateProduct(String title, String description) {
         this.title = title;
         this.description = description;
-        this.price = price;
-        this.stock = stock;
     }
 
     /**
