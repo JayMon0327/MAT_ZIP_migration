@@ -2,18 +2,17 @@ package SHOP.MAT_ZIP_migration.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static jakarta.persistence.FetchType.*;
+import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "image")
+@Table(name = "review_image")
 @Getter
-public class Image {
+public class ReviewImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_id")
@@ -24,21 +23,14 @@ public class Image {
     private String filePath;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "product_id")
-    private Product product;
-
-    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "review_id")
     private Review review;
 
     /**
      * 연관관계 설정 메서드
      */
-    public void addProduct(Product product) {
-        this.product = product;
-    }
 
-    public void setReview(Review review) {
+    public void addReview(Review review) {
         this.review = review;
     }
 
