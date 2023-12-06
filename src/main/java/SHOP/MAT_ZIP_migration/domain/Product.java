@@ -34,11 +34,11 @@ public class Product {
     private List<Item> items = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "product")
-    private List<Image> images = new ArrayList<>();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductImage> productImages = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
 
     /**
@@ -53,13 +53,13 @@ public class Product {
     /**
      * 연관관계 편의 메서드
      */
-    public void addImage(Image image) {
-        this.images.add(image);
-        image.addProduct(this);
+    public void addImage(ProductImage productImage) {
+        this.productImages.add(productImage);
+        productImage.addProduct(this);
     }
 
     public void clearImages() {
-        this.images.clear();
+        this.productImages.clear();
     }
 
     public void addItem(Item item) {

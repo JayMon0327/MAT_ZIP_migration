@@ -21,11 +21,10 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class ItemService {
 
-    private final ItemRepository itemRepository;
     private final ProductRepository productRepository;
 
     @Transactional
-    public Long addItem(Long productId, RequestItemDto requestItemDto) {
+    public Item saveItem(Long productId, RequestItemDto requestItemDto) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("상품이 존재하지 않습니다."));
 
@@ -36,9 +35,6 @@ public class ItemService {
                 .build();
 
         product.addItem(item);
-
-        itemRepository.save(item);
-        return item.getId();
+        return item;
     }
-
 }
