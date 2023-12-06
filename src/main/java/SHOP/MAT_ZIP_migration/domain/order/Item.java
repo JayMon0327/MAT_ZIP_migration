@@ -3,14 +3,15 @@ package SHOP.MAT_ZIP_migration.domain.order;
 import SHOP.MAT_ZIP_migration.domain.Product;
 import SHOP.MAT_ZIP_migration.handler.NotEnoughStockException;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 import static jakarta.persistence.GenerationType.*;
 
 @Entity
 @Getter
 @Table(name = "item")
+@Builder
 public class Item {
 
     @Id @GeneratedValue(strategy = IDENTITY)
@@ -24,6 +25,14 @@ public class Item {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
+
+
+    /**
+     * 사용자 정의 생성자
+     */
+    public void addProduct(Product product) {
+        this.product = product;
+    }
 
     /**
      * stock 증가(재고증가)

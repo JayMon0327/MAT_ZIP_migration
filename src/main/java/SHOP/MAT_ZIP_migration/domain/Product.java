@@ -29,6 +29,7 @@ public class Product {
     private String title;
     private String description;
 
+    @Builder.Default
     @OneToMany(mappedBy = "product")
     private List<Item> items = new ArrayList<>();
 
@@ -36,6 +37,7 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Image> images = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "product")
     private List<Review> reviews = new ArrayList<>();
 
@@ -53,10 +55,15 @@ public class Product {
      */
     public void addImage(Image image) {
         this.images.add(image);
-        image.setProduct(this);
+        image.addProduct(this);
     }
 
     public void clearImages() {
         this.images.clear();
+    }
+
+    public void addItem(Item item) {
+        items.add(item);
+        item.addProduct(this);
     }
 }

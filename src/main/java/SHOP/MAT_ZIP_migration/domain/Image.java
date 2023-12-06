@@ -34,7 +34,7 @@ public class Image {
     /**
      * 연관관계 설정 메서드
      */
-    public void setProduct(Product product) {
+    public void addProduct(Product product) {
         this.product = product;
     }
 
