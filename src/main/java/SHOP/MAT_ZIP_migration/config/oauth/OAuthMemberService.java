@@ -17,14 +17,13 @@ public class OAuthMemberService {
 
     public Member SignUpOAuth2(OAuth2UserInfo oAuth2UserInfo) {
         Optional<Member> userProvider = memberRepository.findByProviderAndProviderId(oAuth2UserInfo.getProvider(),
-                        oAuth2UserInfo.getProviderId());
+                oAuth2UserInfo.getProviderId());
 
         if (userProvider.isPresent()) {
             Member member = userProvider.get();
             member.updateEmail(oAuth2UserInfo.getEmail());
             return memberRepository.save(member);
-        }
-        else {
+        } else {
             Member member = Member.builder()
                     .username(oAuth2UserInfo.getProvider() + "_" + oAuth2UserInfo.getProviderId())
                     .email(oAuth2UserInfo.getEmail())

@@ -2,9 +2,9 @@ package SHOP.MAT_ZIP_migration.config.oauth.provider;
 
 import java.util.Map;
 
-public class NaverUserInfo implements OAuth2UserInfo{
+public class NaverUserInfo implements OAuth2UserInfo {
 
-	private Map<String, Object> attributes;
+    private Map<String, Object> attributes;
 
     public NaverUserInfo(Map<String, Object> attributes) {
         this.attributes = attributes;
@@ -25,9 +25,9 @@ public class NaverUserInfo implements OAuth2UserInfo{
         return (String) attributes.get("email");
     }
 
-	@Override
-	public String getProvider() {
-		return "naver";
-	}
+    @Override
+    public String getProvider() {
+        return "naver";
+    }
 
 }

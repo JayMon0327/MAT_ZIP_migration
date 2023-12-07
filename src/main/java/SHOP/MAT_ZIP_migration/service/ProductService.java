@@ -66,7 +66,7 @@ public class ProductService {
 
     @Transactional
     public Long updateProduct(Long id, RequestProductDto requestProductDto) throws IOException {
-        Product savedProduct = productRepository.findById(id).orElseThrow(()->{
+        Product savedProduct = productRepository.findById(id).orElseThrow(() -> {
             return new IllegalArgumentException("상품 찾기 실패");
         });
         savedProduct.updateProduct(requestProductDto.getTitle(), requestProductDto.getDescription());

@@ -38,7 +38,7 @@ public class MemberService {
 
     @Transactional
     public void update(UpdateMemberDto updateMemberDto) {
-        Member persistance = memberRepository.findById(updateMemberDto.getId()).orElseThrow(()->{
+        Member persistance = memberRepository.findById(updateMemberDto.getId()).orElseThrow(() -> {
             return new IllegalArgumentException("회원 찾기 실패");
         });
 

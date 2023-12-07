@@ -1,6 +1,6 @@
 package SHOP.MAT_ZIP_migration.handler;
 
-public class NotEnoughStockException extends RuntimeException{
+public class NotEnoughStockException extends RuntimeException {
     public NotEnoughStockException() {
         super();
     }

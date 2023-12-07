@@ -19,7 +19,7 @@ public class IndexController {
 
     private final ProductService productService;
 
-    @GetMapping({"/",""})
+    @GetMapping({"/", ""})
     public String index(Model model, @PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC)
     Pageable pageable) {
         Page<Product> products = productService.productAll(pageable);

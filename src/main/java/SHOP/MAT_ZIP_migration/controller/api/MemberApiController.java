@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
-
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -25,7 +24,7 @@ public class MemberApiController {
     @PostMapping("/auth/joinMember")
     public ResponseDto<Integer> save(@Valid @RequestBody JoinMemberDto joinMemberDto) {
         memberService.SignUp(joinMemberDto);
-        return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
     @PutMapping("/user")

@@ -23,38 +23,38 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Slf4j
 public class SecurityConfig {
 
-	private final PrincipalOauth2UserService principalOauth2UserService;
+    private final PrincipalOauth2UserService principalOauth2UserService;
 
-	@Bean
-	public BCryptPasswordEncoder encodePwd() {
-		return new BCryptPasswordEncoder();
-	}
+    @Bean
+    public BCryptPasswordEncoder encodePwd() {
+        return new BCryptPasswordEncoder();
+    }
 
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http
-				.csrf((csrfConfig) ->
-						csrfConfig.disable()
-				)
-				.authorizeHttpRequests(auth -> auth
-						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-						.requestMatchers(new AntPathRequestMatcher("/user/**")).hasRole("USER")
-						.requestMatchers(new AntPathRequestMatcher("/seller/**")).hasRole("SELLER")
-						.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
-						.anyRequest().permitAll()
-				)
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf((csrfConfig) ->
+                        csrfConfig.disable()
+                )
+                .authorizeHttpRequests(auth -> auth
+                        .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/user/**")).hasRole("USER")
+                        .requestMatchers(new AntPathRequestMatcher("/seller/**")).hasRole("SELLER")
+                        .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
+                        .anyRequest().permitAll()
+                )
 
-				.formLogin(form -> form
-						.loginPage("/loginForm")
-						.loginProcessingUrl("/login")
-						.defaultSuccessUrl("/")
-				)
-				.oauth2Login((oauth) -> oauth
-						.loginPage("/loginForm")
-						.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
-								.userService(principalOauth2UserService))
-								.defaultSuccessUrl("/",true));
+                .formLogin(form -> form
+                        .loginPage("/loginForm")
+                        .loginProcessingUrl("/login")
+                        .defaultSuccessUrl("/")
+                )
+                .oauth2Login((oauth) -> oauth
+                        .loginPage("/loginForm")
+                        .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
+                                .userService(principalOauth2UserService))
+                        .defaultSuccessUrl("/", true));
 
-		return http.build();
-	}
+        return http.build();
+    }
 }

@@ -14,22 +14,22 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class PrincipalDetailsService implements UserDetailsService{
+public class PrincipalDetailsService implements UserDetailsService {
 
-	private final MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
-	/**
-	 * loadUserByUsername 함수가 종료되면 Authentication 객체가 생성됨
-	 */
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Member member = memberRepository.findByUsername(username);
-		if(member == null) {
-			return null;
-		}else {
-			return new PrincipalDetails(member);
-		}
-		
-	}
+    /**
+     * loadUserByUsername 함수가 종료되면 Authentication 객체가 생성됨
+     */
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Member member = memberRepository.findByUsername(username);
+        if (member == null) {
+            return null;
+        } else {
+            return new PrincipalDetails(member);
+        }
+
+    }
 
 }

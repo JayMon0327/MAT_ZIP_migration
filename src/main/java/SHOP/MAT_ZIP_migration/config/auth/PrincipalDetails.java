@@ -17,77 +17,77 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
  * 하지만, 파라미터로 받을 때 관리하기가 불편하니 PrincipalDetails 타입으로 상속을 통해 묶어서 관리한다.
  */
 
-public class PrincipalDetails implements UserDetails, OAuth2User{
+public class PrincipalDetails implements UserDetails, OAuth2User {
 
-	private static final long serialVersionUID = 1L;
-	private Member member;
-	private Map<String, Object> attributes; // 회원정보 key,value형태를 저장
+    private static final long serialVersionUID = 1L;
+    private Member member;
+    private Map<String, Object> attributes; // 회원정보 key,value형태를 저장
 
-	// 일반 시큐리티 로그인시 사용
-	public PrincipalDetails(Member member) {
-		this.member = member;
-	}
-	
-	// OAuth2.0 로그인시 사용
-	public PrincipalDetails(Member member, Map<String, Object> attributes) {
-		this.member = member;
-		this.attributes = attributes;
-	}
-	
-	public Member getMember() {
-		return member;
-	}
+    // 일반 시큐리티 로그인시 사용
+    public PrincipalDetails(Member member) {
+        this.member = member;
+    }
 
-	@Override
-	public String getPassword() {
-		return member.getPassword();
-	}
+    // OAuth2.0 로그인시 사용
+    public PrincipalDetails(Member member, Map<String, Object> attributes) {
+        this.member = member;
+        this.attributes = attributes;
+    }
 
-	@Override
-	public String getUsername() {
-		return member.getUsername();
-	}
+    public Member getMember() {
+        return member;
+    }
 
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
+    @Override
+    public String getPassword() {
+        return member.getPassword();
+    }
 
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
+    @Override
+    public String getUsername() {
+        return member.getUsername();
+    }
 
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
-	@Override
-	public boolean isEnabled() {
-		//휴면 로그인 설정
-		// 현재시간 - 로그인 시간 -> 1년을 초과하면 return false;
-		return true;
-	}
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
-	//유저의 권한을 리턴하는 곳
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Collection<GrantedAuthority> authorities = new ArrayList<>();
-		authorities.add(new SimpleGrantedAuthority(member.getRole().getKey()));
-		return authorities;
-	}
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 
-	// 리소스 서버로 부터 받는 회원정보
-	@Override
-	public Map<String, Object> getAttributes() {
-		return attributes;
-	}
+    @Override
+    public boolean isEnabled() {
+        //휴면 로그인 설정
+        // 현재시간 - 로그인 시간 -> 1년을 초과하면 return false;
+        return true;
+    }
 
-	// User의 PrimaryKey
-	@Override
-	public String getName() {
-		return member.getId()+"";
-	}
-	
+    //유저의 권한을 리턴하는 곳
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(member.getRole().getKey()));
+        return authorities;
+    }
+
+    // 리소스 서버로 부터 받는 회원정보
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    // User의 PrimaryKey
+    @Override
+    public String getName() {
+        return member.getId() + "";
+    }
+
 }

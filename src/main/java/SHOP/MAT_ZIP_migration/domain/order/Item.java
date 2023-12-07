@@ -19,7 +19,8 @@ import static jakarta.persistence.GenerationType.*;
 @Builder
 public class Item {
 
-    @Id @GeneratedValue(strategy = IDENTITY)
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "item_id")
     private Long id;
 
@@ -41,6 +42,7 @@ public class Item {
 
     /**
      * stock 증가(재고증가)
+     *
      * @param quantity
      */
     public void addStock(int quantity) {
@@ -49,6 +51,7 @@ public class Item {
 
     /**
      * stock 감소
+     *
      * @param quantity
      */
     public void removeStock(int quantity) {

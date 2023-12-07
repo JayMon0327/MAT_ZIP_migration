@@ -6,12 +6,12 @@ import java.util.Map;
  * 카카오 로그인 시 사용자 정보 응답 값에 id가 분리되어 있으므로 id 필드 생성
  * 사용자 정보 응답 값 = kakao_account
  */
-public class KakaoUserInfo implements OAuth2UserInfo{
+public class KakaoUserInfo implements OAuth2UserInfo {
 
     private String id;
-	private Map<String, Object> attributes;
+    private Map<String, Object> attributes;
 
-    public KakaoUserInfo(Map<String, Object> attributes,String id) {
+    public KakaoUserInfo(Map<String, Object> attributes, String id) {
         this.attributes = attributes;
         this.id = id;
     }
@@ -31,9 +31,9 @@ public class KakaoUserInfo implements OAuth2UserInfo{
         return String.valueOf(attributes.get("email"));
     }
 
-	@Override
-	public String getProvider() {
-		return "kakao";
-	}
+    @Override
+    public String getProvider() {
+        return "kakao";
+    }
 
 }

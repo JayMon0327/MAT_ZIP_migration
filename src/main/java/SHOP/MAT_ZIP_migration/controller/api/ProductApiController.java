@@ -28,26 +28,26 @@ public class ProductApiController {
     private final FileStore fileStore;
 
     /**
-      *  multipart/form-data 전송문제로 @ModelAttribute 사용
-      *  추후 이미지 파일을 S3로 전송하는 로직으로 변경해서 REST API를 유지할 것임
-      */
+     * multipart/form-data 전송문제로 @ModelAttribute 사용
+     * 추후 이미지 파일을 S3로 전송하는 로직으로 변경해서 REST API를 유지할 것임
+     */
     @PostMapping("/product")
     public ResponseDto<Integer> save(@Valid @ModelAttribute ProductAndItemDto dto,
                                      @AuthenticationPrincipal PrincipalDetails principal) throws IOException {
         Long productId = productService.saveProductAndItem(dto, principal.getMember());
-        return new ResponseDto<Integer>(HttpStatus.OK.value(),1, productId);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1, productId);
     }
 
     @PutMapping("/product/{id}")
     public ResponseDto<Integer> update(@PathVariable Long id, @Valid @ModelAttribute ProductAndItemDto dto) throws IOException {
         Long productId = productService.updateProductAndItem(id, dto);
-        return new ResponseDto<Integer>(HttpStatus.OK.value(),1, productId);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1, productId);
     }
 
     @DeleteMapping("/product/{id}")
     public ResponseDto<Integer> deleteById(@PathVariable Long id) {
         productService.delete(id);
-        return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
     @GetMapping("/images/{filename}")

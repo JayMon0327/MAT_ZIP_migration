@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CustomException.class)
     public ResponseEntity handleCustomException(CustomException ex) {
-        log.info("사용자 정의 예외 발생: "+ex.getMessage());
+        log.info("사용자 정의 예외 발생: " + ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 

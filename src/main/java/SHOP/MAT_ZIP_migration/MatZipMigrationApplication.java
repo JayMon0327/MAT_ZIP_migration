@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing
 public class MatZipMigrationApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MatZipMigrationApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MatZipMigrationApplication.class, args);
+    }
 
 }

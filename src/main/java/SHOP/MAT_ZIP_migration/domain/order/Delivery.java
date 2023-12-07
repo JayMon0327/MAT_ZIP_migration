@@ -12,7 +12,8 @@ import static jakarta.persistence.GenerationType.*;
 @Table(name = "delivery")
 public class Delivery {
 
-    @Id @GeneratedValue(strategy = IDENTITY)
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "delivery_id")
     private Long id;
 

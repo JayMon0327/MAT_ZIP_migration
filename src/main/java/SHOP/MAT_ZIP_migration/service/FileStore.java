@@ -34,7 +34,7 @@ public class FileStore {
         multipartFile.transferTo(new File(getFullPath(storeFileName)));
 
         ProductImage productImage = new ProductImage();
-        productImage.addFile(uploadFileName,storeFileName, getFullPath(storeFileName));
+        productImage.addFile(uploadFileName, storeFileName, getFullPath(storeFileName));
         return productImage;
     }
 
@@ -54,7 +54,7 @@ public class FileStore {
         multipartFile.transferTo(new File(getFullPath(storeFileName)));
 
         ReviewImage reviewImage = new ReviewImage();
-        reviewImage.addFile(uploadFileName,storeFileName, getFullPath(storeFileName));
+        reviewImage.addFile(uploadFileName, storeFileName, getFullPath(storeFileName));
         return reviewImage;
     }
 
