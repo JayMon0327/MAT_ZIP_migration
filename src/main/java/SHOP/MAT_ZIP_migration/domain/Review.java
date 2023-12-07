@@ -4,6 +4,7 @@ import SHOP.MAT_ZIP_migration.domain.baseentity.DateBaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +17,7 @@ import static jakarta.persistence.GenerationType.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Getter
 @Table(name = "review")
 public class Review extends DateBaseEntity {
@@ -35,10 +37,16 @@ public class Review extends DateBaseEntity {
     private String content;
     private int rating;
 
+    @Builder.Default
     @OneToMany(mappedBy = "review", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<ReviewImage> reviewImages = new ArrayList<>();
 
     /**
      * 연관관계 편의 메서드
      */
+
+    public void addImage(ReviewImage reviewImage) {
+        this.reviewImages.add(reviewImage);
+        reviewImage.addReview(this);
+    }
 }
