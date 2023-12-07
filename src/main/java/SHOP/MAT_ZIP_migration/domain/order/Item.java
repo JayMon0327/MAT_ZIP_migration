@@ -2,15 +2,20 @@ package SHOP.MAT_ZIP_migration.domain.order;
 
 import SHOP.MAT_ZIP_migration.domain.Product;
 import SHOP.MAT_ZIP_migration.handler.NotEnoughStockException;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import static jakarta.persistence.GenerationType.*;
 
 @Entity
 @Getter
 @Table(name = "item")
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Item {
 
@@ -64,3 +69,4 @@ public class Item {
     }
 
 }
+

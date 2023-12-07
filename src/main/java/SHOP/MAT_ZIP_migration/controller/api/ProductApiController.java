@@ -1,22 +1,21 @@
 package SHOP.MAT_ZIP_migration.controller.api;
 
 import SHOP.MAT_ZIP_migration.config.auth.PrincipalDetails;
-import SHOP.MAT_ZIP_migration.domain.Product;
 import SHOP.MAT_ZIP_migration.dto.ResponseDto;
 import SHOP.MAT_ZIP_migration.dto.product.ProductAndItemDto;
-import SHOP.MAT_ZIP_migration.dto.product.RequestItemDto;
-import SHOP.MAT_ZIP_migration.dto.product.RequestProductDto;
-import SHOP.MAT_ZIP_migration.service.ItemService;
+import SHOP.MAT_ZIP_migration.service.FileStore;
 import SHOP.MAT_ZIP_migration.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
+import java.net.MalformedURLException;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,6 +24,7 @@ import java.util.List;
 public class ProductApiController {
 
     private final ProductService productService;
+    private final FileStore fileStore;
 
     /**
       *  multipart/form-data 전송문제로 @ModelAttribute 사용
@@ -39,13 +39,18 @@ public class ProductApiController {
 
     @PutMapping("/product/{id}")
     public ResponseDto<Integer> update(@PathVariable Long id, @Valid @ModelAttribute ProductAndItemDto productAndItemDto) throws IOException {
-        productService.updateProductAndItem(id, productAndItemDto);
-        return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
+        Long productId = productService.updateProductAndItem(id, productAndItemDto);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(),1, productId);
     }
 
     @DeleteMapping("/product/{id}")
     public ResponseDto<Integer> deleteById(@PathVariable Long id) {
         productService.delete(id);
         return new ResponseDto<Integer>(HttpStatus.OK.value(),1);
+    }
+
+    @GetMapping("/images/{filename}")
+    public Resource viewImage(@PathVariable String filename) throws MalformedURLException {
+        return new UrlResource("file:" + fileStore.getFullPath(filename));
     }
 }
