@@ -9,13 +9,13 @@ let index = {
 			$("#btn-update").on("click", ()=>{
 				this.update();
 			});
-			$("#btn-reply-save").on("click", ()=>{
-				this.replySave();
+			$("#btn-review-save").on("click", ()=>{
+				this.reviewSave();
 			});
 		},
 
 		save: function(){
-			let formData = new FormData(document.getElementById("product-form"));
+			let formData = new FormData(document.getElementById("save-form"));
 
 			$.ajax({
 				type: "POST",
@@ -26,7 +26,7 @@ let index = {
 				dataType: "json"
 			}).done(function(resp){
 				alert("상품 등록이 완료되었습니다.");
-				location.href = "/product/" + id;
+				location.href = "/";
 			}).fail(function(error){
 				alert(JSON.stringify(error));
 			});
@@ -48,46 +48,38 @@ let index = {
 		},
 
 		update: function(){
-			let id = $("#id").val();
-
-			let data = {
-                title: $("#title").val(),
-                content: $("#description").val(),
-                content: $("#price").val(),
-                content: $("#stock").val()
-			};
+			let productId = $("#id").val();
+			let formData = new FormData(document.getElementById("Update-form"));
 
 			$.ajax({
 				type: "PUT",
-				url: "/api/product/"+id,
+				url: `/api/product/${productId}`,
 				data: formData,
 				processData: false, // 데이터를 query string으로 변환하지 않음 -> s3 배포시 해제
                 contentType: false, // multipart/form-data로 설정 -> s3 배포시 해제
 				dataType: "json"
 			}).done(function(resp){
 				alert("상품 수정이 완료되었습니다.");
-				location.href = "/product/" + id;
+				location.href = `/product/${productId}`;
 			}).fail(function(error){
 				alert(JSON.stringify(error));
 			});
 		},
 
-		replySave: function(){
-			let data = {
-					userId: $("#userId").val(),
-					boardId: $("#boardId").val(),
-					content: $("#reply-content").val()
-			};
+		reviewSave: function(){
+			let formData = new FormData(document.getElementById("review-form"));
+			let productId = $("#productId").val();
 
 			$.ajax({
 				type: "POST",
-				url: `/api/board/${data.boardId}/reply`,
-				data: JSON.stringify(data),
-				contentType: "application/json; charset=utf-8",
-				dataType: "json"
+				url: `/api/product/${productId}/review`,
+				data: formData,
+                processData: false, // 데이터를 query string으로 변환하지 않음 -> s3 배포시 해제
+                contentType: false, // multipart/form-data로 설정 -> s3 배포시 해제
+                dataType: "json"
 			}).done(function(resp){
 				alert("댓글작성이 완료되었습니다.");
-				location.href = `/board/${data.boardId}`;
+				location.href = `/product/${productId}`;
 			}).fail(function(error){
 				alert(JSON.stringify(error));
 			});
