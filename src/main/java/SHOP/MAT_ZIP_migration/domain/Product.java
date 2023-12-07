@@ -1,6 +1,7 @@
 package SHOP.MAT_ZIP_migration.domain;
 
 import SHOP.MAT_ZIP_migration.domain.order.Item;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -63,7 +64,7 @@ public class Product {
     }
 
     public void addItem(Item item) {
-        items.add(item);
+        this.items.add(item);
         item.addProduct(this);
     }
 }
