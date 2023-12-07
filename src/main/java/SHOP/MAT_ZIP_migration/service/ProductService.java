@@ -1,8 +1,6 @@
 package SHOP.MAT_ZIP_migration.service;
 
-import SHOP.MAT_ZIP_migration.domain.ProductImage;
-import SHOP.MAT_ZIP_migration.domain.Member;
-import SHOP.MAT_ZIP_migration.domain.Product;
+import SHOP.MAT_ZIP_migration.domain.*;
 import SHOP.MAT_ZIP_migration.domain.order.Item;
 import SHOP.MAT_ZIP_migration.dto.product.ProductAndItemDto;
 import SHOP.MAT_ZIP_migration.dto.product.RequestItemDto;
@@ -53,14 +51,14 @@ public class ProductService {
     }
 
     @Transactional
-    public Long saveProduct(RequestProductDto requestProductDto, Member member) throws IOException {
+    public Long saveProduct(RequestProductDto dto, Member member) throws IOException {
         Product product = Product.builder()
                 .member(member)
-                .title(requestProductDto.getTitle())
-                .description(requestProductDto.getDescription())
+                .title(dto.getTitle())
+                .description(dto.getDescription())
                 .build();
 
-        List<ProductImage> productImages = fileStore.storeFiles(requestProductDto.getImageFiles());
+        List<ProductImage> productImages = fileStore.storeProductFiles(dto.getImageFiles());
         productImages.forEach(product::addImage);
         productRepository.save(product);
         return product.getId();
@@ -74,10 +72,14 @@ public class ProductService {
         savedProduct.updateProduct(requestProductDto.getTitle(), requestProductDto.getDescription());
 
         savedProduct.clearImages();
-        List<ProductImage> productImages = fileStore.storeFiles(requestProductDto.getImageFiles());
+        List<ProductImage> productImages = fileStore.storeProductFiles(requestProductDto.getImageFiles());
         productImages.forEach(savedProduct::addImage);
 
         return savedProduct.getId();
+    }
+
+    public Page<Product> productAll(Pageable pageable) {
+        return productRepository.findAll(pageable);
     }
 
     @Transactional
@@ -85,39 +87,47 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public Product findByProduct(Long id) {
-        return productRepository.findById(id).orElseThrow(()->{
-            return new IllegalArgumentException("상세보기 실패: 상품 아이디가 존재하지 않습니다");
-        });
-    }
-
     public ResponseProductDto getProductDetails(Long productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new EntityNotFoundException("상품을 찾을 수 없습니다."));
 
-        // ProductDetailDto에 정보 채우기
-        ResponseProductDto dto = new ResponseProductDto();
-        dto.setId(product.getId());
-        dto.setTitle(product.getTitle());
-        dto.setDescription(product.getDescription());
-        dto.setMember(product.getMember());
-
-        // Product의 Item 리스트를 DTO로 변환
-        List<ResponseProductDto.ItemDto> itemDtos = product.getItems().stream()
-                .map(item -> new ResponseProductDto.ItemDto(item.getName(), item.getPrice(), item.getStockQuantity()))
-                .collect(Collectors.toList());
-        dto.setItems(itemDtos);
-
-        // Product의 Image 리스트를 DTO로 변환
-        List<ResponseProductDto.ImageDto> imageDtos = product.getProductImages().stream()
-                .map(image -> new ResponseProductDto.ImageDto(image.getStoreFileName()))
-                .collect(Collectors.toList());
-        dto.setImages(imageDtos);
+        ResponseProductDto dto = ResponseProductDto.builder()
+                .id(productId)
+                .title(product.getTitle())
+                .description(product.getDescription())
+                .member(product.getMember())
+                .items(itemDtoTransfer(product))
+                .images(imageDtoTransfer(product))
+                .reviews(reviewDtoTransfer(product))
+                .build();
 
         return dto;
     }
 
-    public Page<Product> productAll(Pageable pageable) {
-        return productRepository.findAll(pageable);
+    public List<ResponseProductDto.ReviewDto> reviewDtoTransfer(Product product) {
+        List<ResponseProductDto.ReviewDto> reviewDtos = product.getReviews().stream()
+                .map(review -> {
+                    List<ResponseProductDto.ReviewDto.ReviewImageDto> reviewImageDtos = review.getReviewImages().stream()
+                            .map(reviewImage -> new ResponseProductDto.ReviewDto.ReviewImageDto(reviewImage.getStoreFileName()))
+                            .collect(Collectors.toList());
+
+                    return new ResponseProductDto.ReviewDto(review.getId(), review.getMember(), review.getContent(), review.getRating(), reviewImageDtos);
+                })
+                .collect(Collectors.toList());
+        return reviewDtos;
+    }
+
+    public List<ResponseProductDto.ItemDto> itemDtoTransfer(Product product) {
+        List<ResponseProductDto.ItemDto> itemDtos = product.getItems().stream()
+                .map(item -> new ResponseProductDto.ItemDto(item.getName(), item.getPrice(), item.getStockQuantity()))
+                .collect(Collectors.toList());
+        return itemDtos;
+    }
+
+    public List<ResponseProductDto.ProductImageDto> imageDtoTransfer(Product product) {
+        List<ResponseProductDto.ProductImageDto> imageDtos = product.getProductImages().stream()
+                .map(image -> new ResponseProductDto.ProductImageDto(image.getStoreFileName()))
+                .collect(Collectors.toList());
+        return imageDtos;
     }
 }

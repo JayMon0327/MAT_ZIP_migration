@@ -2,6 +2,7 @@ package SHOP.MAT_ZIP_migration.dto.product;
 
 import SHOP.MAT_ZIP_migration.domain.Member;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,13 +11,15 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ResponseProductDto {
     private Long id;
     private String title;
     private String description;
     private Member member;
     private List<ItemDto> items;
-    private List<ImageDto> images;
+    private List<ProductImageDto> images;
+    private List<ReviewDto> reviews;
 
     @Data
     @AllArgsConstructor
@@ -30,8 +33,26 @@ public class ResponseProductDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class ImageDto {
+    public static class ProductImageDto {
         private String storeFileName;
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ReviewDto {
+        private Long id;
+        private Member member;
+        private String content;
+        private int rating;
+        private List<ReviewImageDto> images;
+
+        @Data
+        @AllArgsConstructor
+        @NoArgsConstructor
+        public static class ReviewImageDto {
+            private String storeFileName;
+        }
     }
 }
 

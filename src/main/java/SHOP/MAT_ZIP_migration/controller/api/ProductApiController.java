@@ -2,6 +2,7 @@ package SHOP.MAT_ZIP_migration.controller.api;
 
 import SHOP.MAT_ZIP_migration.config.auth.PrincipalDetails;
 import SHOP.MAT_ZIP_migration.dto.ResponseDto;
+import SHOP.MAT_ZIP_migration.dto.RequestReviewDto;
 import SHOP.MAT_ZIP_migration.dto.product.ProductAndItemDto;
 import SHOP.MAT_ZIP_migration.service.FileStore;
 import SHOP.MAT_ZIP_migration.service.ProductService;
@@ -31,15 +32,15 @@ public class ProductApiController {
       *  추후 이미지 파일을 S3로 전송하는 로직으로 변경해서 REST API를 유지할 것임
       */
     @PostMapping("/product")
-    public ResponseDto<Integer> save(@Valid @ModelAttribute ProductAndItemDto productAndItemDto,
+    public ResponseDto<Integer> save(@Valid @ModelAttribute ProductAndItemDto dto,
                                      @AuthenticationPrincipal PrincipalDetails principal) throws IOException {
-        Long productId = productService.saveProductAndItem(productAndItemDto, principal.getMember());
+        Long productId = productService.saveProductAndItem(dto, principal.getMember());
         return new ResponseDto<Integer>(HttpStatus.OK.value(),1, productId);
     }
 
     @PutMapping("/product/{id}")
-    public ResponseDto<Integer> update(@PathVariable Long id, @Valid @ModelAttribute ProductAndItemDto productAndItemDto) throws IOException {
-        Long productId = productService.updateProductAndItem(id, productAndItemDto);
+    public ResponseDto<Integer> update(@PathVariable Long id, @Valid @ModelAttribute ProductAndItemDto dto) throws IOException {
+        Long productId = productService.updateProductAndItem(id, dto);
         return new ResponseDto<Integer>(HttpStatus.OK.value(),1, productId);
     }
 
