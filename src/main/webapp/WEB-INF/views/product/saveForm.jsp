@@ -2,7 +2,7 @@
 
 <%@ include file = "../layout/header.jsp" %>
 
-          <form id="product-form" enctype="multipart/form-data">
+          <form id="save-form" enctype="multipart/form-data">
               <!-- 상품 정보 -->
               <div class="form-group">
                   <label for="productDto.title">상품명</label>
@@ -31,8 +31,8 @@
                   <input type="number" class="form-control" id="itemDtos[0].stock" name="itemDtos[0].stock" required>
               </div>
 
-              <button type="button" id="add-item">아이템 추가</button>
           </form>
+              <button type="button" id="add-item">아이템 추가</button>
           <button class="btn btn-primary w-100 py-2" id="btn-save">상품 등록</button>
 
 <script>
