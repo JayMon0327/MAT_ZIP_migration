@@ -2,16 +2,15 @@
 
 <%@ include file = "layout/header.jsp" %>
         <div class="container">
-
         <c:forEach var="product" items="${products.content}">
-          <div class="card m-2">
-            <div class="card-body">
-                <h4 class="card-title">${product.title}</h4>
-                <a href="/product/${product.id}" class="btn btn-primary">상세보기</a>
-            </div>
-        </div>
-        </div>
-        </c:forEach>
+                  <div class="card m-2">
+                    <div class="card-body">
+                        <h4 class="card-title">${product.title}</h4>
+                        <a href="/product/${product.id}" class="btn btn-primary">상세보기</a>
+                    </div>
+                </div>
+                </div>
+                </c:forEach>
 
         <ul class="pagination justify-content-center">
         <c:choose>
@@ -42,4 +41,3 @@
           </ul>
 
 <%@ include file = "layout/footer.jsp" %>
-

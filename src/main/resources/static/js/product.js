@@ -26,7 +26,7 @@ let index = {
 				dataType: "json"
 			}).done(function(resp){
 				alert("상품 등록이 완료되었습니다.");
-				location.href = "/";
+				location.href = "/product/" + id;
 			}).fail(function(error){
 				alert(JSON.stringify(error));
 			});
@@ -60,12 +60,13 @@ let index = {
 			$.ajax({
 				type: "PUT",
 				url: "/api/product/"+id,
-				data: JSON.stringify(data),
-				contentType: "application/json; charset=utf-8",
+				data: formData,
+				processData: false, // 데이터를 query string으로 변환하지 않음 -> s3 배포시 해제
+                contentType: false, // multipart/form-data로 설정 -> s3 배포시 해제
 				dataType: "json"
 			}).done(function(resp){
 				alert("상품 수정이 완료되었습니다.");
-				location.href = "/";
+				location.href = "/product/" + id;
 			}).fail(function(error){
 				alert(JSON.stringify(error));
 			});
