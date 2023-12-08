@@ -35,15 +35,6 @@
               <button type="button" id="add-item">아이템 추가</button>
           <button class="btn btn-primary w-100 py-2" id="btn-save">상품 등록</button>
 
-<script>
-$('.summernote').summernote({
-  placeholder: 'Summernote for Bootstrap 5',
-  tabsize: 2,
-  height: 400,
-  lang: 'ko-KR'
-});
-</script>
-
 <script src="/js/item.js"></script>
 <script src="/js/product.js"></script>
 <%@ include file = "../layout/footer.jsp" %>
