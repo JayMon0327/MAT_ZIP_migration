@@ -36,17 +36,16 @@ public class ProductFileStore implements FileStore<ProductImage>{
     }
 
     @Override
-    public String getFullPath(String filename) {
-        return fileDir + filename;
-    }
-
-    @Override
-    public Resource getUrlResource(String fullPath) {
+    public Resource getUrlResource(String filename) {
         try {
-            return new UrlResource(fullPath);
+            return new UrlResource(getFullPath(filename));
         } catch (MalformedURLException e) {
             throw new CustomException(CustomErrorCode.FILE_URL_ERROR);
         }
+    }
+
+    private String getFullPath(String filename) {
+        return fileDir + filename;
     }
 
     private ProductImage storeProductFile(MultipartFile multipartFile){

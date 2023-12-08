@@ -32,13 +32,12 @@ public class ReviewFileStore implements FileStore<ReviewImage>{
     }
 
     @Override
-    public String getFullPath(String filename) {
+    public Resource getUrlResource(String fullPath) {
         return null;
     }
 
-    @Override
-    public Resource getUrlResource(String fullPath) {
-        return null;
+    private String getFullPath(String filename) {
+        return fileDir + filename;
     }
 
     private ReviewImage storeFile(MultipartFile multipartFile) {

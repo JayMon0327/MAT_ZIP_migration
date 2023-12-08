@@ -17,10 +17,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
         <script type="text/javascript" src="//code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        <script src="/js/summernote/summernote-lite.js"></script>
-        <script src="/js/summernote/lang/summernote-ko-KR.js"></script>
-        <link rel="stylesheet" href="/css/summernote/summernote-lite.css">
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <title>Title</title>
 </head>

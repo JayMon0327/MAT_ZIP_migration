@@ -6,7 +6,5 @@ import java.util.List;
 
 public interface FileStore<T> {
     List<T> storeFiles(List<MultipartFile> multipartFiles);
-    String getFullPath(String filename);
-
     Resource getUrlResource(String fullPath);
 }
