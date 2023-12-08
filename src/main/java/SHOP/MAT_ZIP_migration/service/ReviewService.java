@@ -7,7 +7,8 @@ import SHOP.MAT_ZIP_migration.domain.ReviewImage;
 import SHOP.MAT_ZIP_migration.dto.RequestReviewDto;
 import SHOP.MAT_ZIP_migration.repository.ProductRepository;
 import SHOP.MAT_ZIP_migration.repository.ReviewRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,13 +16,19 @@ import java.io.IOException;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class ReviewService {
 
     private final ProductRepository productRepository;
-    private final FileStore fileStore;
     private final ReviewRepository reviewRepository;
+    private final FileStore<ReviewImage> fileStore;
+
+    public ReviewService(ProductRepository productRepository, ReviewRepository reviewRepository,
+                         @Qualifier("reviewFileStore") FileStore<ReviewImage> fileStore) {
+        this.productRepository = productRepository;
+        this.reviewRepository = reviewRepository;
+        this.fileStore = fileStore;
+    }
 
     @Transactional
     public void saveReview(RequestReviewDto reviewDto, Member member) throws IOException {
@@ -32,7 +39,7 @@ public class ReviewService {
                 .content(reviewDto.getContent())
                 .rating(reviewDto.getRating())
                 .build();
-        List<ReviewImage> reviewImages = fileStore.storeReviewFiles(reviewDto.getImageFiles());
+        List<ReviewImage> reviewImages = fileStore.storeFiles(reviewDto.getImageFiles());
         reviewImages.forEach(review::addImage);
         reviewRepository.save(review);
     }

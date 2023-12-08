@@ -9,8 +9,8 @@ import SHOP.MAT_ZIP_migration.dto.product.ResponseProductDto;
 import SHOP.MAT_ZIP_migration.repository.ItemRepository;
 import SHOP.MAT_ZIP_migration.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,15 +21,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 @Transactional(readOnly = true)
 public class ProductService {
 
     private final ProductRepository productRepository;
     private final ItemRepository itemRepository;
-    private final FileStore fileStore;
+    private final FileStore<ProductImage> fileStore;
     private final ItemService itemService;
+
+    public ProductService(ProductRepository productRepository, ItemRepository itemRepository,
+                          @Qualifier("productFileStore") FileStore<ProductImage> fileStore, ItemService itemService) {
+        this.productRepository = productRepository;
+        this.itemRepository = itemRepository;
+        this.fileStore = fileStore;
+        this.itemService = itemService;
+    }
 
     @Transactional
     public Long saveProductAndItem(ProductAndItemDto dto, Member member) throws IOException {
@@ -58,7 +65,7 @@ public class ProductService {
                 .description(dto.getDescription())
                 .build();
 
-        List<ProductImage> productImages = fileStore.storeProductFiles(dto.getImageFiles());
+        List<ProductImage> productImages = fileStore.storeFiles(dto.getImageFiles());
         productImages.forEach(product::addImage);
         productRepository.save(product);
         return product.getId();
@@ -72,7 +79,7 @@ public class ProductService {
         savedProduct.updateProduct(requestProductDto.getTitle(), requestProductDto.getDescription());
 
         savedProduct.clearImages();
-        List<ProductImage> productImages = fileStore.storeProductFiles(requestProductDto.getImageFiles());
+        List<ProductImage> productImages = fileStore.storeFiles(requestProductDto.getImageFiles());
         productImages.forEach(savedProduct::addImage);
 
         return savedProduct.getId();

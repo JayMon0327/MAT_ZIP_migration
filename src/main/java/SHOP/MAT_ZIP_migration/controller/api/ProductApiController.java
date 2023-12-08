@@ -2,7 +2,6 @@ package SHOP.MAT_ZIP_migration.controller.api;
 
 import SHOP.MAT_ZIP_migration.config.auth.PrincipalDetails;
 import SHOP.MAT_ZIP_migration.dto.ResponseDto;
-import SHOP.MAT_ZIP_migration.dto.RequestReviewDto;
 import SHOP.MAT_ZIP_migration.dto.product.ProductAndItemDto;
 import SHOP.MAT_ZIP_migration.service.FileStore;
 import SHOP.MAT_ZIP_migration.service.ProductService;
@@ -19,8 +18,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 @RestController
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 @RequestMapping("/api")
 public class ProductApiController {
 
