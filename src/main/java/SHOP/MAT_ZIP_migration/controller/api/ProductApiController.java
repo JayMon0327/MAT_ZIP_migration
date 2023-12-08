@@ -9,13 +9,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 
 @RestController
 @Slf4j
@@ -32,13 +29,13 @@ public class ProductApiController {
      */
     @PostMapping("/product")
     public ResponseDto<Integer> save(@Valid @ModelAttribute ProductAndItemDto dto,
-                                     @AuthenticationPrincipal PrincipalDetails principal) throws IOException {
+                                     @AuthenticationPrincipal PrincipalDetails principal){
         Long productId = productService.saveProductAndItem(dto, principal.getMember());
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1, productId);
     }
 
     @PutMapping("/product/{id}")
-    public ResponseDto<Integer> update(@PathVariable Long id, @Valid @ModelAttribute ProductAndItemDto dto) throws IOException {
+    public ResponseDto<Integer> update(@PathVariable Long id, @Valid @ModelAttribute ProductAndItemDto dto){
         Long productId = productService.updateProductAndItem(id, dto);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1, productId);
     }
@@ -50,7 +47,7 @@ public class ProductApiController {
     }
 
     @GetMapping("/images/{filename}")
-    public Resource viewImage(@PathVariable String filename) throws MalformedURLException {
-        return new UrlResource("file:" + fileStore.getFullPath(filename));
+    public Resource viewImage(@PathVariable String filename) {
+        return fileStore.getUrlResource(fileStore.getFullPath(filename));
     }
 }

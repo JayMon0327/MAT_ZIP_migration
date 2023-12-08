@@ -15,8 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +37,7 @@ public class ProductService {
     }
 
     @Transactional
-    public Long saveProductAndItem(ProductAndItemDto dto, Member member) throws IOException {
+    public Long saveProductAndItem(ProductAndItemDto dto, Member member){
         Long productId = saveProduct(dto.getProductDto(), member);
         for (RequestItemDto requestItemDto : dto.getItemDtos()) {
             Item item = itemService.saveItem(productId, requestItemDto);
@@ -49,7 +47,7 @@ public class ProductService {
     }
 
     @Transactional
-    public Long updateProductAndItem(Long id, ProductAndItemDto dto) throws IOException {
+    public Long updateProductAndItem(Long id, ProductAndItemDto dto){
         Long productId = updateProduct(id, dto.getProductDto());
         for (RequestItemDto requestItemDto : dto.getItemDtos()) {
             itemService.saveItem(productId, requestItemDto);
@@ -58,7 +56,7 @@ public class ProductService {
     }
 
     @Transactional
-    public Long saveProduct(RequestProductDto dto, Member member) throws IOException {
+    public Long saveProduct(RequestProductDto dto, Member member){
         Product product = Product.builder()
                 .member(member)
                 .title(dto.getTitle())
@@ -72,7 +70,7 @@ public class ProductService {
     }
 
     @Transactional
-    public Long updateProduct(Long id, RequestProductDto requestProductDto) throws IOException {
+    public Long updateProduct(Long id, RequestProductDto requestProductDto){
         Product savedProduct = productRepository.findById(id).orElseThrow(() -> {
             return new IllegalArgumentException("상품 찾기 실패");
         });

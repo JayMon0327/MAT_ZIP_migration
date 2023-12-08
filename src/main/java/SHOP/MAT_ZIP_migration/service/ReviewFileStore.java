@@ -1,7 +1,10 @@
 package SHOP.MAT_ZIP_migration.service;
 
 import SHOP.MAT_ZIP_migration.domain.ReviewImage;
+import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
+import SHOP.MAT_ZIP_migration.exception.CustomException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,7 +21,7 @@ public class ReviewFileStore implements FileStore<ReviewImage>{
     private String fileDir;
 
     @Override
-    public List<ReviewImage> storeFiles(List<MultipartFile> multipartFiles) throws IOException  {
+    public List<ReviewImage> storeFiles(List<MultipartFile> multipartFiles){
         List<ReviewImage> storeFileResult = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
             if (!multipartFile.isEmpty()) {
@@ -30,13 +33,22 @@ public class ReviewFileStore implements FileStore<ReviewImage>{
 
     @Override
     public String getFullPath(String filename) {
-        return fileDir + filename;
+        return null;
     }
 
-    private ReviewImage storeFile(MultipartFile multipartFile) throws IOException {
+    @Override
+    public Resource getUrlResource(String fullPath) {
+        return null;
+    }
+
+    private ReviewImage storeFile(MultipartFile multipartFile) {
         String uploadFileName = multipartFile.getOriginalFilename();
         String storeFileName = createStoreFileName(uploadFileName);
-        multipartFile.transferTo(new File(getFullPath(storeFileName)));
+        try {
+            multipartFile.transferTo(new File(getFullPath(storeFileName)));
+        } catch (IOException e) {
+            throw new CustomException(CustomErrorCode.FILE_PROCESSING_ERROR);
+        }
 
         ReviewImage reviewImage = new ReviewImage();
         reviewImage.addFile(uploadFileName, storeFileName, getFullPath(storeFileName));

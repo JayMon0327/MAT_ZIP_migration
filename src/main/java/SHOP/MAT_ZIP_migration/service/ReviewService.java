@@ -7,12 +7,10 @@ import SHOP.MAT_ZIP_migration.domain.ReviewImage;
 import SHOP.MAT_ZIP_migration.dto.RequestReviewDto;
 import SHOP.MAT_ZIP_migration.repository.ProductRepository;
 import SHOP.MAT_ZIP_migration.repository.ReviewRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -31,7 +29,7 @@ public class ReviewService {
     }
 
     @Transactional
-    public void saveReview(RequestReviewDto reviewDto, Member member) throws IOException {
+    public void saveReview(RequestReviewDto reviewDto, Member member){
         Product product = productRepository.findById(reviewDto.getProductId()).orElseThrow();
         Review review = Review.builder()
                 .product(product)
