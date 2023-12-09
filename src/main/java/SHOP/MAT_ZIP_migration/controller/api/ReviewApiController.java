@@ -27,7 +27,6 @@ public class ReviewApiController {
     public ResponseDto<Integer> replySave(@Valid @ModelAttribute RequestReviewDto dto,
                                           @AuthenticationPrincipal PrincipalDetails principal) {
         reviewService.saveReview(dto, principal.getMember());
-        log.info("댓글작성요청");
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 }

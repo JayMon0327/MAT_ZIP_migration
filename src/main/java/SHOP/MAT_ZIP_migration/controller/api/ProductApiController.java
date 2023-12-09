@@ -48,6 +48,7 @@ public class ProductApiController {
 
     @GetMapping("/images/{filename}")
     public Resource viewImage(@PathVariable String filename) {
+        log.info("viewImage" + filename);
         return fileStore.getUrlResource(filename);
     }
 }

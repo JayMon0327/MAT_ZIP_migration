@@ -3,6 +3,7 @@ package SHOP.MAT_ZIP_migration.service;
 import SHOP.MAT_ZIP_migration.domain.ProductImage;
 import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
 import SHOP.MAT_ZIP_migration.exception.CustomException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
@@ -19,6 +20,7 @@ import java.util.UUID;
 
 @Primary
 @Component
+@Slf4j
 public class ProductFileStore implements FileStore<ProductImage>{
 
     @Value("${file.dir}")
@@ -38,7 +40,7 @@ public class ProductFileStore implements FileStore<ProductImage>{
     @Override
     public Resource getUrlResource(String filename) {
         try {
-            return new UrlResource(getFullPath(filename));
+            return new UrlResource("file:"+ getFullPath(filename));
         } catch (MalformedURLException e) {
             throw new CustomException(CustomErrorCode.FILE_URL_ERROR);
         }

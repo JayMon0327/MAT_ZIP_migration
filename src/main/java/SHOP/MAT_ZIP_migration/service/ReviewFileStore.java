@@ -3,8 +3,10 @@ package SHOP.MAT_ZIP_migration.service;
 import SHOP.MAT_ZIP_migration.domain.ReviewImage;
 import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
 import SHOP.MAT_ZIP_migration.exception.CustomException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
+@Slf4j
 public class ReviewFileStore implements FileStore<ReviewImage>{
 
     @Value("${file.dir}")
@@ -25,14 +28,14 @@ public class ReviewFileStore implements FileStore<ReviewImage>{
         List<ReviewImage> storeFileResult = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
             if (!multipartFile.isEmpty()) {
-                storeFileResult.add(storeFile(multipartFile));
+                storeFileResult.add(storeReviewFile(multipartFile));
             }
         }
         return storeFileResult;
     }
 
     @Override
-    public Resource getUrlResource(String fullPath) {
+    public Resource getUrlResource(String filename) {
         return null;
     }
 
@@ -40,7 +43,7 @@ public class ReviewFileStore implements FileStore<ReviewImage>{
         return fileDir + filename;
     }
 
-    private ReviewImage storeFile(MultipartFile multipartFile) {
+    private ReviewImage storeReviewFile(MultipartFile multipartFile) {
         String uploadFileName = multipartFile.getOriginalFilename();
         String storeFileName = createStoreFileName(uploadFileName);
         try {
