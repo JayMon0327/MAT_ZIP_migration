@@ -3,12 +3,10 @@ package SHOP.MAT_ZIP_migration.service;
 import SHOP.MAT_ZIP_migration.domain.Member;
 import SHOP.MAT_ZIP_migration.domain.Product;
 import SHOP.MAT_ZIP_migration.domain.Review;
-import SHOP.MAT_ZIP_migration.dto.RequestReviewDto;
+import SHOP.MAT_ZIP_migration.dto.product.RequestReviewDto;
 import SHOP.MAT_ZIP_migration.repository.MemberRepository;
 import SHOP.MAT_ZIP_migration.repository.ProductRepository;
 import SHOP.MAT_ZIP_migration.repository.ReviewRepository;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 

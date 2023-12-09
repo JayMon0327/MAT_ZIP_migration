@@ -1,6 +1,7 @@
 package SHOP.MAT_ZIP_migration.dto.product;
 
 import SHOP.MAT_ZIP_migration.domain.Member;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,8 +23,10 @@ public class RequestProductDto {
     private String title;
 
     @NotBlank(message = "내용은 빈칸일 수 없습니다.")
+    @Max(value = 1000)
     private String description;
 
+    @NotBlank(message = "미로그인 사용자 접근 오류")
     private Member member;
 
     @Builder.Default

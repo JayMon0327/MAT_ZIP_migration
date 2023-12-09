@@ -2,7 +2,7 @@ package SHOP.MAT_ZIP_migration.service;
 
 import SHOP.MAT_ZIP_migration.domain.Member;
 import SHOP.MAT_ZIP_migration.domain.Product;
-import SHOP.MAT_ZIP_migration.dto.product.ProductAndItemDto;
+import SHOP.MAT_ZIP_migration.dto.product.RequestProductAndItemDto;
 import SHOP.MAT_ZIP_migration.dto.product.RequestItemDto;
 import SHOP.MAT_ZIP_migration.dto.product.RequestProductDto;
 import SHOP.MAT_ZIP_migration.repository.ItemRepository;
@@ -38,7 +38,7 @@ class ProductServiceTest {
     private Member member;
     private RequestProductDto productDto;
     private List<RequestItemDto> itemDtos;
-    private ProductAndItemDto productAndItemDto;
+    private RequestProductAndItemDto requestProductAndItemDto;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -59,9 +59,9 @@ class ProductServiceTest {
         itemDtos.add(new RequestItemDto("Test Item 1", 10000, 10));
         itemDtos.add(new RequestItemDto("Test Item 2", 20000, 5));
 
-        productAndItemDto = new ProductAndItemDto();
-        productAndItemDto.setProductDto(productDto);
-        productAndItemDto.setItemDtos(itemDtos);
+        requestProductAndItemDto = new RequestProductAndItemDto();
+        requestProductAndItemDto.setProductDto(productDto);
+        requestProductAndItemDto.setItemDtos(itemDtos);
     }
 
     @DisplayName("상품 등록 테스트")
@@ -104,7 +104,7 @@ class ProductServiceTest {
     @DisplayName("상품과 아이템 등록 테스트")
     @Test
     void saveProductWithItemsTest() throws IOException {
-        Long productId = productService.saveProductAndItem(productAndItemDto, member);
+        Long productId = productService.saveProductAndItem(requestProductAndItemDto, member);
 
         Product savedProduct = productRepository.findById(productId).orElseThrow();
 
@@ -119,7 +119,7 @@ class ProductServiceTest {
     @Test
     void updateProductWithItemsTest() throws IOException {
         Long savedProductId = productService.saveProduct(productDto, member);
-        productService.updateProductAndItem(savedProductId, productAndItemDto);
+        productService.updateProductAndItem(savedProductId, requestProductAndItemDto);
 
         Product resultProduct = productRepository.findById(savedProductId).orElseThrow();
 

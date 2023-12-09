@@ -35,7 +35,7 @@ public class Review extends DateBaseEntity {
     private Member member;
 
     private String content;
-    private int rating;
+    private Integer rating;
 
     @Builder.Default
     @OneToMany(mappedBy = "review", cascade = CascadeType.PERSIST, orphanRemoval = true)

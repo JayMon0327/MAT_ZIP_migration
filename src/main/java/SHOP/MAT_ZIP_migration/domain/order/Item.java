@@ -25,8 +25,8 @@ public class Item {
     private Long id;
 
     private String name;
-    private int price;
-    private int stockQuantity;
+    private Integer price;
+    private Integer stockQuantity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
@@ -45,7 +45,7 @@ public class Item {
      *
      * @param quantity
      */
-    public void addStock(int quantity) {
+    public void addStock(Integer quantity) {
         this.stockQuantity += quantity;
     }
 
@@ -54,7 +54,7 @@ public class Item {
      *
      * @param quantity
      */
-    public void removeStock(int quantity) {
+    public void removeStock(Integer quantity) {
         int result = this.stockQuantity - quantity;
         if (result < 0) {
             throw new NotEnoughStockException("재고가 없습니다.");
@@ -65,7 +65,7 @@ public class Item {
     /**
      * 상품 수정
      */
-    public void change(String name, int price, int stockQuantity) {
+    public void change(String name, Integer price, Integer stockQuantity) {
         this.name = name;
         this.price = price;
         this.stockQuantity = stockQuantity;

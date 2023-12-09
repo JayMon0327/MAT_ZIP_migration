@@ -23,6 +23,10 @@ import java.util.UUID;
 @Slf4j
 public class ProductFileStore implements FileStore<ProductImage>{
 
+    private static final String pathHeader = "file:";
+    private static final String NameCriterion = ".";
+    private static final int NameRange = 1;
+
     @Value("${file.dir}")
     private String fileDir;
 
@@ -40,7 +44,7 @@ public class ProductFileStore implements FileStore<ProductImage>{
     @Override
     public Resource getUrlResource(String filename) {
         try {
-            return new UrlResource("file:"+ getFullPath(filename));
+            return new UrlResource(pathHeader + getFullPath(filename));
         } catch (MalformedURLException e) {
             throw new CustomException(CustomErrorCode.FILE_URL_ERROR);
         }
@@ -67,12 +71,12 @@ public class ProductFileStore implements FileStore<ProductImage>{
     private String createStoreFileName(String originalFilename) {
         String ext = extracted(originalFilename);
         String uuid = UUID.randomUUID().toString();
-        return uuid + "." + ext;
+        return uuid + NameCriterion + ext;
     }
 
     private String extracted(String originalFilename) {
-        int pos = originalFilename.lastIndexOf(".");
-        return originalFilename.substring(pos + 1);
+        int pos = originalFilename.lastIndexOf(NameCriterion);
+        return originalFilename.substring(pos + NameRange);
     }
 }
 

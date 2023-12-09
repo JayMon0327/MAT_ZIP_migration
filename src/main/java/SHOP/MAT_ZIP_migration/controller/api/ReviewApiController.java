@@ -1,7 +1,7 @@
 package SHOP.MAT_ZIP_migration.controller.api;
 
 import SHOP.MAT_ZIP_migration.config.auth.PrincipalDetails;
-import SHOP.MAT_ZIP_migration.dto.RequestReviewDto;
+import SHOP.MAT_ZIP_migration.dto.product.RequestReviewDto;
 import SHOP.MAT_ZIP_migration.dto.ResponseDto;
 import SHOP.MAT_ZIP_migration.service.ReviewService;
 import jakarta.validation.Valid;

@@ -2,7 +2,7 @@ package SHOP.MAT_ZIP_migration.service;
 
 import SHOP.MAT_ZIP_migration.domain.*;
 import SHOP.MAT_ZIP_migration.domain.order.Item;
-import SHOP.MAT_ZIP_migration.dto.product.ProductAndItemDto;
+import SHOP.MAT_ZIP_migration.dto.product.RequestProductAndItemDto;
 import SHOP.MAT_ZIP_migration.dto.product.RequestItemDto;
 import SHOP.MAT_ZIP_migration.dto.product.RequestProductDto;
 import SHOP.MAT_ZIP_migration.dto.product.ResponseProductDto;
@@ -37,7 +37,7 @@ public class ProductService {
     }
 
     @Transactional
-    public Long saveProductAndItem(ProductAndItemDto dto, Member member){
+    public Long saveProductAndItem(RequestProductAndItemDto dto, Member member){
         Long productId = saveProduct(dto.getProductDto(), member);
         for (RequestItemDto requestItemDto : dto.getItemDtos()) {
             Item item = itemService.saveItem(productId, requestItemDto);
@@ -47,7 +47,7 @@ public class ProductService {
     }
 
     @Transactional
-    public Long updateProductAndItem(Long id, ProductAndItemDto dto){
+    public Long updateProductAndItem(Long id, RequestProductAndItemDto dto){
         Long productId = updateProduct(id, dto.getProductDto());
         for (RequestItemDto requestItemDto : dto.getItemDtos()) {
             itemService.saveItem(productId, requestItemDto);

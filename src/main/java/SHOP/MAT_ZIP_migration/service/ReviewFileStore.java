@@ -6,7 +6,6 @@ import SHOP.MAT_ZIP_migration.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +18,9 @@ import java.util.UUID;
 @Component
 @Slf4j
 public class ReviewFileStore implements FileStore<ReviewImage>{
+
+    private static final String NameCriterion = ".";
+    private static final int NameRange = 1;
 
     @Value("${file.dir}")
     private String fileDir;
@@ -60,11 +62,11 @@ public class ReviewFileStore implements FileStore<ReviewImage>{
     private String createStoreFileName(String originalFilename) {
         String ext = extracted(originalFilename);
         String uuid = UUID.randomUUID().toString();
-        return uuid + "." + ext;
+        return uuid + NameCriterion + ext;
     }
 
     private String extracted(String originalFilename) {
-        int pos = originalFilename.lastIndexOf(".");
-        return originalFilename.substring(pos + 1);
+        int pos = originalFilename.lastIndexOf(NameCriterion);
+        return originalFilename.substring(pos + NameRange);
     }
 }

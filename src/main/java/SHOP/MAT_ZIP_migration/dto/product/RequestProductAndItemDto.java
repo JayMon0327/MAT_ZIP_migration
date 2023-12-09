@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductAndItemDto {
+public class RequestProductAndItemDto {
     private RequestProductDto productDto;
     private List<RequestItemDto> itemDtos;
 }

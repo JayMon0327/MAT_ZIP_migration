@@ -34,6 +34,6 @@ public class OrderItem {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    private int orderPrice;
-    private int count;
+    private Integer orderPrice;
+    private Integer count;
 }

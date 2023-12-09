@@ -17,10 +17,12 @@ public class RequestItemDto {
     @Length(min = 5, max = 20, message = "상품이름은 5자 이상 20자 이하 제한입니다.")
     private String name;
 
+    @NotBlank(message = "상품 가격을 입력해주세요.")
     @Min(value = 1000, message = "가격은 1000원 이상이어야 합니다.")
     @Max(value = 1000000, message = "가격은 1000000원 이하이어야 합니다.")
     private int price;
 
+    @NotBlank(message = "상품 수량을 입력해주세요.")
     @Min(value = 1, message = "수량은 1개 이상이어야 합니다.")
     @Max(value = 100, message = "수량은 100개 이하이어야 합니다.")
     private int stock;

@@ -27,5 +27,5 @@ public class Payment extends CreateDateBaseEntity {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    private int amount;
+    private Integer amount;
 }

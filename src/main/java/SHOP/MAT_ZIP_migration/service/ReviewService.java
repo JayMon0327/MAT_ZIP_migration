@@ -4,7 +4,7 @@ import SHOP.MAT_ZIP_migration.domain.Member;
 import SHOP.MAT_ZIP_migration.domain.Product;
 import SHOP.MAT_ZIP_migration.domain.Review;
 import SHOP.MAT_ZIP_migration.domain.ReviewImage;
-import SHOP.MAT_ZIP_migration.dto.RequestReviewDto;
+import SHOP.MAT_ZIP_migration.dto.product.RequestReviewDto;
 import SHOP.MAT_ZIP_migration.repository.ProductRepository;
 import SHOP.MAT_ZIP_migration.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Qualifier;

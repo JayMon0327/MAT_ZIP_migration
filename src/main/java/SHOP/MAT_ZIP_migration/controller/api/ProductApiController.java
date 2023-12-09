@@ -2,7 +2,7 @@ package SHOP.MAT_ZIP_migration.controller.api;
 
 import SHOP.MAT_ZIP_migration.config.auth.PrincipalDetails;
 import SHOP.MAT_ZIP_migration.dto.ResponseDto;
-import SHOP.MAT_ZIP_migration.dto.product.ProductAndItemDto;
+import SHOP.MAT_ZIP_migration.dto.product.RequestProductAndItemDto;
 import SHOP.MAT_ZIP_migration.service.FileStore;
 import SHOP.MAT_ZIP_migration.service.ProductService;
 import jakarta.validation.Valid;
@@ -28,14 +28,14 @@ public class ProductApiController {
      * 추후 이미지 파일을 S3로 전송하는 로직으로 변경해서 REST API를 유지할 것임
      */
     @PostMapping("/product")
-    public ResponseDto<Integer> save(@Valid @ModelAttribute ProductAndItemDto dto,
+    public ResponseDto<Integer> save(@Valid @ModelAttribute RequestProductAndItemDto dto,
                                      @AuthenticationPrincipal PrincipalDetails principal){
         Long productId = productService.saveProductAndItem(dto, principal.getMember());
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1, productId);
     }
 
     @PutMapping("/product/{id}")
-    public ResponseDto<Integer> update(@PathVariable Long id, @Valid @ModelAttribute ProductAndItemDto dto){
+    public ResponseDto<Integer> update(@PathVariable Long id, @Valid @ModelAttribute RequestProductAndItemDto dto){
         Long productId = productService.updateProductAndItem(id, dto);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1, productId);
     }
@@ -48,7 +48,6 @@ public class ProductApiController {
 
     @GetMapping("/images/{filename}")
     public Resource viewImage(@PathVariable String filename) {
-        log.info("viewImage" + filename);
         return fileStore.getUrlResource(filename);
     }
 }

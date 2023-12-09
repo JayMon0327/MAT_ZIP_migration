@@ -39,7 +39,7 @@ public class Member extends DateBaseEntity {
     private String providerId;
 
     @Column(columnDefinition = "integer default 0", nullable = false)
-    private int point;
+    private Integer point;
 
     @Builder.Default
     @OneToMany(mappedBy = "member")
