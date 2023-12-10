@@ -23,15 +23,16 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
-        OAuth2UserInfo oAuth2UserInfo = null;
         String registrationId = userRequest.getClientRegistration().getRegistrationId(); //provider
-        return processOAuth2User(registrationId, oAuth2User, oAuth2UserInfo);
+        return processOAuth2User(registrationId, oAuth2User);
     }
 
     /**
      * 위에서 받은 userRequest정보에 userRequest.getAttibutes를 이용해서 로그인 요청과 자동회원가입을 한다.
      */
-    private OAuth2User processOAuth2User(String registrationId, OAuth2User oAuth2User, OAuth2UserInfo oAuth2UserInfo) {
+    private OAuth2User processOAuth2User(String registrationId, OAuth2User oAuth2User) {
+        OAuth2UserInfo oAuth2UserInfo = null;
+
         if (registrationId.equals("google")) {
             oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
         }

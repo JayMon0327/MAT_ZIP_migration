@@ -1,5 +1,6 @@
 package SHOP.MAT_ZIP_migration.controller.api;
 
+import SHOP.MAT_ZIP_migration.config.auth.PrincipalDetails;
 import SHOP.MAT_ZIP_migration.dto.member.JoinMemberDto;
 import SHOP.MAT_ZIP_migration.dto.ResponseDto;
 import SHOP.MAT_ZIP_migration.dto.member.UpdateMemberDto;
@@ -8,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;

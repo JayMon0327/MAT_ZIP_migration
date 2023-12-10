@@ -38,7 +38,6 @@ public class Member extends DateBaseEntity {
     private String provider;
     private String providerId;
 
-    @Column(columnDefinition = "integer default 0", nullable = false)
     private Integer point;
 
     @Builder.Default

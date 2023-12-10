@@ -12,18 +12,19 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 public class JoinMemberDto {
 
-    @NotBlank(message = "아이디는 빈칸일 수 없습니다.")
+    @NotBlank
+    @Length(min = 4, max = 20)
     private String username;
 
-    @NotBlank(message = "비밀번호는 빈칸일 수 없습니다.")
-    @Length(min = 10, max = 20, message = "비밀번호는 10자이상 20자이하입니다.")
+    @NotBlank
+    @Length(min = 10, max = 20)
     private String password;
 
-    @NotBlank(message = "비밀번호는 빈칸일 수 없습니다.")
-    @Length(min = 10, max = 20, message = "비밀번호는 10자이상 20자이하입니다.")
+    @NotBlank
+    @Length(min = 10, max = 20)
     private String passwordCheck;
 
     @Email
-    @NotBlank(message = "이메일은 빈칸일 수 없습니다.")
+    @NotBlank
     private String email;
 }

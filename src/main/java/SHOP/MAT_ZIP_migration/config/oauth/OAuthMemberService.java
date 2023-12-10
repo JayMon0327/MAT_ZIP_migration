@@ -15,6 +15,9 @@ public class OAuthMemberService {
 
     private final MemberRepository memberRepository;
 
+    private static final String userNamingWord = "_";
+    private static final int defaultPoint = 0;
+
     public Member SignUpOAuth2(OAuth2UserInfo oAuth2UserInfo) {
         Optional<Member> userProvider = memberRepository.findByProviderAndProviderId(oAuth2UserInfo.getProvider(),
                 oAuth2UserInfo.getProviderId());
@@ -25,8 +28,9 @@ public class OAuthMemberService {
             return memberRepository.save(member);
         } else {
             Member member = Member.builder()
-                    .username(oAuth2UserInfo.getProvider() + "_" + oAuth2UserInfo.getProviderId())
+                    .username(oAuth2UserInfo.getProvider() + userNamingWord + oAuth2UserInfo.getProviderId())
                     .email(oAuth2UserInfo.getEmail())
+                    .point(defaultPoint)
                     .role(Role.USER)
                     .provider(oAuth2UserInfo.getProvider())
                     .providerId(oAuth2UserInfo.getProviderId())
