@@ -1,8 +1,10 @@
 package SHOP.MAT_ZIP_migration.dto.product;
 
 import SHOP.MAT_ZIP_migration.domain.Member;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,15 +20,18 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class RequestProductDto {
-    @NotBlank(message = "제목은 빈칸일 수 없습니다.")
-    @Length(min = 10, max = 30, message = "제목은 10자이상 30자 미만입니다.")
+
+    @NotBlank(message = "{title.notBlank}")
+    @Length(min = 10, max = 30, message = "{title.length}")
     private String title;
 
-    @NotBlank(message = "내용은 빈칸일 수 없습니다.")
-    @Max(value = 1000)
+    @NotBlank(message = "{content.notBlank}")
+    @Length(min = 10, message = "{content.length}")
+    @Length(max = 1000, message = "{content.length}")
     private String description;
 
-    @NotBlank(message = "미로그인 사용자 접근 오류")
+    @NotNull(message = "{member.notNull}")
+    @Valid
     private Member member;
 
     @Builder.Default

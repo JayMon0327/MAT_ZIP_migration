@@ -3,6 +3,7 @@ package SHOP.MAT_ZIP_migration.dto.product;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,18 +16,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RequestReviewDto {
-    @NotBlank(message = "미로그인 사용자 접근오류")
+    @NotNull(message = "{member.notNull}")
     private Long memberId;
-    @NotBlank(message = "게시판 ID 미 전달 오류")
+    @NotNull(message = "{product.notNull}")
     private Long productId;
 
-    @NotBlank(message = "내용은 빈칸일 수 없습니다.")
+    @NotBlank(message = "{content.notBlank}")
     private String content;
 
-    @NotBlank(message = "평점 미입력 오류")
-    @Min(value = 1, message = "평점은 1점 이상입니다.")
-    @Max(value = 5, message = "평점은 5점까지 입니다.")
-    private int rating;
+    @NotNull(message = "{review.notNull}")
+    @Min(value = 1, message = "{rating.min}")
+    @Max(value = 5, message = "{rating.max}")
+    private Integer rating;
 
     private List<MultipartFile> imageFiles = new ArrayList<>();
 }

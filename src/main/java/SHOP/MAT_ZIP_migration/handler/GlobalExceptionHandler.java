@@ -1,15 +1,24 @@
 package SHOP.MAT_ZIP_migration.handler;
 
 import SHOP.MAT_ZIP_migration.exception.CustomException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.ObjectError;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
+@RequiredArgsConstructor
 @Slf4j
 public class GlobalExceptionHandler {
+
+    private final MessageSource messageSource;
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -17,6 +26,18 @@ public class GlobalExceptionHandler {
         log.info("검증에러 캐치 " + errorMessage);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
     }
+
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
+//    public ResponseEntity<List<String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+//        List<String> errorMessages = ex.getBindingResult().getAllErrors().stream()
+//                .map(ObjectError::getDefaultMessage)
+//                .map(code -> messageSource.getMessage(code, null, LocaleContextHolder.getLocale()))
+//                .collect(Collectors.toList());
+//
+//        log.info("검증 오류 발생: " + errorMessages);
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessages);
+//    }
+
 
     @ExceptionHandler(CustomException.class)
     public ResponseEntity handleCustomException(CustomException ex) {
