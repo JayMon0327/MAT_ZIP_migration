@@ -14,17 +14,17 @@ import org.hibernate.validator.constraints.Length;
 @AllArgsConstructor
 public class RequestItemDto {
 
-    @NotBlank(message = "{name.notBlank}")
-    @Length(min = 5, max = 20, message = "{name.length}")
+    @NotBlank
+    @Length(min = 5, max = 20)
     private String name;
 
-    @NotNull(message = "{price.notNull}")
-    @Min(value = 1000, message = "{price.min}")
-    @Max(value = 1000000, message = "{price.max}")
+    @NotNull
+    @Min(1000)
+    @Max(1000000)
     private Integer price;
 
-    @NotNull(message = "{stock.notNull}")
-    @Min(value = 1, message = "{stock.min}")
-    @Max(value = 100, message = "{stock.max}")
+    @NotNull
+    @Min(1)
+    @Max(100)
     private Integer stock;
 }

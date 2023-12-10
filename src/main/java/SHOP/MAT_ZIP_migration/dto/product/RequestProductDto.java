@@ -21,18 +21,13 @@ import java.util.List;
 @Builder
 public class RequestProductDto {
 
-    @NotBlank(message = "{title.notBlank}")
-    @Length(min = 10, max = 30, message = "{title.length}")
+    @NotBlank
+    @Length(min = 10, max = 30)
     private String title;
 
-    @NotBlank(message = "{content.notBlank}")
-    @Length(min = 10, message = "{content.length}")
-    @Length(max = 1000, message = "{content.length}")
+    @NotBlank
+    @Length(min = 10, max= 1000)
     private String description;
-
-    @NotNull(message = "{member.notNull}")
-    @Valid
-    private Member member;
 
     @Builder.Default
     private List<MultipartFile> imageFiles = new ArrayList<>();

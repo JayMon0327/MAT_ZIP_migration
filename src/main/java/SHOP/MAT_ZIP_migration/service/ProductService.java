@@ -124,7 +124,7 @@ public class ProductService {
 
     public List<ResponseProductDto.ItemDto> itemDtoTransfer(Product product) {
         List<ResponseProductDto.ItemDto> itemDtos = product.getItems().stream()
-                .map(item -> new ResponseProductDto.ItemDto(item.getName(), item.getPrice(), item.getStockQuantity()))
+                .map(item -> new ResponseProductDto.ItemDto(item.getName(), item.getPrice(), item.getStock()))
                 .collect(Collectors.toList());
         return itemDtos;
     }

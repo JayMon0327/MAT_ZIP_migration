@@ -16,17 +16,15 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RequestReviewDto {
-    @NotNull(message = "{member.notNull}")
-    private Long memberId;
-    @NotNull(message = "{product.notNull}")
+    @NotNull
     private Long productId;
 
-    @NotBlank(message = "{content.notBlank}")
+    @NotBlank
     private String content;
 
-    @NotNull(message = "{review.notNull}")
-    @Min(value = 1, message = "{rating.min}")
-    @Max(value = 5, message = "{rating.max}")
+    @NotNull
+    @Min(1)
+    @Max(5)
     private Integer rating;
 
     private List<MultipartFile> imageFiles = new ArrayList<>();

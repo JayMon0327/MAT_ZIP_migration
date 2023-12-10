@@ -22,18 +22,18 @@ public class ResponseProductDto {
 
     private static final String responseHeader = "응답 : ";
 
-    @NotNull(message = responseHeader+ "{product.notNull}")
+    @NotNull
     private Long id;
 
-    @NotBlank(message = responseHeader + "{title.notBlank}")
-    @Length(min = 10, max = 30, message = responseHeader + "{title.length}")
+    @NotBlank
+    @Length(min = 10, max = 30)
     private String title;
 
-    @NotBlank(message = responseHeader + "{content.notBlank}")
-    @Length(min = 10, max = 1000, message = responseHeader + "{content.length}")
+    @NotBlank
+    @Length(min = 10, max = 1000)
     private String description;
 
-    @NotNull(message =responseHeader + "{member.notNull}")
+    @NotNull
     @Valid
     private Member member;
 
@@ -45,18 +45,18 @@ public class ResponseProductDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class ItemDto {
-        @NotBlank(message = responseHeader + "{name.notBlank}")
-        @Length(min = 5, max = 20, message = "{name.length}")
+        @NotBlank
+        @Length(min = 5, max = 20)
         private String name;
 
-        @NotNull(message = responseHeader + "{price.notNull}")
-        @Min(value = 1000, message = responseHeader + "{price.min}")
-        @Max(value = 1000000, message = responseHeader + "{price.max}")
+        @NotNull
+        @Min(1000)
+        @Max(1000000)
         private Integer price;
 
-        @NotNull(message = responseHeader + "{stock.notNull}")
-        @Min(value = 1, message = responseHeader + "{stock.min}")
-        @Max(value = 100, message = responseHeader + "{stock.max}")
+        @NotNull
+        @Min(1)
+        @Max(100)
         private Integer stock;
     }
 
@@ -72,19 +72,19 @@ public class ResponseProductDto {
     @NoArgsConstructor
     public static class ReviewDto {
 
-        @NotNull(message = responseHeader + "{review.notNull}")
+        @NotNull
         private Long id;
 
-        @NotNull(message = responseHeader + "{member.notNull}")
+        @NotNull
         private Member member;
 
-        @NotBlank(message = responseHeader + "{content.notBlank}")
-        @Length(min = 10, max = 1000, message = responseHeader + "{content.length}")
+        @NotBlank
+        @Length(min = 10, max = 1000)
         private String content;
 
-        @NotNull(message = responseHeader + "{rating.notNull}")
-        @Min(value = 1, message = responseHeader + "{rating.min}")
-        @Max(value = 5, message = responseHeader + "{rating.max}")
+        @NotNull
+        @Min(1)
+        @Max(5)
         private Integer rating;
 
         private List<ReviewImageDto> images;

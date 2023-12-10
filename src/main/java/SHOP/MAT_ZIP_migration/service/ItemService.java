@@ -31,7 +31,7 @@ public class ItemService {
         Item item = Item.builder()
                 .name(requestItemDto.getName())
                 .price(requestItemDto.getPrice())
-                .stockQuantity(requestItemDto.getStock())
+                .stock(requestItemDto.getStock())
                 .build();
 
         product.addItem(item);
