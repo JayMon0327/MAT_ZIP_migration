@@ -9,6 +9,4 @@ import java.util.List;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    @Query("SELECT i FROM Item i WHERE i.product = :product")
-    List<Item> findByProduct(Product product);
 }

@@ -65,10 +65,10 @@ public class Item {
     /**
      * 상품 수정
      */
-    public void change(String name, Integer price, Integer stockQuantity) {
+    public void change(String name, Integer price, Integer stock) {
         this.name = name;
         this.price = price;
-        this.stock = stockQuantity;
+        this.stock = stock;
     }
 
 }

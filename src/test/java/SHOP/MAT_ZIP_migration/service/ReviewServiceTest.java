@@ -38,13 +38,12 @@ public class ReviewServiceTest {
 
     @DisplayName("리뷰 작성 통합테스트")
     @Test
-    public void saveReviewTest() throws IOException {
+    public void saveReviewTest(){
         Member member = memberRepository.findById(1L).orElseThrow();
         Product product = productRepository.findById(1L).orElseThrow();
 
         // 리뷰 DTO 생성
         RequestReviewDto reviewDto = new RequestReviewDto();
-        reviewDto.setMemberId(member.getId());
         reviewDto.setProductId(product.getId());
         reviewDto.setContent("테스트 리뷰 내용");
         reviewDto.setRating(5);
@@ -59,8 +58,8 @@ public class ReviewServiceTest {
         // 검증
         List<Review> reviews = reviewRepository.findByProduct(product);
         assertThat(reviews).isNotEmpty();
-        assertThat(reviews.get(0).getContent()).isEqualTo("adsf");
-        assertThat(reviews.get(0).getRating()).isEqualTo(3);
+        assertThat(reviews.get(0).getContent()).isEqualTo("테스트 리뷰 내용");
+        assertThat(reviews.get(0).getRating()).isEqualTo(5);
         assertThat(reviews.get(0).getReviewImages()).isNotEmpty();
     }
 }

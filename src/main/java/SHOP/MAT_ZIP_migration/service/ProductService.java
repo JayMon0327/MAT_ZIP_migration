@@ -2,10 +2,7 @@ package SHOP.MAT_ZIP_migration.service;
 
 import SHOP.MAT_ZIP_migration.domain.*;
 import SHOP.MAT_ZIP_migration.domain.order.Item;
-import SHOP.MAT_ZIP_migration.dto.product.RequestProductAndItemDto;
-import SHOP.MAT_ZIP_migration.dto.product.RequestItemDto;
-import SHOP.MAT_ZIP_migration.dto.product.RequestProductDto;
-import SHOP.MAT_ZIP_migration.dto.product.ResponseProductDto;
+import SHOP.MAT_ZIP_migration.dto.product.*;
 import SHOP.MAT_ZIP_migration.repository.ItemRepository;
 import SHOP.MAT_ZIP_migration.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -37,20 +34,20 @@ public class ProductService {
     }
 
     @Transactional
-    public Long saveProductAndItem(RequestProductAndItemDto dto, Member member){
+    public Long saveProductAndItem(RequestSaveProductAndItemDto dto, Member member){
         Long productId = saveProduct(dto.getProductDto(), member);
-        for (RequestItemDto requestItemDto : dto.getItemDtos()) {
-            Item item = itemService.saveItem(productId, requestItemDto);
+        for (RequestSaveItemDto requestSaveItemDto : dto.getItems()) {
+            Item item = itemService.saveItem(productId, requestSaveItemDto);
             itemRepository.save(item);
         }
         return productId;
     }
 
     @Transactional
-    public Long updateProductAndItem(Long id, RequestProductAndItemDto dto){
+    public Long updateProductAndItem(Long id, RequestUpdateProductAndItemDto dto){
         Long productId = updateProduct(id, dto.getProductDto());
-        for (RequestItemDto requestItemDto : dto.getItemDtos()) {
-            itemService.saveItem(productId, requestItemDto);
+        for (RequestUpdateItemDto requestUpdateItemDto : dto.getItems()) {
+            itemService.updateItem(requestUpdateItemDto);
         }
         return productId;
     }
@@ -124,7 +121,7 @@ public class ProductService {
 
     public List<ResponseProductDto.ItemDto> itemDtoTransfer(Product product) {
         List<ResponseProductDto.ItemDto> itemDtos = product.getItems().stream()
-                .map(item -> new ResponseProductDto.ItemDto(item.getName(), item.getPrice(), item.getStock()))
+                .map(item -> new ResponseProductDto.ItemDto(item.getId(),item.getName(), item.getPrice(), item.getStock()))
                 .collect(Collectors.toList());
         return itemDtos;
     }

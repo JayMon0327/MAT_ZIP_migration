@@ -2,9 +2,7 @@ package SHOP.MAT_ZIP_migration.service;
 
 import SHOP.MAT_ZIP_migration.domain.Member;
 import SHOP.MAT_ZIP_migration.domain.Product;
-import SHOP.MAT_ZIP_migration.dto.product.RequestProductAndItemDto;
-import SHOP.MAT_ZIP_migration.dto.product.RequestItemDto;
-import SHOP.MAT_ZIP_migration.dto.product.RequestProductDto;
+import SHOP.MAT_ZIP_migration.dto.product.*;
 import SHOP.MAT_ZIP_migration.repository.ItemRepository;
 import SHOP.MAT_ZIP_migration.repository.MemberRepository;
 import SHOP.MAT_ZIP_migration.repository.ProductRepository;
@@ -37,8 +35,9 @@ class ProductServiceTest {
 
     private Member member;
     private RequestProductDto productDto;
-    private List<RequestItemDto> itemDtos;
-    private RequestProductAndItemDto requestProductAndItemDto;
+    private List<RequestSaveItemDto> itemDtos;
+    private List<RequestUpdateItemDto> updateItemDtos;
+    private RequestSaveProductAndItemDto requestSaveProductAndItemDto;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -56,17 +55,19 @@ class ProductServiceTest {
 
         // 아이템 DTO 리스트 설정
         itemDtos = new ArrayList<>();
-        itemDtos.add(new RequestItemDto("Test Item 1", 10000, 10));
-        itemDtos.add(new RequestItemDto("Test Item 2", 20000, 5));
+        itemDtos.add(new RequestSaveItemDto("Test Item 1", 10000, 10));
+        itemDtos.add(new RequestSaveItemDto("Test Item 2", 20000, 5));
 
-        requestProductAndItemDto = new RequestProductAndItemDto();
-        requestProductAndItemDto.setProductDto(productDto);
-        requestProductAndItemDto.setItemDtos(itemDtos);
+        requestSaveProductAndItemDto = new RequestSaveProductAndItemDto();
+        requestSaveProductAndItemDto.setProductDto(productDto);
+        requestSaveProductAndItemDto.setItems(itemDtos);
+
+
     }
 
     @DisplayName("상품 등록 테스트")
     @Test
-    void save() throws IOException {
+    void save(){
         Long productId = productService.saveProduct(productDto, member);
         Product savedProduct = productRepository.findById(productId).orElseThrow();
 
@@ -77,7 +78,7 @@ class ProductServiceTest {
 
     @DisplayName("상품 수정 테스트")
     @Test
-    void update() throws IOException {
+    void update() {
         Long savedProductId = productService.saveProduct(productDto, member);
 
         RequestProductDto updatedto = RequestProductDto.builder()
@@ -93,7 +94,7 @@ class ProductServiceTest {
 
     @DisplayName("상품 삭제 테스트")
     @Test
-    void delete() throws IOException {
+    void delete() {
         Long savedProductId = productService.saveProduct(productDto, member);
         productService.delete(savedProductId);
 
@@ -103,8 +104,8 @@ class ProductServiceTest {
 
     @DisplayName("상품과 아이템 등록 테스트")
     @Test
-    void saveProductWithItemsTest() throws IOException {
-        Long productId = productService.saveProductAndItem(requestProductAndItemDto, member);
+    void saveProductWithItemsTest() {
+        Long productId = productService.saveProductAndItem(requestSaveProductAndItemDto, member);
 
         Product savedProduct = productRepository.findById(productId).orElseThrow();
 
@@ -115,18 +116,43 @@ class ProductServiceTest {
         assertThat(savedProduct.getItems().get(1).getPrice()).isEqualTo(20000);
     }
 
+
     @DisplayName("상품과 아이템 수정 테스트")
     @Test
-    void updateProductWithItemsTest() throws IOException {
-        Long savedProductId = productService.saveProduct(productDto, member);
-        productService.updateProductAndItem(savedProductId, requestProductAndItemDto);
+    void updateProductWithItemsTest() {
+        // 상품과 아이템 저장
+        Long savedProductId = productService.saveProductAndItem(requestSaveProductAndItemDto, member);
 
+        // 수정할 상품 DTO 설정
+        RequestProductDto updatedProductDto = RequestProductDto.builder()
+                .title("제목수정")
+                .description("내용수정")
+                .build();
+
+        // 수정할 아이템 DTO 리스트 설정
+        List<RequestUpdateItemDto> updateItemDtos = new ArrayList<>();
+        Product savedProduct = productRepository.findById(savedProductId).orElseThrow();
+        Long itemId1 = savedProduct.getItems().get(0).getId();
+        Long itemId2 = savedProduct.getItems().get(1).getId();
+        updateItemDtos.add(new RequestUpdateItemDto(itemId1,"Change Item 1", 30000, 12));
+        updateItemDtos.add(new RequestUpdateItemDto(itemId2,"Change Item 2", 40000, 55));
+
+        RequestUpdateProductAndItemDto updateItemDto = new RequestUpdateProductAndItemDto();
+        updateItemDto.setProductDto(updatedProductDto);
+        updateItemDto.setItems(updateItemDtos);
+
+        // when
+        productService.updateProductAndItem(savedProductId, updateItemDto);
+
+        // then
         Product resultProduct = productRepository.findById(savedProductId).orElseThrow();
-
+        assertThat(resultProduct.getTitle()).isEqualTo("제목수정");
+        assertThat(resultProduct.getDescription()).isEqualTo("내용수정");
         assertThat(resultProduct.getItems().size()).isEqualTo(2);
-        assertThat(resultProduct.getItems().get(0).getName()).isEqualTo("Test Item 1");
-        assertThat(resultProduct.getItems().get(0).getPrice()).isEqualTo(10000);
-        assertThat(resultProduct.getItems().get(1).getName()).isEqualTo("Test Item 2");
-        assertThat(resultProduct.getItems().get(1).getPrice()).isEqualTo(20000);
+        assertThat(resultProduct.getItems().get(0).getName()).isEqualTo("Change Item 1");
+        assertThat(resultProduct.getItems().get(0).getPrice()).isEqualTo(30000);
+        assertThat(resultProduct.getItems().get(1).getName()).isEqualTo("Change Item 2");
+        assertThat(resultProduct.getItems().get(1).getPrice()).isEqualTo(40000);
     }
+
 }
