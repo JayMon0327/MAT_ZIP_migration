@@ -23,34 +23,43 @@
 
     <!-- 아이템 정보 표시 -->
     <c:forEach items="${products.items}" var="item">
-        <div>${item.name} - 가격: ${item.price}, 재고: ${item.stockQuantity}</div>
+        <div>${item.name} - 가격: ${item.price}, 재고: ${item.stock}</div>
     </c:forEach>
 
-    <div class="card">
-            <form id="review-form" enctype="multipart/form-data">
-                <div class="form-group">
-                <input type="hidden" id="memberId" name="memberId" value="${principal.member.id}" />
-                </div>
-                <div class="form-group">
-                <input type="hidden" id="productId" name="productId" value="${products.id}" />
-                </div>
-                <div class="card-body, form-group">
-                    <label for="content">리뷰내용</label>
-                    <textarea id="content" class="form-control" name="content" rows="1"></textarea>
-                </div>
-                <div class="card-body, form-group">
-                    <label for="rating">평점</label>
-                    <textarea id="rating" class="form-control" name="rating" rows="1"></textarea>
-                </div>
-                 <div class="card-body, form-group">
-                    <label for="imageFiles">이미지 파일들</label>
-                    <input type="file" class="form-control" id="imageFiles" name="imageFiles" multiple required>
-                </div>
-                <div class="card-footer">
-                </div>
-    		</form>
-                <button type="button" id="btn-review-save" class="btn btn-primary">등록</button>
-    	</div>
+<br />
+<c:choose>
+    <c:when test="${empty principal}">
+        <div>로그인 후 리뷰 작성을 할 수 있습니다.</div>
+    </c:when>
+    <c:otherwise>
+        <div class="card">
+                <form id="review-form" enctype="multipart/form-data">
+                    <div class="form-group">
+                    <input type="hidden" id="memberId" name="memberId" value="${principal.member.id}" />
+                    </div>
+                    <div class="form-group">
+                    <input type="hidden" id="productId" name="productId" value="${products.id}" />
+                    </div>
+                    <div class="card-body, form-group">
+                        <label for="content">리뷰내용</label>
+                        <textarea id="content" class="form-control" name="content" rows="1"></textarea>
+                    </div>
+                    <div class="card-body, form-group">
+                        <label for="rating">평점</label>
+                        <textarea id="rating" class="form-control" name="rating" rows="1"></textarea>
+                    </div>
+                     <div class="card-body, form-group">
+                        <label for="imageFiles">이미지 파일들</label>
+                        <input type="file" class="form-control" id="imageFiles" name="imageFiles" multiple required>
+                    </div>
+                    <div class="card-footer">
+                    </div>
+                </form>
+                    <button type="button" id="btn-review-save" class="btn btn-primary">등록</button>
+            </div>
+    </c:otherwise>
+</c:choose>
+
     	<br />
     	<div class="card">
     		<div class="card-header">댓글 리스트</div>

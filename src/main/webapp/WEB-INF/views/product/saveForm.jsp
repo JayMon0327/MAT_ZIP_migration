@@ -19,16 +19,16 @@
 
               <!-- 아이템 정보 -->
               <div class="form-group">
-                  <label for="itemDtos[0].name">아이템 이름</label>
-                  <input type="text" class="form-control" id="itemDtos[0].name" name="itemDtos[0].name" required>
+                  <label for="items[0].name">아이템 이름</label>
+                  <input type="text" class="form-control" id="items[0].name" name="items[0].name" required>
               </div>
               <div class="form-group">
-                  <label for="itemDtos[0].price">가격</label>
-                  <input type="number" class="form-control" id="itemDtos[0].price" name="itemDtos[0].price" required>
+                  <label for="items[0].price">가격</label>
+                  <input type="number" class="form-control" id="items[0].price" name="items[0].price" required>
               </div>
               <div class="form-group">
-                  <label for="itemDtos[0].stock">재고 수량</label>
-                  <input type="number" class="form-control" id="itemDtos[0].stock" name="itemDtos[0].stock" required>
+                  <label for="items[0].stock">재고 수량</label>
+                  <input type="number" class="form-control" id="items[0].stock" name="items[0].stock" required>
               </div>
 
           </form>

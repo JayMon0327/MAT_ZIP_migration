@@ -49,7 +49,7 @@ let index = {
 
 		update: function(){
 			let productId = $("#id").val();
-			let formData = new FormData(document.getElementById("Update-form"));
+			let formData = new FormData(document.getElementById("update-form"));
 
 			$.ajax({
 				type: "PUT",
