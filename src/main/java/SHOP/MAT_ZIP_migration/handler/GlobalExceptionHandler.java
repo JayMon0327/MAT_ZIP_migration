@@ -24,13 +24,6 @@ public class GlobalExceptionHandler {
 
     private final MessageSource messageSource;
 
-//    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    public ResponseEntity handleValidationExceptions(MethodArgumentNotValidException ex) {
-//        String errorMessage = ex.getBindingResult().getAllErrors().get(0).getDefaultMessage();
-//        log.info("검증에러 캐치 " + errorMessage);
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
-//    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
