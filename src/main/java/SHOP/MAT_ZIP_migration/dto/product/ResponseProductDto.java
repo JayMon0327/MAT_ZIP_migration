@@ -45,6 +45,10 @@ public class ResponseProductDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class ItemDto {
+
+        @NotNull
+        private Long itemId;
+
         @NotBlank
         @Length(min = 5, max = 20)
         private String name;

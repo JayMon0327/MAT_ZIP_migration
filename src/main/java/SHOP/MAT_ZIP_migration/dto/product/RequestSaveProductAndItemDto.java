@@ -10,10 +10,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestProductAndItemDto {
+public class RequestSaveProductAndItemDto {
 
     @Valid
     private RequestProductDto productDto;
     @Valid
-    private List<RequestItemDto> itemDtos;
+    private List<RequestSaveItemDto> items;
 }
