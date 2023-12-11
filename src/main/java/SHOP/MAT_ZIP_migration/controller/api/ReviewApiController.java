@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -23,10 +20,16 @@ public class ReviewApiController {
 
     private final ReviewService reviewService;
 
-    @PostMapping("/product/{id}/review")
-    public ResponseDto<Integer> replySave(@Valid @ModelAttribute RequestReviewDto dto,
+    @PostMapping("/review")
+    public ResponseDto<Integer> save(@Valid @ModelAttribute RequestReviewDto dto,
                                           @AuthenticationPrincipal PrincipalDetails principal) {
         reviewService.saveReview(dto, principal.getMember());
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+    }
+
+    @DeleteMapping("/review/{id}")
+    public ResponseDto<Integer> delete(@PathVariable Long id) {
+        reviewService.deleteReview(id);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 }

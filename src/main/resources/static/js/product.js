@@ -12,6 +12,9 @@ let index = {
 			$("#btn-review-save").on("click", ()=>{
 				this.reviewSave();
 			});
+			$("#btn-review-delete").on("click", ()=>{
+                this.reviewDelete();
+            });
 		},
 
 		save: function(){
@@ -72,7 +75,7 @@ let index = {
 
 			$.ajax({
 				type: "POST",
-				url: `/api/product/${productId}/review`,
+				url: `/api/review`,
 				data: formData,
                 processData: false, // 데이터를 query string으로 변환하지 않음 -> s3 배포시 해제
                 contentType: false, // multipart/form-data로 설정 -> s3 배포시 해제
@@ -85,14 +88,14 @@ let index = {
 			});
 		},
 
-		replyDelete : function(boardId, replyId){
+		reviewDelete : function(productId ,reviewId){
 			$.ajax({
 				type: "DELETE",
-				url: `/api/board/${boardId}/reply/${replyId}`,
+				url: `/api/review/${reviewId}`,
 				dataType: "json"
 			}).done(function(resp){
 				alert("댓글삭제 성공");
-				location.href = `/board/${boardId}`;
+				location.href = `/product/${productId}`;
 			}).fail(function(error){
 				alert(JSON.stringify(error));
 			});
