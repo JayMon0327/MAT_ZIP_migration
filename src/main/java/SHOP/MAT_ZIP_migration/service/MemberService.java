@@ -29,7 +29,9 @@ public class MemberService {
         Member member = Member.builder()
                 .username(joinMemberDto.getUsername())
                 .password(endPassword)
+                .nickName(joinMemberDto.getNickName())
                 .email(joinMemberDto.getEmail())
+                .address(joinMemberDto.getAddress())
                 .role(Role.USER)
                 .build();
 
@@ -37,15 +39,15 @@ public class MemberService {
     }
 
     @Transactional
-    public void update(UpdateMemberDto updateMemberDto) {
-        Member persistance = memberRepository.findById(updateMemberDto.getId()).orElseThrow(() -> {
+    public void update(UpdateMemberDto dto) {
+        Member persistance = memberRepository.findById(dto.getId()).orElseThrow(() -> {
             return new IllegalArgumentException("회원 찾기 실패");
         });
 
         if (persistance.getProvider() == null || persistance.getProvider().equals("")) {
-            String encodePassword = memberValidator.PasswordCheck(updateMemberDto.getPassword(),
-                    updateMemberDto.getPasswordCheck());
-            persistance.updateMember(encodePassword, updateMemberDto.getEmail());
+            String encodePassword = memberValidator.PasswordCheck(dto.getPassword(),
+                    dto.getPasswordCheck());
+            persistance.updateMember(encodePassword, dto.getNickName(), dto.getEmail(),dto.getAddress());
         }
     }
 }

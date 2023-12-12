@@ -27,10 +27,25 @@
         </c:if>
 
         <div class="form-floating">
+          <input type="nickName" class="form-control" id="nickName" placeholder="Enter nickName">
+          <label for="nickName">nickName</label>
+        </div>
+        <div class="form-floating">
           <label for="email">Email</label>
           <input type="email" value="${principal.member.email}" class="form-control" id="email" placeholder="Enter email">
         </div>
-
+        <div class="form-floating">
+          <input type="text" class="form-control" id="addressCity" placeholder="Enter city">
+          <label for="addressCity">City</label>
+        </div>
+        <div class="form-floating">
+          <input type="text" class="form-control" id="addressStreet" placeholder="Enter street">
+          <label for="addressStreet">Street</label>
+        </div>
+        <div class="form-floating">
+          <input type="text" class="form-control" id="addressZipcode" placeholder="Enter zipcode">
+          <label for="addressZipcode">Zipcode</label>
+        </div>
 
       </form>
         <button class="btn btn-primary w-100 py-2" id="btn-update">수정완료</button>

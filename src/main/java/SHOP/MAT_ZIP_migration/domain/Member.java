@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import SHOP.MAT_ZIP_migration.domain.baseentity.DateBaseEntity;
+import SHOP.MAT_ZIP_migration.domain.order.Address;
 import SHOP.MAT_ZIP_migration.domain.order.Order;
 import SHOP.MAT_ZIP_migration.domain.status.Role;
 import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
@@ -32,6 +33,8 @@ public class Member extends DateBaseEntity {
 
     private String password;
 
+    private String nickName;
+
     private String email;
 
     @Enumerated(EnumType.STRING)
@@ -41,6 +44,7 @@ public class Member extends DateBaseEntity {
     private String providerId;
 
     private Integer point;
+    private Address address;
 
     @Builder.Default
     @OneToMany(mappedBy = "member")
@@ -69,9 +73,11 @@ public class Member extends DateBaseEntity {
     /**
      * 회원 수정
      */
-    public void updateMember(String password, String email) {
+    public void updateMember(String password,String nickName, String email, Address address) {
         this.password = password;
+        this.nickName=nickName;
         this.email = email;
+        this.address = address;
     }
 
     /**

@@ -1,5 +1,6 @@
 package SHOP.MAT_ZIP_migration.dto.member;
 
+import SHOP.MAT_ZIP_migration.domain.order.Address;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,7 +28,13 @@ public class UpdateMemberDto {
     @Length(min = 10, max = 20)
     private String passwordCheck;
 
+    @NotBlank
+    @Length(min = 4, max = 10)
+    private String nickName;
+
     @Email
     @NotBlank
     private String email;
+
+    private Address address;
 }

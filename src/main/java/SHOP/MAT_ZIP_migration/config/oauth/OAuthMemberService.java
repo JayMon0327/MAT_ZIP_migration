@@ -29,6 +29,7 @@ public class OAuthMemberService {
         } else {
             Member member = Member.builder()
                     .username(oAuth2UserInfo.getProvider() + userNamingWord + oAuth2UserInfo.getProviderId())
+                    .nickName(oAuth2UserInfo.getProvider() + userNamingWord + oAuth2UserInfo.getProviderId())
                     .email(oAuth2UserInfo.getEmail())
                     .point(defaultPoint)
                     .role(Role.USER)
