@@ -15,7 +15,7 @@ import org.hibernate.validator.constraints.Length;
 public class RequestSaveItemDto {
 
     @NotBlank
-    @Length(min = 5, max = 20)
+    @Length(min = 4, max = 20)
     private String name;
 
     @NotNull

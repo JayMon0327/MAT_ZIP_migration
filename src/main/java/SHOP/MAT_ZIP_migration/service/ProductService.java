@@ -44,15 +44,6 @@ public class ProductService {
     }
 
     @Transactional
-    public Long updateProductAndItem(Long id, RequestUpdateProductAndItemDto dto){
-        Long productId = updateProduct(id, dto.getProductDto());
-        for (RequestUpdateItemDto requestUpdateItemDto : dto.getItems()) {
-            itemService.updateItem(requestUpdateItemDto);
-        }
-        return productId;
-    }
-
-    @Transactional
     public Long saveProduct(RequestProductDto dto, Member member){
         Product product = Product.builder()
                 .member(member)
@@ -64,6 +55,15 @@ public class ProductService {
         productImages.forEach(product::addImage);
         productRepository.save(product);
         return product.getId();
+    }
+
+    @Transactional
+    public Long updateProductAndItem(Long id, RequestUpdateProductAndItemDto dto){
+        Long productId = updateProduct(id, dto.getProductDto());
+        for (RequestUpdateItemDto requestUpdateItemDto : dto.getItems()) {
+            itemService.updateItem(requestUpdateItemDto);
+        }
+        return productId;
     }
 
     @Transactional

@@ -22,7 +22,7 @@ import java.util.List;
 public class RequestProductDto {
 
     @NotBlank
-    @Length(min = 10, max = 30)
+    @Length(min = 5, max = 30)
     private String title;
 
     @NotBlank

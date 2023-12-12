@@ -6,6 +6,8 @@ import java.util.List;
 import SHOP.MAT_ZIP_migration.domain.baseentity.DateBaseEntity;
 import SHOP.MAT_ZIP_migration.domain.order.Order;
 import SHOP.MAT_ZIP_migration.domain.status.Role;
+import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
+import SHOP.MAT_ZIP_migration.exception.CustomException;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -50,21 +52,17 @@ public class Member extends DateBaseEntity {
 
 
     /**
-     * 연관관계 편의 메서드
-     */
-//	public void addOrder(Order order) {
-//		orders.add(order);
-//		order.setMember(this);
-//	}
-
-    /**
      * 포인트 처리 로직
      */
     public void addPoints(int points) {
         this.point += points; // 포인트 충전
     }
 
-    public void subtractPoints(int points) {
+    public void removePoints(int points) {
+        int result = this.point - points;
+        if (result < 0) {
+            throw new CustomException(CustomErrorCode.NOT_ENOUGH_POINT);
+        }
         this.point -= points; // 포인트 사용
     }
 

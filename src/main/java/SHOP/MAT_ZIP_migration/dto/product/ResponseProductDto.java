@@ -20,8 +20,6 @@ import java.util.List;
 @Builder
 public class ResponseProductDto {
 
-    private static final String responseHeader = "응답 : ";
-
     @NotNull
     private Long id;
 
@@ -47,7 +45,7 @@ public class ResponseProductDto {
     public static class ItemDto {
 
         @NotNull
-        private Long itemId;
+        private Long Id;
 
         @NotBlank
         @Length(min = 5, max = 20)
