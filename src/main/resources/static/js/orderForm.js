@@ -60,7 +60,7 @@
         // 상품 수량 추가
         var quantityInput = document.createElement('input');
         quantityInput.type = 'hidden';
-        quantityInput.name = 'items[' + i + '].itemStock';
+        quantityInput.name = 'items[' + i + '].count';
         quantityInput.value = quantity;
         orderForm.appendChild(quantityInput);
 

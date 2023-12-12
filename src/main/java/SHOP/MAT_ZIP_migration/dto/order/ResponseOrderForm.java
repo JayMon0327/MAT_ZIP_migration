@@ -1,5 +1,7 @@
 package SHOP.MAT_ZIP_migration.dto.order;
 
+import SHOP.MAT_ZIP_migration.domain.order.Address;
+import SHOP.MAT_ZIP_migration.domain.order.Delivery;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -16,17 +18,17 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OrderForm {
+public class ResponseOrderForm {
+
     private List<ItemDto> items;
     private String sellerName;
+    private Integer totalPrice;
+    private Address address;
 
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
     public static class ItemDto {
-
-        @NotNull
-        private Long itemId;
 
         @NotBlank
         @Length(min = 4, max = 20)

@@ -14,10 +14,10 @@
         <h3>구매 정보</h3>
         <c:forEach items="${order.items}" var="item">
             <div>상품명: ${item.itemName}</div>
-            <div>수량: ${item.itemStock}</div>
+            <div>수량: ${item.count}</div>
             <input type="hidden" name="itemId" value="${item.itemId}" />
             <input type="hidden" name="itemName" value="${item.itemName}" />
-            <input type="hidden" name="itemStock" value="${item.itemStock}" />
+            <input type="hidden" name="count" value="${item.count}" />
             <!-- 가격 정보가 필요하다면 여기에 추가 -->
         </c:forEach>
         <input type="hidden" name="sellerName" value="${order.sellerName}" />
