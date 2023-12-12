@@ -1,8 +1,8 @@
 package SHOP.MAT_ZIP_migration.domain.order;
 
 import SHOP.MAT_ZIP_migration.domain.Product;
-import SHOP.MAT_ZIP_migration.handler.NotEnoughStockException;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
+import SHOP.MAT_ZIP_migration.exception.CustomException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -57,7 +57,7 @@ public class Item {
     public void removeStock(Integer quantity) {
         int result = this.stock - quantity;
         if (result < 0) {
-            throw new NotEnoughStockException("재고가 없습니다.");
+            throw new CustomException(CustomErrorCode.NOT_ENOUGH_STOCK);
         }
         this.stock = result;
     }

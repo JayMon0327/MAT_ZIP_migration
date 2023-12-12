@@ -18,6 +18,7 @@
               </div>
 
               <!-- 아이템 정보 -->
+            <div id="item-group">
               <div class="form-group">
                   <label for="items[0].name">아이템 이름</label>
                   <input type="text" class="form-control" id="items[0].name" name="items[0].name" required>
@@ -30,7 +31,7 @@
                   <label for="items[0].stock">재고 수량</label>
                   <input type="number" class="form-control" id="items[0].stock" name="items[0].stock" required>
               </div>
-
+            </div>
           </form>
               <button type="button" id="add-item">아이템 추가</button>
           <button class="btn btn-primary w-100 py-2" id="btn-save">상품 등록</button>
