@@ -104,6 +104,13 @@ public class OrderService {
         return orderItems;
     }
 
+    @Transactional
+    public void cancelOrder(Long orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(()->
+                new CustomException(CustomErrorCode.NOT_FOUND_ORDER));
+        order.cancel();
+    }
+
     /**
      * 최종 결제 금액 검증
      */

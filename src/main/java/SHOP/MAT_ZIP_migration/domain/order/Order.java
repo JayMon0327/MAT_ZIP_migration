@@ -37,11 +37,7 @@ public class Order extends CreateDateBaseEntity {
     private List<OrderItem> orderItems = new ArrayList<>();
 
     /**
-     * 연관관계 편의 메서드
-     */
-
-    /**
-     * 주문 생성
+     * 주문 로직
      */
     public static Order createOrder(Member member, Delivery delivery, List<OrderItem> orderItems) {
         Order order = Order.builder()
@@ -51,6 +47,16 @@ public class Order extends CreateDateBaseEntity {
                 .status(OrderStatus.ORDER)
                 .build();
         return order;
+    }
+
+    public void cancel() {
+        if (delivery.getStatus() == DeliveryStatus.COMP) {
+            throw new IllegalStateException("이미 배송완료된 상품은 취소가 불가능합니다.");
+        }
+        this.status = (OrderStatus.CANCEL);
+        for (OrderItem orderItem : orderItems) {
+            orderItem.cancel();
+        }
     }
 
 }

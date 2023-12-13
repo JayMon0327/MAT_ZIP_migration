@@ -43,8 +43,8 @@ public class Item {
     /**
      * stock 증가(재고증가)
      */
-    public void addStock(Integer quantity) {
-        this.stock += quantity;
+    public void addStock(Integer count) {
+        this.stock += count;
     }
 
     /**
