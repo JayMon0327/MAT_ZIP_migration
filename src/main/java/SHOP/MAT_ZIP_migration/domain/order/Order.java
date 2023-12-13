@@ -12,6 +12,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "orders")
 public class Order extends CreateDateBaseEntity {
@@ -38,8 +39,18 @@ public class Order extends CreateDateBaseEntity {
     /**
      * 연관관계 편의 메서드
      */
-//    public void addOrderItem(OrderItem orderItem) {
-//        orderItems.add(orderItem);
-//        orderItem.setOrder(this);
-//    }
+
+    /**
+     * 주문 생성
+     */
+    public static Order createOrder(Member member, Delivery delivery, List<OrderItem> orderItems) {
+        Order order = Order.builder()
+                .member(member)
+                .delivery(delivery)
+                .orderItems(orderItems)
+                .status(OrderStatus.ORDER)
+                .build();
+        return order;
+    }
+
 }

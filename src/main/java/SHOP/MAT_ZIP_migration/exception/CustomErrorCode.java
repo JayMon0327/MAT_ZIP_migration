@@ -13,7 +13,8 @@ public enum CustomErrorCode {
     FILE_URL_ERROR("ERP302", "파일 URL 오류가 발생했습니다."),
     NOT_ENOUGH_STOCK("ERP401", "재고가 부족합니다."),
     NOT_ENOUGH_POINT("ERP402", "포인트가 부족합니다."),
-    NOT_FOUND_ITEM("ERP403", "상품을 찾을 수 없습니다.");
+    NOT_FOUND_ITEM("ERP403", "상품을 찾을 수 없습니다."),
+    NOT_EQUAL_FINAL_PRICE("ERP500", "최종 결제금액이 일치하지 않습니다.");
 
     private final String errorCode;
     private final String errorMessage;

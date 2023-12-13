@@ -42,8 +42,6 @@ public class Item {
 
     /**
      * stock 증가(재고증가)
-     *
-     * @param quantity
      */
     public void addStock(Integer quantity) {
         this.stock += quantity;
@@ -51,11 +49,9 @@ public class Item {
 
     /**
      * stock 감소
-     *
-     * @param quantity
      */
-    public void removeStock(Integer quantity) {
-        int result = this.stock - quantity;
+    public void removeStock(Integer count) {
+        int result = this.stock - count;
         if (result < 0) {
             throw new CustomException(CustomErrorCode.NOT_ENOUGH_STOCK);
         }
