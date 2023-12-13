@@ -13,12 +13,14 @@ let index ={
         let data ={
             username: $("#username").val(),
             password: $("#password").val(),
+            passwordCheck: $("#passwordCheck").val(),
             nickName: $("#nickName").val(),
             email: $("#email").val(),
             address: {
                     city: $("#addressCity").val(),
                     street: $("#addressStreet").val(),
                     zipcode: $("#addressZipcode").val()
+                    }
         };
 
         $.ajax({
@@ -49,11 +51,13 @@ let index ={
                 username: $("#username").val(),
                 password: $("#password").val(),
                 passwordCheck: $("#passwordCheck").val(),
+                nickName: $("#nickName").val(),
                 email: $("#email").val(),
                 address: {
                         city: $("#addressCity").val(),
                         street: $("#addressStreet").val(),
                         zipcode: $("#addressZipcode").val()
+                        }
             };
 
             $.ajax({

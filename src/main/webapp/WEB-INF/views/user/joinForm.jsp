@@ -15,6 +15,10 @@
           <label for="password">password</label>
         </div>
         <div class="form-floating">
+          <input type="password" class="form-control" id="passwordCheck" placeholder="passwordCheck">
+          <label for="passwordCheck">passwordCheck</label>
+        </div>
+        <div class="form-floating">
           <input type="nickName" class="form-control" id="nickName" placeholder="Enter nickName">
           <label for="nickName">nickName</label>
         </div>

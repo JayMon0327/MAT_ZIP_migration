@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class MemberService {
 
+    private static final Integer defaultPoint = 0;
+
     private final MemberRepository memberRepository;
     private final MemberValidator memberValidator;
 
@@ -33,6 +35,7 @@ public class MemberService {
                 .email(joinMemberDto.getEmail())
                 .address(joinMemberDto.getAddress())
                 .role(Role.USER)
+                .point(defaultPoint)
                 .build();
 
         memberRepository.save(member);

@@ -21,7 +21,7 @@
         </div>
         <div class="form-floating">
           <label for="passwordCheck">passwordCheck</label>
-          <input type="passwordCheck" class="form-control"
+          <input type="password" class="form-control"
           id="passwordCheck" placeholder="passwordCheck">
         </div>
         </c:if>
