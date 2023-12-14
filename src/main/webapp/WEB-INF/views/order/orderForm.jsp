@@ -20,7 +20,7 @@
             <input type="hidden" name="count" value="${item.count}" />
             <!-- 가격 정보가 필요하다면 여기에 추가 -->
         </c:forEach>
-        <input type="hidden" name="sellerName" value="${order.sellerName}" />
+        <input type="hidden" name="storeId" value="${order.storeId}" />
 
         <h3>총 가격: <span id="totalPrice">${order.totalPrice}원</span></h3>
 

@@ -2,10 +2,7 @@ package SHOP.MAT_ZIP_migration.service;
 
 import SHOP.MAT_ZIP_migration.domain.Member;
 import SHOP.MAT_ZIP_migration.domain.order.*;
-import SHOP.MAT_ZIP_migration.dto.order.ItemDto;
-import SHOP.MAT_ZIP_migration.dto.order.OrderForm;
-import SHOP.MAT_ZIP_migration.dto.order.RequestOrderDto;
-import SHOP.MAT_ZIP_migration.dto.order.ResponseOrderForm;
+import SHOP.MAT_ZIP_migration.dto.order.*;
 import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
 import SHOP.MAT_ZIP_migration.exception.CustomException;
 import SHOP.MAT_ZIP_migration.repository.ItemRepository;
@@ -27,6 +24,7 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final ItemRepository itemRepository;
+    private final PaymentService paymentService;
 
     /**
      * orderForm = 상품 이름, 구매 수량, 총 구매금액, 판매자 이름, 배송지 정보
@@ -35,7 +33,7 @@ public class OrderService {
         ResponseOrderForm orderForm = ResponseOrderForm.builder()
                 .items(itemDtoTransfer(form.getItems()))
                 .address(member.getAddress())
-                .sellerName(form.getSellerName())
+                .sellerName(form.getStoreId())
                 .totalPrice(calculateTotalPrice(form.getItems()))
                 .build();
         return orderForm;
@@ -61,16 +59,21 @@ public class OrderService {
     }
 
     /**
-     * 주문하기 API
+     * 주문생성 API
      */
 
     @Transactional
-    public void order(RequestOrderDto dto, Member member) {
+    public PaymentForm order(RequestOrderDto dto, Member member) {
+//        calculatePoint(dto, member);
         List<OrderItem> orderItems = createOrderItem(dto);
         Delivery delivery = Delivery.createDelivery(dto.getAddress());
         Order order = Order.createOrder(member, delivery, orderItems);
+        PaymentForm paymentForm = paymentService.requestPaymentForm(dto);
+        paymentForm.setOrder(order);
+        paymentForm.setOrderItems(orderItems);
 
         orderRepository.save(order);
+        return paymentForm;
     }
 
     private List<Integer> orderPrice(List<ItemDto> dtos) {
@@ -104,6 +107,9 @@ public class OrderService {
         return orderItems;
     }
 
+    /**
+     * 포인트 원복 관련 로직 필요, 배송 취소 처리 필요
+     */
     @Transactional
     public void cancelOrder(Long orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(()->
@@ -112,15 +118,23 @@ public class OrderService {
     }
 
     /**
-     * 최종 결제 금액 검증
+     * 최종 결제 금액, 포인트 검증
      */
 
-    private int checkFinalPrice(RequestOrderDto dto) {
-        List<ItemDto> itemDtos = dto.getItemDtos();
-        int totalPrice = calculateTotalPrice(itemDtos);
-        if (totalPrice - dto.getUsedPoint() == dto.getTotalPrice()) {
-            return dto.getTotalPrice();
-        }
-        throw new CustomException(CustomErrorCode.NOT_EQUAL_FINAL_PRICE);
-    }
+//    private int checkFinalPrice(RequestOrderDto dto) {
+//        List<ItemDto> itemDtos = dto.getItemDtos();
+//        int totalPrice = calculateTotalPrice(itemDtos);
+//        if (totalPrice - dto.getUsedPoint() == dto.getTotalPrice()) {
+//            return dto.getTotalPrice();
+//        }
+//        throw new CustomException(CustomErrorCode.NOT_EQUAL_FINAL_PRICE);
+//    }
+//
+//    private void calculatePoint(RequestOrderDto dto, Member member) {
+//        member.removePoints(dto.getUsedPoint());
+//
+//        double earnedPoints = checkFinalPrice(dto) * 0.05; // 5% 적립
+//        int earnedPointsInteger = ((int) Math.round(earnedPoints));
+//        member.addPoints(earnedPointsInteger);
+//    }
 }

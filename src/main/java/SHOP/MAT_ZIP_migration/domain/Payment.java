@@ -1,6 +1,6 @@
 package SHOP.MAT_ZIP_migration.domain;
 
-import SHOP.MAT_ZIP_migration.domain.baseentity.CreateDateBaseEntity;
+import SHOP.MAT_ZIP_migration.domain.baseentity.DateBaseEntity;
 import SHOP.MAT_ZIP_migration.domain.order.Order;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import static jakarta.persistence.GenerationType.*;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "payment")
-public class Payment extends CreateDateBaseEntity {
+public class Payment extends DateBaseEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "payment_id")
@@ -28,4 +28,10 @@ public class Payment extends CreateDateBaseEntity {
     private Order order;
 
     private Integer amount;
+    private Integer cancelAmount;
+
+    private Integer addPoint;
+    private Integer usedPoint;
+
+    private String pg_code;
 }
