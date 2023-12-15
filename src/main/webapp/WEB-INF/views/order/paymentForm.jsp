@@ -1,89 +1,135 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%@ include file="../layout/header.jsp"%>
+<html>
+<head>
+<!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <title>결제 페이지</title>
 
-<!--STEP 1-->
-<!--포트원 SDK 가져오기-->
+
+<!-- PortOne SDK -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-<script th:inline="javascript"></script>
+<script>
+    var paymentId = "${paymentForm.paymentId}";
+    var storeId = "${paymentForm.storeId}";
+    var finalPrice = "${paymentForm.finalPrice}";
+    var userEmail = "${principal.member.email}";
+    var userName = "${principal.member.name}";
+    var IMP = window.IMP;
+    IMP.init("imp85150734");
 
-    var paymentId = [[${paymentId}]];
-    var storeId = [[${storeId}]];
-    var channelKey = [[${channelKey}]];
-    var naverpay_channelKey = [[${naverPayChannelKey}]];
-    var kakaopay_channelKey = [[${kakaoPayChannelKey}]];
-
-
-    function payment(payMethod, easyPayProvider, isHub){
-    //STEP 2
-    //파라미터 셋팅 후 결제창 호출
-    //고객정보
-    const customer = {
-        customerId : 'cid-'+[[${user.id}]],
-        fullName : [[${user.name}]],
-        phoneNumber : [[${user.phone}]],
-        email : [[${user.email}]]
-        };
-
-        var paymentData ={
-
-            storeId: storeId,
-            paymentId: paymentId,
-            payMethod: payMethod,
-            orderName: [[${product.name}]],
-            totalAmount: [[${product.amount}]],
-            currency : 'KRW',
-            customer : customer,
-            customData: [[${order.id}]],
-            confirmUrl: 'https://fb4f-182-220-157-203.ngrok-free.app/v2/order/confirm',
-            redirectUrl: 'https://fb4f-182-220-157-203.ngrok-free,app/v2/payment/redirect',
-
-        };
-
-        var easyPay = {
-            easyPayProvider: easyPayProvider
-        };
-
-        //일반 신용카드 결제시
-        //'payMethod' : 'CARD'
-
-        //허브형 간편 결제시
-        //'payMethod' : 'CARD'
-        //'easyPayProvider' : 'NAVERPAY', 'KAKAOPAY', 'APPLEPAY' 등 간편결제사 코드
-        //channelKey에 PG사의 키
-
-        // 직연동 간편 결제 시
-        //'payMethod' : 'EASY_PAY'
-        //channelKey에 간편결제사의 키
-
-        if(payMethod == 'EASY_PAY'){
-            paymentData.easyPay = easyPay;
-            if(easyPayProvider == "NAVERPAY" && isHub == false){
-                paymentData.channelKey = naverpay_channelKey;
-            } else if(easyPayProvider == "KAKAOPAY" && isHub == false){
-                paymentData.channelKey = kakaopay_channelKey;
-            } else if(isHub == true){
-                paymentData.channelKey = channelKey;
+        function requestPay() {
+            IMP.request_pay({
+                pg: "kakaopay.TC0ONETIME", // PG사
+                pay_method: "card", // 결제수단
+                merchant_uid: paymentId, // 주문번호
+                name: storeId, // 주문명
+                amount: finalPrice, // 결제 금액
+                buyer_email: userEmail, // 구매자 이메일
+                buyer_name: userName, // 구매자 이름
+            }, function (rsp) {
+                if (rsp.success) {
+                    if (rsp.success) {
+                    // 결제 성공 시 서버로 결제 정보 전송
+                    axios.post('/api/payment/complete', {
+                        imp_uid: rsp.imp_uid,
+                        merchant_uid: rsp.merchant_uid
+                    }).then(function(response) {
+                        // 성공 로직 처리
+                        alert("결제 성공");
+                    }).catch(function(error) {
+                        // 에러 처리
+                        console.error("결제 정보 전송 실패", error);
+                    });
+                } else {
+                    // 결제 실패 시 로직
+                    alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
+                }
             }
-        } else{
-            paymentData.channelKey = channelKey;
+            });
         }
 
-        const response = PortOne.requestPayment(paymentDate)
-                .then(function(response){
-                    console.log(response); //응답 객체가 개발자 도구 - 콘솔에 출력된다.
-                    alert('response 수신:'+JSON.stringify(response));
-                    //STEP 3
-                    //가맹점 백엔드 서버로 결과를 가져온다.
-                    jQuery.ajax({
-                        url: "/v2/payment/callback",
-                        method: "POST",
-                        headers: {"Content-Type": "application/json"},
-                        data: JSON.stringify(response)
-                    }).done(function(data){
-                        //STEP6
-                        alert("서버 처리 결과 : " + data.status);
-                        //콜백에서 처리한 결과를 사용자에게 표시하거나 결제내역 페이지로 이동할 수 있다.
+        function requestNaverPay() {
+            IMP.request_pay({
+                pg: "naverco.JayMonTest", // PG사
+                pay_method: "card", // 결제수단
+                merchant_uid: paymentId, // 주문번호
+                name: storeId, // 주문명
+                amount: finalPrice, // 결제 금액
+                buyer_email: userEmail, // 구매자 이메일
+                buyer_name: userName, // 구매자 이름
+            }, function (rsp) {
+                if (rsp.success) {
+                    if (rsp.success) {
+                    // 결제 성공 시 서버로 결제 정보 전송
+                    axios.post('/api/payment/complete', {
+                        imp_uid: rsp.imp_uid,
+                        merchant_uid: rsp.merchant_uid
+                    }).then(function(response) {
+                        // 성공 로직 처리
+                        alert("결제 성공");
+                    }).catch(function(error) {
+                        // 에러 처리
+                        console.error("결제 정보 전송 실패", error);
                     });
-                });
-}
+                } else {
+                    // 결제 실패 시 로직
+                    alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
+                }
+            }
+            });
+        }
+
+        function requestTossPay() {
+            IMP.request_pay({
+                pg: "toss_brandpay.iamporttest_3", // PG사
+                pay_method: "card", // 결제수단
+                merchant_uid: paymentId, // 주문번호
+                name: storeId, // 주문명
+                amount: finalPrice, // 결제 금액
+                buyer_email: userEmail, // 구매자 이메일
+                buyer_name: userName, // 구매자 이름
+            }, function (rsp) {
+                if (rsp.success) {
+                    if (rsp.success) {
+                    // 결제 성공 시 서버로 결제 정보 전송
+                    axios.post('/api/payment/complete', {
+                        imp_uid: rsp.imp_uid,
+                        merchant_uid: rsp.merchant_uid
+                    }).then(function(response) {
+                        // 성공 로직 처리
+                        alert("결제 성공");
+                    }).catch(function(error) {
+                        // 에러 처리
+                        console.error("결제 정보 전송 실패", error);
+                    });
+                } else {
+                    // 결제 실패 시 로직
+                    alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
+                }
+            }
+            });
+        }
+</script>
+</head>
+<body>
+    <h2>결제 정보</h2>
+    <p>결제 ID: ${paymentForm.paymentId}</p>
+    <p>스토어 ID: ${paymentForm.storeId}</p>
+    <p>채널 키: ${paymentForm.channelKey}</p>
+
+    <h2>주문 상품</h2>
+        <c:forEach items="${paymentForm.orderItems}" var="orderItem">
+            <p>상품명: ${orderItem.item.name}</p>
+            <p>수량: ${orderItem.count}</p>
+            <p>가격: ${orderItem.orderPrice}</p>
+        </c:forEach>
+
+    <button onclick="requestPay()">카카오결제하기</button>
+    <button onclick="requestNaverPay()">네이버결제하기</button>
+    <button onclick="requestTossPay()">토스결제하기</button>
+
+</body>
+
+</html>

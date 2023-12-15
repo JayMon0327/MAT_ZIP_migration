@@ -43,6 +43,8 @@
 
     <form id="orderForm" action="/order" method="post">
       <!-- 여기에 동적으로 상품 ID와 수량 input 태그가 추가됩니다 -->
+      <!-- 판매자 ID -->
+      <input type="hidden" name="storeId" value="${products.member.username}" />
     </form>
     <button id="orderButton">주문하기</button>
 

@@ -16,9 +16,12 @@ public class PaymentService {
 
     private static final String toss = "tosspayments";
     private static final String ksnet = "ksnet";
-    private static final String paymentId = "pid -" + System.currentTimeMillis();
+    private static final String paymentIdHeader = "pid-";
 
-    public PaymentForm requestPaymentForm(RequestOrderDto dto) {
+    public PaymentForm paymentForm(RequestOrderDto dto) {
+        // 현재 시간을 기준으로 paymentId 생성
+        String paymentId = paymentIdHeader + System.currentTimeMillis();
+
         //멀티 PG 분기(db)로 관리할 수 있다. - 포트원 sdk가 필요로 하는 채널키 정보와 결제 데이터 정보를 함께 전송
         String[] pg_code = {toss, ksnet};
         String[] channelKey = {PaymentKey.CHANNEL_KEY_TOSS, PaymentKey.CHANNEL_KEY_KSNET};

@@ -21,6 +21,7 @@ public class PaymentForm {
     private String naverPayChannelKey;
     private String kakaoPayChannelKey;
     private String paymentId;
+    private Integer finalPrice;
 
     private Order order;
     private List<OrderItem> orderItems;

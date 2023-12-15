@@ -73,12 +73,5 @@
         orderForm.appendChild(productNameInput);
       }
 
-      // 판매자 ID 추가
-      var sellerIdInput = document.createElement('input');
-      sellerIdInput.type = 'hidden';
-      sellerIdInput.name = 'storeId';
-      sellerIdInput.value = '${products.member.username}';
-      orderForm.appendChild(sellerIdInput);
-
       orderForm.submit();
 });

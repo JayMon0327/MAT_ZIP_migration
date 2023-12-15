@@ -15,7 +15,7 @@ import java.util.List;
 public class ResponseOrderForm {
 
     private List<ItemDto> items;
-    private String sellerName;
+    private String storeId;
     private Integer totalPrice;
     private Address address;
 }

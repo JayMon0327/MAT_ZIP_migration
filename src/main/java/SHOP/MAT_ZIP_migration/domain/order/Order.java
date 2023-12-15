@@ -33,6 +33,7 @@ public class Order extends CreateDateBaseEntity {
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
+    @Builder.Default
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();
 

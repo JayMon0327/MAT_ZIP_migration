@@ -17,4 +17,6 @@ public class OrderForm {
 
     @NotNull
     private String storeId;
+
+    private Integer totalPrice;
 }

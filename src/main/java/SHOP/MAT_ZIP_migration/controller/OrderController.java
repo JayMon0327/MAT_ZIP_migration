@@ -40,21 +40,18 @@ public class OrderController {
         return "order/orderForm";
     }
 
-    @GetMapping("/order/paymentForm")
+    @PostMapping("/order/paymentForm")
     public String order(@Valid @ModelAttribute RequestOrderDto dto,
                         @AuthenticationPrincipal PrincipalDetails principal, Model model) {
         //주문 페이지 접속시 주문을 생성하고, 상품의 재고 유무를 확인하여 결제 페이지로 이동시킴
-        orderService.order(dto,principal.getMember());
-        PaymentForm form = paymentService.requestPaymentForm(dto);
+        paymentService.paymentForm(dto);
+        PaymentForm form = orderService.order(dto, principal.getMember());
 
         //포트원 sdk 채널키와 결제 데이터 정보
         model.addAttribute("paymentForm", form);
-        // 회원, 상품, 주문 정보
-        model.addAttribute("member", principal.getMember());
-        model.addAttribute("product", form.getOrderItems());
-        model.addAttribute("order", form.getOrder());
 
-        return "checkout_v2"; //결제 페이지로 이동
+        log.info("paymentForm 호출됨" + form);
+        return "order/paymentForm"; //결제 페이지로 이동
     }
 
 

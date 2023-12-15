@@ -33,7 +33,7 @@ public class OrderService {
         ResponseOrderForm orderForm = ResponseOrderForm.builder()
                 .items(itemDtoTransfer(form.getItems()))
                 .address(member.getAddress())
-                .sellerName(form.getStoreId())
+                .storeId(form.getStoreId())
                 .totalPrice(calculateTotalPrice(form.getItems()))
                 .build();
         return orderForm;
@@ -64,13 +64,15 @@ public class OrderService {
 
     @Transactional
     public PaymentForm order(RequestOrderDto dto, Member member) {
-//        calculatePoint(dto, member);
+        calculatePoint(dto, member);
         List<OrderItem> orderItems = createOrderItem(dto);
         Delivery delivery = Delivery.createDelivery(dto.getAddress());
         Order order = Order.createOrder(member, delivery, orderItems);
-        PaymentForm paymentForm = paymentService.requestPaymentForm(dto);
+
+        PaymentForm paymentForm = paymentService.paymentForm(dto);
         paymentForm.setOrder(order);
         paymentForm.setOrderItems(orderItems);
+        paymentForm.setFinalPrice(checkFinalPrice(dto));
 
         orderRepository.save(order);
         return paymentForm;
@@ -108,6 +110,25 @@ public class OrderService {
     }
 
     /**
+     * 최종 결제 금액, 포인트
+     */
+
+    private int checkFinalPrice(RequestOrderDto dto) {
+        List<ItemDto> itemDtos = dto.getItemDtos();
+        int totalPrice = calculateTotalPrice(itemDtos);
+        int finalPrice = totalPrice - dto.getUsedPoint();
+        return finalPrice;
+    }
+
+    private void calculatePoint(RequestOrderDto dto, Member member) {
+        member.removePoints(dto.getUsedPoint());
+
+        double earnedPoints = checkFinalPrice(dto) * 0.05; // 5% 적립
+        int earnedPointsInteger = ((int) Math.round(earnedPoints));
+        member.addPoints(earnedPointsInteger);
+    }
+
+    /**
      * 포인트 원복 관련 로직 필요, 배송 취소 처리 필요
      */
     @Transactional
@@ -116,25 +137,4 @@ public class OrderService {
                 new CustomException(CustomErrorCode.NOT_FOUND_ORDER));
         order.cancel();
     }
-
-    /**
-     * 최종 결제 금액, 포인트 검증
-     */
-
-//    private int checkFinalPrice(RequestOrderDto dto) {
-//        List<ItemDto> itemDtos = dto.getItemDtos();
-//        int totalPrice = calculateTotalPrice(itemDtos);
-//        if (totalPrice - dto.getUsedPoint() == dto.getTotalPrice()) {
-//            return dto.getTotalPrice();
-//        }
-//        throw new CustomException(CustomErrorCode.NOT_EQUAL_FINAL_PRICE);
-//    }
-//
-//    private void calculatePoint(RequestOrderDto dto, Member member) {
-//        member.removePoints(dto.getUsedPoint());
-//
-//        double earnedPoints = checkFinalPrice(dto) * 0.05; // 5% 적립
-//        int earnedPointsInteger = ((int) Math.round(earnedPoints));
-//        member.addPoints(earnedPointsInteger);
-//    }
 }
