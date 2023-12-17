@@ -3,10 +3,7 @@ package SHOP.MAT_ZIP_migration.domain;
 import SHOP.MAT_ZIP_migration.domain.baseentity.DateBaseEntity;
 import SHOP.MAT_ZIP_migration.domain.order.Order;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import static jakarta.persistence.FetchType.*;
 import static jakarta.persistence.GenerationType.*;
@@ -15,6 +12,7 @@ import static jakarta.persistence.GenerationType.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "payment")
 public class Payment extends DateBaseEntity {
@@ -34,4 +32,7 @@ public class Payment extends DateBaseEntity {
     private Integer usedPoint;
 
     private String pg_code;
+
+    private String imp_uid;
+    private String merchant_uid;
 }

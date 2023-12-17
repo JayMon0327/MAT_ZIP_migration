@@ -7,6 +7,7 @@ import SHOP.MAT_ZIP_migration.domain.baseentity.DateBaseEntity;
 import SHOP.MAT_ZIP_migration.domain.order.Address;
 import SHOP.MAT_ZIP_migration.domain.order.Order;
 import SHOP.MAT_ZIP_migration.domain.status.Role;
+import SHOP.MAT_ZIP_migration.dto.order.RequestOrderDto;
 import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
 import SHOP.MAT_ZIP_migration.exception.CustomException;
 import jakarta.persistence.*;
@@ -58,16 +59,25 @@ public class Member extends DateBaseEntity {
     /**
      * 포인트 처리 로직
      */
-    public void addPoints(int points) {
+    private void addPoints(int points) {
         this.point += points; // 포인트 충전
     }
 
-    public void removePoints(int points) {
+    private void removePoints(int points) {
         int result = this.point - points;
         if (result < 0) {
             throw new CustomException(CustomErrorCode.NOT_ENOUGH_POINT);
         }
         this.point -= points; // 포인트 사용
+    }
+
+    public Integer calculatePoint(Integer usedPoint, Integer amount) {
+        this.removePoints(usedPoint);
+
+        double earnedPoints = amount - usedPoint * 0.05; // 5% 적립
+        int earnedPointsInteger = ((int) Math.round(earnedPoints));
+        this.addPoints(earnedPointsInteger);
+        return earnedPointsInteger;
     }
 
     /**

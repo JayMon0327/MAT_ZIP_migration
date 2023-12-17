@@ -45,9 +45,13 @@ public class Order extends CreateDateBaseEntity {
                 .member(member)
                 .delivery(delivery)
                 .orderItems(orderItems)
-                .status(OrderStatus.ORDER)
+                .status(OrderStatus.TRY)
                 .build();
         return order;
+    }
+
+    public void changeOrderStatus(OrderStatus status) {
+        this.status = status;
     }
 
     public void cancel() {

@@ -16,108 +16,65 @@
     var finalPrice = "${paymentForm.finalPrice}";
     var userEmail = "${principal.member.email}";
     var userName = "${principal.member.name}";
+    var usedPoint = "${paymentForm.usedPoint}";
+    var orderId = "${paymentForm.order.id}";
     var IMP = window.IMP;
     IMP.init("imp85150734");
 
-        function requestPay() {
-            IMP.request_pay({
-                pg: "kakaopay.TC0ONETIME", // PG사
-                pay_method: "card", // 결제수단
-                merchant_uid: paymentId, // 주문번호
-                name: storeId, // 주문명
-                amount: finalPrice, // 결제 금액
-                buyer_email: userEmail, // 구매자 이메일
-                buyer_name: userName, // 구매자 이름
-            }, function (rsp) {
-                if (rsp.success) {
-                    if (rsp.success) {
-                    // 결제 성공 시 서버로 결제 정보 전송
-                    axios.post('/api/payment/complete', {
+    function requestPay() {
+        IMP.request_pay({
+            pg: "kakaopay.TC0ONETIME",
+            pay_method: "card",
+            merchant_uid: paymentId,
+            name: storeId,
+            amount: finalPrice,
+            buyer_email: userEmail,
+            buyer_name: userName,
+        }, function (rsp) {
+            if (rsp.success) {
+                $.ajax({
+                    url: "/api/payment/callback",
+                    method: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({
                         imp_uid: rsp.imp_uid,
-                        merchant_uid: rsp.merchant_uid
-                    }).then(function(response) {
-                        // 성공 로직 처리
+                        merchant_uid: rsp.merchant_uid,
+                        amount: rsp.paid_amount,
+                        usedPoint: usedPoint,
+                        orderId: orderId
+                    }),
+                }).done(function(response) {
+                    alert("첫 번째 요청 성공");
+                    $.ajax({
+                        url: "/api/payment/complete",
+                        method: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({
+                            imp_uid: rsp.imp_uid,
+                            merchant_uid: rsp.merchant_uid,
+                            amount: rsp.paid_amount,
+                            usedPoint: usedPoint,
+                            orderId: orderId
+                        }),
+                    }).done(function(response) {
                         alert("결제 성공");
-                    }).catch(function(error) {
-                        // 에러 처리
-                        console.error("결제 정보 전송 실패", error);
+                    }).fail(function(error) {
+                        console.error("두 번째 요청 실패", error);
                     });
-                } else {
-                    // 결제 실패 시 로직
-                    alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
-                }
+                }).fail(function(error) {
+                    console.error("첫 번째 요청 실패", error);
+                });
+            } else {
+                alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
             }
-            });
-        }
+        })};
 
-        function requestNaverPay() {
-            IMP.request_pay({
-                pg: "naverco.JayMonTest", // PG사
-                pay_method: "card", // 결제수단
-                merchant_uid: paymentId, // 주문번호
-                name: storeId, // 주문명
-                amount: finalPrice, // 결제 금액
-                buyer_email: userEmail, // 구매자 이메일
-                buyer_name: userName, // 구매자 이름
-            }, function (rsp) {
-                if (rsp.success) {
-                    if (rsp.success) {
-                    // 결제 성공 시 서버로 결제 정보 전송
-                    axios.post('/api/payment/complete', {
-                        imp_uid: rsp.imp_uid,
-                        merchant_uid: rsp.merchant_uid
-                    }).then(function(response) {
-                        // 성공 로직 처리
-                        alert("결제 성공");
-                    }).catch(function(error) {
-                        // 에러 처리
-                        console.error("결제 정보 전송 실패", error);
-                    });
-                } else {
-                    // 결제 실패 시 로직
-                    alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
-                }
-            }
-            });
-        }
-
-        function requestTossPay() {
-            IMP.request_pay({
-                pg: "toss_brandpay.iamporttest_3", // PG사
-                pay_method: "card", // 결제수단
-                merchant_uid: paymentId, // 주문번호
-                name: storeId, // 주문명
-                amount: finalPrice, // 결제 금액
-                buyer_email: userEmail, // 구매자 이메일
-                buyer_name: userName, // 구매자 이름
-            }, function (rsp) {
-                if (rsp.success) {
-                    if (rsp.success) {
-                    // 결제 성공 시 서버로 결제 정보 전송
-                    axios.post('/api/payment/complete', {
-                        imp_uid: rsp.imp_uid,
-                        merchant_uid: rsp.merchant_uid
-                    }).then(function(response) {
-                        // 성공 로직 처리
-                        alert("결제 성공");
-                    }).catch(function(error) {
-                        // 에러 처리
-                        console.error("결제 정보 전송 실패", error);
-                    });
-                } else {
-                    // 결제 실패 시 로직
-                    alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
-                }
-            }
-            });
-        }
 </script>
 </head>
 <body>
     <h2>결제 정보</h2>
-    <p>결제 ID: ${paymentForm.paymentId}</p>
-    <p>스토어 ID: ${paymentForm.storeId}</p>
-    <p>채널 키: ${paymentForm.channelKey}</p>
+    <p>주문번호: ${paymentForm.paymentId}</p>
+    <p>상점명: ${paymentForm.storeId}</p>
 
     <h2>주문 상품</h2>
         <c:forEach items="${paymentForm.orderItems}" var="orderItem">
@@ -125,6 +82,7 @@
             <p>수량: ${orderItem.count}</p>
             <p>가격: ${orderItem.orderPrice}</p>
         </c:forEach>
+        <p>총 주문금액: ${paymentForm.finalPrice}</p>
 
     <button onclick="requestPay()">카카오결제하기</button>
     <button onclick="requestNaverPay()">네이버결제하기</button>

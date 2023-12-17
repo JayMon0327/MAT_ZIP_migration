@@ -15,13 +15,10 @@ import java.util.List;
 @AllArgsConstructor
 public class PaymentForm {
 
-    private String[] pg_code;
     private String storeId;
-    private String channelKey;
-    private String naverPayChannelKey;
-    private String kakaoPayChannelKey;
     private String paymentId;
     private Integer finalPrice;
+    private Integer usedPoint;
 
     private Order order;
     private List<OrderItem> orderItems;

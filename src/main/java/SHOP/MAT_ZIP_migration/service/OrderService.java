@@ -2,6 +2,7 @@ package SHOP.MAT_ZIP_migration.service;
 
 import SHOP.MAT_ZIP_migration.domain.Member;
 import SHOP.MAT_ZIP_migration.domain.order.*;
+import SHOP.MAT_ZIP_migration.domain.status.OrderStatus;
 import SHOP.MAT_ZIP_migration.dto.order.*;
 import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
 import SHOP.MAT_ZIP_migration.exception.CustomException;
@@ -60,11 +61,12 @@ public class OrderService {
 
     /**
      * 주문생성 API
+     * 재고 확인 예외처리 필요
+     * 결제 정보 콜백 시, OrderStatus 변경 메소드 필요
      */
 
     @Transactional
     public PaymentForm order(RequestOrderDto dto, Member member) {
-        calculatePoint(dto, member);
         List<OrderItem> orderItems = createOrderItem(dto);
         Delivery delivery = Delivery.createDelivery(dto.getAddress());
         Order order = Order.createOrder(member, delivery, orderItems);
@@ -120,16 +122,8 @@ public class OrderService {
         return finalPrice;
     }
 
-    private void calculatePoint(RequestOrderDto dto, Member member) {
-        member.removePoints(dto.getUsedPoint());
-
-        double earnedPoints = checkFinalPrice(dto) * 0.05; // 5% 적립
-        int earnedPointsInteger = ((int) Math.round(earnedPoints));
-        member.addPoints(earnedPointsInteger);
-    }
-
     /**
-     * 포인트 원복 관련 로직 필요, 배송 취소 처리 필요
+     * 주문취소 - 포인트 원복 관련 로직 필요, 배송 취소 처리 필요
      */
     @Transactional
     public void cancelOrder(Long orderId) {
@@ -137,4 +131,26 @@ public class OrderService {
                 new CustomException(CustomErrorCode.NOT_FOUND_ORDER));
         order.cancel();
     }
+
+
+
+
+
+
+    public Order updateOrderStatus(Long orderId, String paymentStatus) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_ORDER));
+
+        // 결제 상태에 따라 주문 상태 업데이트
+        if ("paid".equals(paymentStatus)) {
+            order.changeOrderStatus(OrderStatus.ORDER);
+        } else if ("failed".equals(paymentStatus)) {
+            order.changeOrderStatus(OrderStatus.FAIL);
+        }
+
+        orderRepository.save(order);
+
+        return order;
+    }
+
 }
