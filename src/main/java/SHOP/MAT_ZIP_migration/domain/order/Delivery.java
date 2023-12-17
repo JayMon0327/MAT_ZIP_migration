@@ -3,8 +3,10 @@ package SHOP.MAT_ZIP_migration.domain.order;
 import SHOP.MAT_ZIP_migration.dto.order.RequestOrderDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import static jakarta.persistence.FetchType.*;
 import static jakarta.persistence.GenerationType.*;
@@ -13,6 +15,8 @@ import static jakarta.persistence.GenerationType.*;
 @Data
 @Table(name = "delivery")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Delivery {
 
     @Id
