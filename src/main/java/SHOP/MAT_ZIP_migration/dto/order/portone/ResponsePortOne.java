@@ -1,4 +1,4 @@
-package SHOP.MAT_ZIP_migration.dto.order;
+package SHOP.MAT_ZIP_migration.dto.order.portone;
 
 import SHOP.MAT_ZIP_migration.domain.order.Order;
 import lombok.Data;

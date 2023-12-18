@@ -131,26 +131,4 @@ public class OrderService {
                 new CustomException(CustomErrorCode.NOT_FOUND_ORDER));
         order.cancel();
     }
-
-
-
-
-
-
-    public Order updateOrderStatus(Long orderId, String paymentStatus) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_ORDER));
-
-        // 결제 상태에 따라 주문 상태 업데이트
-        if ("paid".equals(paymentStatus)) {
-            order.changeOrderStatus(OrderStatus.ORDER);
-        } else if ("failed".equals(paymentStatus)) {
-            order.changeOrderStatus(OrderStatus.FAIL);
-        }
-
-        orderRepository.save(order);
-
-        return order;
-    }
-
 }

@@ -33,7 +33,7 @@
         }, function (rsp) {
             if (rsp.success) {
                 $.ajax({
-                    url: "/api/payment/callback",
+                    url: "/api/payment/order",
                     method: "POST",
                     contentType: "application/json",
                     data: JSON.stringify({
@@ -44,25 +44,10 @@
                         orderId: orderId
                     }),
                 }).done(function(response) {
-                    alert("첫 번째 요청 성공");
-                    $.ajax({
-                        url: "/api/payment/complete",
-                        method: "POST",
-                        contentType: "application/json",
-                        data: JSON.stringify({
-                            imp_uid: rsp.imp_uid,
-                            merchant_uid: rsp.merchant_uid,
-                            amount: rsp.paid_amount,
-                            usedPoint: usedPoint,
-                            orderId: orderId
-                        }),
-                    }).done(function(response) {
-                        alert("결제 성공");
-                    }).fail(function(error) {
-                        console.error("두 번째 요청 실패", error);
-                    });
+                    alert("결제 성공");
+                    location.href = "/";
                 }).fail(function(error) {
-                    console.error("첫 번째 요청 실패", error);
+                    console.error("결제 실패", error);
                 });
             } else {
                 alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);

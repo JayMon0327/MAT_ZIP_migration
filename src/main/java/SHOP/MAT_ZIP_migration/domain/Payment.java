@@ -33,6 +33,7 @@ public class Payment extends DateBaseEntity {
 
     private String pg_code;
 
-    private String imp_uid;
-    private String merchant_uid;
+    private String impUid;
+    private String merchantUid;
+
 }
