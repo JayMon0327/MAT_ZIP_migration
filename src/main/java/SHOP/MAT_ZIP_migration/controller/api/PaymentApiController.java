@@ -26,9 +26,9 @@ public class PaymentApiController {
     private final PaymentService paymentService;
 
     @PostMapping("/payment/order")
-    public ResponseEntity createOrder(@Valid @RequestBody ResponsePortOne dto,
+    public ResponseEntity<SuccessPayment> createOrder(@Valid @RequestBody ResponsePortOne dto,
                                       @AuthenticationPrincipal PrincipalDetails principal) {
-        SuccessPayment successPayment = paymentService.createReservation(dto, principal.getMember());
-        return new ResponseEntity(successPayment, HttpStatus.OK);
+        SuccessPayment res = paymentService.createReservation(dto, principal.getMember());
+        return new ResponseEntity<>(res,HttpStatus.OK);
     }
 }

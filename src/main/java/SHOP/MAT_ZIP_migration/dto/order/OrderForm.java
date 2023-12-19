@@ -1,6 +1,5 @@
 package SHOP.MAT_ZIP_migration.dto.order;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -20,8 +19,4 @@ public class OrderForm {
 
     @NotBlank
     private String storeId;
-
-    @NotNull
-    @Min(1000)
-    private Integer totalPrice;
 }

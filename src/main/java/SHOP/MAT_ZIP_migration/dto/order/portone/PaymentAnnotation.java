@@ -13,4 +13,5 @@ public class PaymentAnnotation {
     private int amount;
     private String buyer_name;
     private String name; //제품명
+    private String pg_provider;
 }
