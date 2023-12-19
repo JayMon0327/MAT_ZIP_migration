@@ -55,26 +55,26 @@ public class PaymentService {
     @Transactional
     public SuccessPayment createReservation(ResponsePortOne res, Member member) {
         // 1. 응답받은 imp_uid로 결제조회 api를 호출하여 가격 검증
-        int verifyPrice = verifyPrice(res.getImp_uid(), res.getAmount());
+        PaymentDetail verifiedPayment = verifyPrice(res.getImp_uid(), res.getAmount());
 
         // 2. 응답받은 포인트로 멤버 포인트 계산
-        Integer addPoint = member.calculatePoint(res.getUsedPoint(), verifyPrice);
+        Integer addPoint = member.calculatePoint(res.getUsedPoint(), verifiedPayment.getResponse().getAmount());
 
         // 3. orderStatus를 Order상태로 변경
         Order order = changeOrderStatus(res.getOrderId());
 
         // 4. 응답받은 imp_uid로 payment 객체 생성
-        Payment payment = createPayment(res, addPoint, order);
+        Payment payment = createPayment(res.getUsedPoint(), addPoint, order, verifiedPayment);
 
         paymentRepository.save(payment);
         return createSuccessForm(res.getImp_uid());
     }
 
-    private int verifyPrice(String impUid, int amount) {
+    private PaymentDetail verifyPrice(String impUid, int amount) {
         PaymentDetail paymentDetails = portOneService.getPaymentDetails(impUid);
         int paidAmount = paymentDetails.getResponse().getAmount();
         if (paidAmount == amount) {
-            return paidAmount;
+            return paymentDetails;
         }
         throw new CustomException(CustomErrorCode.NOT_EQUAL_VERIFY_PRICE);
     }
@@ -86,14 +86,15 @@ public class PaymentService {
         return order;
     }
 
-    private Payment createPayment(ResponsePortOne res, Integer addPoint, Order order) {
+    private Payment createPayment(Integer usedPoint, Integer addPoint, Order order, PaymentDetail verifiedPayment) {
         Payment payment = Payment.builder()
-                .usedPoint(res.getUsedPoint())
+                .usedPoint(usedPoint)
                 .addPoint(addPoint)
                 .order(order)
-                .amount(res.getAmount())
-                .impUid(res.getImp_uid())
-                .merchantUid(res.getMerchant_uid())
+                .amount(verifiedPayment.getResponse().getAmount())
+                .impUid(verifiedPayment.getResponse().getImp_uid())
+                .merchantUid(verifiedPayment.getResponse().getMerchant_uid())
+                .pg_code(verifiedPayment.getResponse().getPg_provider())
                 .build();
         return payment;
     }

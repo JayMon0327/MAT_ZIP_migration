@@ -32,6 +32,5 @@ public class PaymentForm {
     @NotNull
     private Order order;
 
-    @NotNull
     private List<OrderItem> orderItems;
 }

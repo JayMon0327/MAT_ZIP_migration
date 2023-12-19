@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SuccessPayment {
-    private String OrderName; // 제품명
+    private String orderName; // 제품명
     private int amount; // 총 결제 금액
     private String buyerName; // 구매자
 }
