@@ -5,6 +5,7 @@ import SHOP.MAT_ZIP_migration.domain.Payment;
 import SHOP.MAT_ZIP_migration.domain.order.Order;
 import SHOP.MAT_ZIP_migration.domain.status.OrderStatus;
 import SHOP.MAT_ZIP_migration.dto.order.*;
+import SHOP.MAT_ZIP_migration.dto.order.portone.PaymentAnnotation;
 import SHOP.MAT_ZIP_migration.dto.order.portone.PaymentDetail;
 import SHOP.MAT_ZIP_migration.dto.order.portone.ResponsePortOne;
 import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
@@ -48,41 +49,61 @@ public class PaymentService {
      * 2. 응답받은 포인트로 멤버 포인트 계산
      * 3. 위의 응답이 true일 경우 orderStatus를 Order상태로 변경
      * 4. 응답받은 imp_uid로 payment 객체 생성
+     * 5. 주문명, 구매자, 결제금액을 응답
      */
 
     @Transactional
-    public void createReservation(ResponsePortOne response, Member member) {
+    public SuccessPayment createReservation(ResponsePortOne res, Member member) {
         // 1. 응답받은 imp_uid로 결제조회 api를 호출하여 가격 검증
-        boolean isVerified = verifyPayment(response.getImp_uid(), response.getAmount());
-        if (!isVerified) {
-            throw new RuntimeException("서버응답 가격과 DB 가격이 다릅니다.");
-        }
+        int verifyPrice = verifyPrice(res.getImp_uid(), res.getAmount());
+
         // 2. 응답받은 포인트로 멤버 포인트 계산
-        Integer increasePoint = member.calculatePoint(response.getUsedPoint(), response.getAmount());
+        Integer addPoint = member.calculatePoint(res.getUsedPoint(), verifyPrice);
 
         // 3. orderStatus를 Order상태로 변경
-        Order order = orderRepository.findById(response.getOrderId()).orElseThrow(
-                () -> new CustomException(CustomErrorCode.NOT_FOUND_ORDER));
-        order.changeOrderStatus(OrderStatus.ORDER);
+        Order order = changeOrderStatus(res.getOrderId());
 
         // 4. 응답받은 imp_uid로 payment 객체 생성
-        Payment payment = Payment.builder()
-                .usedPoint(response.getUsedPoint())
-                .addPoint(increasePoint)
-                .order(order)
-                .amount(response.getAmount())
-                .impUid(response.getImp_uid())
-                .merchantUid(response.getMerchant_uid())
-                .build();
+        Payment payment = createPayment(res, addPoint, order);
 
         paymentRepository.save(payment);
+        return createSuccessForm(res.getImp_uid());
     }
 
-    //액세스 토큰으로 가격 검증
-    public boolean verifyPayment(String impUid, int amount) {
+    private int verifyPrice(String impUid, int amount) {
         PaymentDetail paymentDetails = portOneService.getPaymentDetails(impUid);
         int paidAmount = paymentDetails.getResponse().getAmount();
-        return paidAmount == amount;
+        if (paidAmount == amount) {
+            return paidAmount;
+        }
+        throw new CustomException(CustomErrorCode.NOT_EQUAL_VERIFY_PRICE);
+    }
+
+    private Order changeOrderStatus(Long orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(
+                () -> new CustomException(CustomErrorCode.NOT_FOUND_ORDER));
+        order.changeOrderStatus(OrderStatus.ORDER);
+        return order;
+    }
+
+    private Payment createPayment(ResponsePortOne res, Integer addPoint, Order order) {
+        Payment payment = Payment.builder()
+                .usedPoint(res.getUsedPoint())
+                .addPoint(addPoint)
+                .order(order)
+                .amount(res.getAmount())
+                .impUid(res.getImp_uid())
+                .merchantUid(res.getMerchant_uid())
+                .build();
+        return payment;
+    }
+
+    private SuccessPayment createSuccessForm(String impUid) {
+        PaymentDetail paymentDetail = portOneService.getPaymentDetails(impUid);
+        PaymentAnnotation paymentRes = paymentDetail.getResponse();
+        SuccessPayment successPayment = new SuccessPayment(paymentRes.getName(), paymentRes.getAmount(),
+                paymentRes.getBuyer_name());
+        return successPayment;
     }
 }
 
