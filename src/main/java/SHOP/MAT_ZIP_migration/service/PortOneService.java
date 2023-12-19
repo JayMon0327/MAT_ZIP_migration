@@ -3,6 +3,8 @@ package SHOP.MAT_ZIP_migration.service;
 import SHOP.MAT_ZIP_migration.dto.order.portone.PaymentDetail;
 import SHOP.MAT_ZIP_migration.dto.order.portone.TokenRequest;
 import SHOP.MAT_ZIP_migration.dto.order.portone.TokenResponse;
+import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
+import SHOP.MAT_ZIP_migration.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ public class PortOneService {
         this.webClient = webClientBuilder.baseUrl("https://api.iamport.kr").build();
     }
 
+    /**
+     * 액세스 토큰 발급
+     */
     public String getAccessToken() {
         TokenRequest tokenRequest = new TokenRequest(PortOneApiKey.RestAPIKey, PortOneApiKey.RestAPISecretKey);
 
@@ -31,14 +36,15 @@ public class PortOneService {
                 .block();
 
         if (tokenResponse != null && tokenResponse.getResponse() != null) {
-            log.info("액세스토큰" + tokenResponse);
             return tokenResponse.getResponse().getAccess_token();
         } else {
-            String errorMessage = (tokenResponse != null) ? tokenResponse.getMessage() : "액세스 토큰을 가져오는 데 실패했습니다.";
-            throw new RuntimeException(errorMessage);
+            throw new CustomException(CustomErrorCode.FAIL_BRING_ACCESS_TOKEN);
         }
     }
 
+    /**
+     * 액세스 토큰으로 결제 단건 조회
+     */
     public PaymentDetail getPaymentDetails(String impUid) {
         String accessToken = getAccessToken();
 
@@ -52,7 +58,7 @@ public class PortOneService {
         if (paymentDetail != null) {
             return paymentDetail;
         } else {
-            throw new RuntimeException("결제 조회 실패");
+            throw new CustomException(CustomErrorCode.FAIL_FIND_PAYMENT_DETAIL);
         }
     }
 }

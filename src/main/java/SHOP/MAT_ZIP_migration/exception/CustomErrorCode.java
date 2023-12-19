@@ -14,10 +14,12 @@ public enum CustomErrorCode {
     NOT_FOUND_ITEM("ERP400", "상품을 찾을 수 없습니다."),
     NOT_FOUND_ORDER("ERP401", "주문을 찾을 수 없습니다."),
     NOT_FOUND_PRODUCT("ERP402", "상품 게시글을 찾을 수 없습니다."),
-    NOT_EQUAL_FINAL_PRICE("ERP500", "최종 결제금액이 일치하지 않습니다."),
+    NOT_EQUAL_FINAL_PRICE("ERP500", "결제금액이 일치하지 않습니다."),
     NOT_ENOUGH_STOCK("ERP501", "재고가 부족합니다."),
-    NOT_ENOUGH_POINT("ERP502", "포인트가 부족합니다.");
-
+    NOT_ENOUGH_POINT("ERP502", "포인트가 부족합니다."),
+    NOT_EQUAL_VERIFY_PRICE("ERP503", "지불 결제금액이 일치하지 않습니다."),
+    FAIL_BRING_ACCESS_TOKEN("ERP700", "API 액세스 토큰을 발급받는데 실패하였습니다."),
+    FAIL_FIND_PAYMENT_DETAIL("ERP701", "API 결제 조회에 실패하였습니다.");
 
     private final String errorCode;
     private final String errorMessage;

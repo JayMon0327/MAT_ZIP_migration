@@ -5,6 +5,7 @@ import SHOP.MAT_ZIP_migration.dto.ResponseDto;
 import SHOP.MAT_ZIP_migration.dto.order.SuccessPayment;
 import SHOP.MAT_ZIP_migration.dto.order.portone.ResponsePortOne;
 import SHOP.MAT_ZIP_migration.service.PaymentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class PaymentApiController {
     private final PaymentService paymentService;
 
     @PostMapping("/payment/order")
-    public ResponseEntity createOrder(@RequestBody ResponsePortOne dto,
+    public ResponseEntity createOrder(@Valid @RequestBody ResponsePortOne dto,
                                       @AuthenticationPrincipal PrincipalDetails principal) {
         SuccessPayment successPayment = paymentService.createReservation(dto, principal.getMember());
         return new ResponseEntity(successPayment, HttpStatus.OK);

@@ -7,7 +7,6 @@ import SHOP.MAT_ZIP_migration.domain.baseentity.DateBaseEntity;
 import SHOP.MAT_ZIP_migration.domain.order.Address;
 import SHOP.MAT_ZIP_migration.domain.order.Order;
 import SHOP.MAT_ZIP_migration.domain.status.Role;
-import SHOP.MAT_ZIP_migration.dto.order.RequestOrderDto;
 import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
 import SHOP.MAT_ZIP_migration.exception.CustomException;
 import jakarta.persistence.*;

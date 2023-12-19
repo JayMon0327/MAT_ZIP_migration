@@ -12,4 +12,5 @@ public class PaymentAnnotation {
     private String merchant_uid;
     private int amount;
     private String buyer_name;
+    private String name; //제품명
 }
