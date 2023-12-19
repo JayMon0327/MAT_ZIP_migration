@@ -2,7 +2,6 @@ package SHOP.MAT_ZIP_migration.service;
 
 import SHOP.MAT_ZIP_migration.domain.Member;
 import SHOP.MAT_ZIP_migration.domain.order.*;
-import SHOP.MAT_ZIP_migration.domain.status.OrderStatus;
 import SHOP.MAT_ZIP_migration.dto.order.*;
 import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
 import SHOP.MAT_ZIP_migration.exception.CustomException;
@@ -61,8 +60,9 @@ public class OrderService {
 
     /**
      * 주문생성 API
-     * 재고 확인 예외처리 필요
-     * 결제 정보 콜백 시, OrderStatus 변경 메소드 필요
+     * 재고 검증 후 주문 생성
+     * 결제 승인 전이므로 주문 상태를 TRY 설정
+     * 사용된 포인트를 제외한 금액을 결제요청에 넘김
      */
 
     @Transactional
@@ -74,7 +74,7 @@ public class OrderService {
         PaymentForm paymentForm = paymentService.paymentForm(dto);
         paymentForm.setOrder(order);
         paymentForm.setOrderItems(orderItems);
-        paymentForm.setFinalPrice(checkFinalPrice(dto));
+        paymentForm.setFinalPrice(checkPrice(dto));
 
         orderRepository.save(order);
         return paymentForm;
@@ -106,16 +106,13 @@ public class OrderService {
                     .count(itemDto.getCount())
                     .build();
             orderItems.add(orderItem);
+            //재고 처리와 검증
             item.removeStock(itemDto.getCount());
         }
         return orderItems;
     }
 
-    /**
-     * 최종 결제 금액, 포인트
-     */
-
-    private int checkFinalPrice(RequestOrderDto dto) {
+    private int checkPrice(RequestOrderDto dto) {
         List<ItemDto> itemDtos = dto.getItemDtos();
         int totalPrice = calculateTotalPrice(itemDtos);
         int finalPrice = totalPrice - dto.getUsedPoint();
