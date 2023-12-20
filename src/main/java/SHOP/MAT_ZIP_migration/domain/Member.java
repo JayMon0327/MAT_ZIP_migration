@@ -73,7 +73,7 @@ public class Member extends DateBaseEntity {
     public Integer calculatePoint(Integer usedPoint, Integer amount) {
         this.removePoints(usedPoint);
 
-        double earnedPoints = amount - usedPoint * 0.05; // 5% 적립
+        double earnedPoints = (amount - usedPoint) * 0.05; // 5% 적립
         int earnedPointsInteger = ((int) Math.round(earnedPoints));
         this.addPoints(earnedPointsInteger);
         return earnedPointsInteger;

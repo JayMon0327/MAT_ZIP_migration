@@ -7,6 +7,7 @@ import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
 import SHOP.MAT_ZIP_migration.exception.CustomException;
 import SHOP.MAT_ZIP_migration.repository.MemberRepository;
 import SHOP.MAT_ZIP_migration.service.validator.MemberValidator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +29,26 @@ class MemberServiceTest {
     private MemberValidator memberValidator;
     @Autowired
     private BCryptPasswordEncoder encoder;
+    private JoinMemberDto joinMemberDto;
+
+    @BeforeEach
+    void setup() {
+        joinMemberDto = JoinMemberDto.builder()
+                .username("kim123")
+                .password("testPassword")
+                .passwordCheck("testPassword")
+                .nickName("testname")
+                .email("kim@naver.com")
+                .build();
+    }
 
     @DisplayName("회원가입")
     @Test
     void signUp() {
-        JoinMemberDto joinMemberDto = new JoinMemberDto("kim", "testPassword", "testPassword", "kim@naver.com");
-
         memberService.SignUp(joinMemberDto);
-        Member savedMember = memberRepository.findByUsername("kim");
+        Member savedMember = memberRepository.findByUsername("kim123");
 
-        assertThat(savedMember.getUsername()).isEqualTo("kim");
+        assertThat(savedMember.getUsername()).isEqualTo("kim123");
         assertThat(savedMember.getEmail()).isEqualTo("kim@naver.com");
         assertThat(encoder.matches("testPassword", savedMember.getPassword())).isTrue();
     }
@@ -45,7 +56,6 @@ class MemberServiceTest {
     @DisplayName("비밀번호 확인과 예외")
     @Test
     void passwordCheck() {
-        JoinMemberDto joinMemberDto = new JoinMemberDto("kim", "testPassword", "testPassword", "kim@naver.com");
         String rawPassword = joinMemberDto.getPassword();
         String passwordCheck = "testPassword";
         String encodedPassword = memberValidator.PasswordCheck(rawPassword, passwordCheck);
@@ -58,9 +68,15 @@ class MemberServiceTest {
     @DisplayName("중복 유저네임 예외")
     @Test
     void DuplicateUsername() {
-        JoinMemberDto joinMemberDto1 = new JoinMemberDto("kim", "testPassword", "testPassword", "kim@naver.com");
-        JoinMemberDto joinMemberDto2 = new JoinMemberDto("kim", "test", "test", "Lee@naver.com");
-        memberService.SignUp(joinMemberDto1);
+        JoinMemberDto joinMemberDto2 = JoinMemberDto.builder()
+                .username("kim123")
+                .password("testPassword")
+                .passwordCheck("testPassword")
+                .nickName("testname")
+                .email("kim@naver.com")
+                .build();
+
+        memberService.SignUp(joinMemberDto);
 
         assertThatThrownBy(() -> memberService.SignUp(joinMemberDto2))
                 .isInstanceOf(CustomException.class)
@@ -71,9 +87,15 @@ class MemberServiceTest {
     @DisplayName("중복 이메일 예외")
     @Test
     void DuplicateEmail() {
-        JoinMemberDto joinMemberDto1 = new JoinMemberDto("kim", "testPassword", "testPassword", "kim@naver.com");
-        JoinMemberDto joinMemberDto2 = new JoinMemberDto("LEE", "test", "test", "kim@naver.com");
-        memberService.SignUp(joinMemberDto1);
+        JoinMemberDto joinMemberDto2 = JoinMemberDto.builder()
+                .username("park123")
+                .password("testPassword")
+                .passwordCheck("testPassword")
+                .nickName("testname")
+                .email("kim@naver.com")
+                .build();
+
+        memberService.SignUp(joinMemberDto);
 
         assertThatThrownBy(() -> memberService.SignUp(joinMemberDto2))
                 .isInstanceOf(CustomException.class)
@@ -84,12 +106,18 @@ class MemberServiceTest {
     @DisplayName("회원정보 수정")
     @Test
     void updateEmailAndPassword() {
-        JoinMemberDto joinMemberDto = new JoinMemberDto("kim", "testPassword", "testPassword", "kim@naver.com");
         memberService.SignUp(joinMemberDto);
-        Member savedMember = memberRepository.findByUsername("kim");
+        Member savedMember = memberRepository.findByUsername("kim123");
 
-        UpdateMemberDto updateMemberDto = new UpdateMemberDto(savedMember.getId(), "kim", "replacePassword",
-                "replacePassword", "LEE@naver.com");
+        UpdateMemberDto updateMemberDto = UpdateMemberDto.builder()
+                .id(savedMember.getId())
+                .username("kim123")
+                .password("replacePassword")
+                .passwordCheck("replacePassword")
+                .nickName("testname")
+                .email("LEE@naver.com")
+                .build();
+
         memberService.update(updateMemberDto);
 
 
