@@ -31,4 +31,11 @@ public class PaymentApiController {
         SuccessPayment res = paymentService.createReservation(dto, principal.getMember());
         return new ResponseEntity<>(res,HttpStatus.OK);
     }
+
+    @PostMapping("/payment/order")
+    public ResponseEntity<SuccessPayment> cancelOrder(@Valid @RequestBody ResponsePortOne dto,
+                                                      @AuthenticationPrincipal PrincipalDetails principal) {
+        SuccessPayment res = paymentService.createReservation(dto, principal.getMember());
+        return new ResponseEntity<>(res,HttpStatus.OK);
+    }
 }

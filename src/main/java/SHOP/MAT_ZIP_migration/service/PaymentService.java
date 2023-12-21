@@ -8,14 +8,19 @@ import SHOP.MAT_ZIP_migration.dto.order.*;
 import SHOP.MAT_ZIP_migration.dto.order.portone.PaymentAnnotation;
 import SHOP.MAT_ZIP_migration.dto.order.portone.PaymentDetail;
 import SHOP.MAT_ZIP_migration.dto.order.portone.ResponsePortOne;
+import SHOP.MAT_ZIP_migration.dto.product.ResponseProductDto;
 import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
 import SHOP.MAT_ZIP_migration.exception.CustomException;
 import SHOP.MAT_ZIP_migration.repository.OrderRepository;
 import SHOP.MAT_ZIP_migration.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 @Service
@@ -105,6 +110,10 @@ public class PaymentService {
         SuccessPayment successPayment = new SuccessPayment(paymentRes.getName(), paymentRes.getAmount(),
                 paymentRes.getBuyer_name());
         return successPayment;
+    }
+
+    public Page<Payment> getPaymentDetails(Long memberId, Pageable pageable) {
+        return paymentRepository.findByOrderMemberId(memberId,pageable);
     }
 }
 
