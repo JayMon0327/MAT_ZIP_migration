@@ -1,7 +1,10 @@
+마이그레이션 이전 프로젝트 주소 : https://github.com/JayMon0327/MAT_ZIP
+<hr>
+
 # 🍕 맛집 migration
 ## [📚 프로젝트 작업일지](https://jaymon.notion.site/5c86177f92e649639e4fa40fa5befac1?pvs=4)
 
-# 사장님들을 위한 커뮤니티 서비스 ➡️ 판매자들을 위한 쇼핑몰
+
 * 판매 분석을 위한 매출차트
 * 스프링 시큐리티 기반의 OAuth2 로그인
 * 상품 등록, 재고 관리
