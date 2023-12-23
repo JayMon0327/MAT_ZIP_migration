@@ -8,7 +8,6 @@ import SHOP.MAT_ZIP_migration.dto.order.*;
 import SHOP.MAT_ZIP_migration.dto.order.portone.PaymentAnnotation;
 import SHOP.MAT_ZIP_migration.dto.order.portone.PaymentDetail;
 import SHOP.MAT_ZIP_migration.dto.order.portone.ResponsePortOne;
-import SHOP.MAT_ZIP_migration.dto.product.ResponseProductDto;
 import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
 import SHOP.MAT_ZIP_migration.exception.CustomException;
 import SHOP.MAT_ZIP_migration.repository.OrderRepository;
@@ -19,8 +18,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 
 @Service
