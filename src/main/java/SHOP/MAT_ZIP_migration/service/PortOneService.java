@@ -1,6 +1,7 @@
 package SHOP.MAT_ZIP_migration.service;
 
 import SHOP.MAT_ZIP_migration.dto.order.portone.PaymentDetail;
+import SHOP.MAT_ZIP_migration.dto.order.portone.ReqCancelPayment;
 import SHOP.MAT_ZIP_migration.dto.order.portone.TokenRequest;
 import SHOP.MAT_ZIP_migration.dto.order.portone.TokenResponse;
 import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
@@ -10,6 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -60,5 +64,27 @@ public class PortOneService {
         } else {
             throw new CustomException(CustomErrorCode.FAIL_FIND_PAYMENT_DETAIL);
         }
+    }
+
+    /**
+     * 결제 취소
+     */
+    public void cancelPayment(String impUid, String merchantUid, Integer amount) {
+        String accessToken = getAccessToken();
+
+        ReqCancelPayment reqCancelPayment = ReqCancelPayment.builder()
+                .imp_uid(impUid)
+                .merchant_uid(merchantUid)
+                .checksum(amount)
+                .build();
+
+        PaymentDetail paymentDetail = webClient.post()
+                .uri("/payments/cancel")
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(reqCancelPayment)
+                .retrieve()
+                .bodyToMono(PaymentDetail.class)
+                .block();
     }
 }

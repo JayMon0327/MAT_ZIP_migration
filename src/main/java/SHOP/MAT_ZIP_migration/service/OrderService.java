@@ -1,12 +1,15 @@
 package SHOP.MAT_ZIP_migration.service;
 
 import SHOP.MAT_ZIP_migration.domain.Member;
+import SHOP.MAT_ZIP_migration.domain.Payment;
 import SHOP.MAT_ZIP_migration.domain.order.*;
 import SHOP.MAT_ZIP_migration.dto.order.*;
+import SHOP.MAT_ZIP_migration.dto.order.portone.PaymentDetail;
 import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
 import SHOP.MAT_ZIP_migration.exception.CustomException;
 import SHOP.MAT_ZIP_migration.repository.ItemRepository;
 import SHOP.MAT_ZIP_migration.repository.OrderRepository;
+import SHOP.MAT_ZIP_migration.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,8 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ItemRepository itemRepository;
     private final PaymentService paymentService;
+    private final PaymentRepository paymentRepository;
+    private final PortOneService portOneService;
 
     /**
      * orderForm = 상품 이름, 구매 수량, 총 구매금액, 판매자 이름, 배송지 정보
@@ -120,12 +125,32 @@ public class OrderService {
     }
 
     /**
-     * 주문취소 - 포인트 원복 관련 로직 필요, 배송 취소 처리 필요
+     * 주문취소
+     * 1. 결제 조회 API로 주문 정보 검증
+     * 2. 재고 원복, 주문 상태 변경
+     * 3. 포인트 원복 관련 로직 필요
+     * 4. 결제내역 테이블에 취소 금액 저장
+     * 5. 결제 취소 API로 주문 취소 처리
      */
     @Transactional
     public void cancelOrder(Long orderId) {
+        //결제 조회 API로 주문 정보 검증
+        Payment payment = paymentRepository.findByOrderId(orderId);
+        paymentService.verifyPrice(payment.getImpUid(), payment.getAmount());
+
+        //재고 원복, 주문 상태 변경
         Order order = orderRepository.findById(orderId).orElseThrow(()->
                 new CustomException(CustomErrorCode.NOT_FOUND_ORDER));
         order.cancel();
+
+        //포인트 원복 처리
+        Member member = order.getMember();
+        member.cancelOrderPoint(payment.getUsedPoint(), payment.getAddPoint());
+
+        //결제내역 테이블에 취소 금액 저장 - 현재 부분 취소 처리 기능 없음
+        payment.addCancelAmount(payment.getAmount());
+
+        //결제 취소 API로 주문 취소 처리
+        portOneService.cancelPayment(payment.getImpUid(), payment.getMerchantUid(),payment.getAmount());
     }
 }
