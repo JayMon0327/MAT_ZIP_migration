@@ -1,5 +1,6 @@
 package SHOP.MAT_ZIP_migration.domain;
 
+import SHOP.MAT_ZIP_migration.domain.baseentity.DateBaseEntity;
 import SHOP.MAT_ZIP_migration.domain.order.Item;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -17,7 +18,7 @@ import static jakarta.persistence.GenerationType.*;
 @Getter
 @Builder
 @Table(name = "product")
-public class Product {
+public class Product extends DateBaseEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "product_id")

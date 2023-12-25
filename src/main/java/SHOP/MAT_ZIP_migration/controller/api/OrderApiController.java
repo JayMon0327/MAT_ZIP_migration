@@ -26,8 +26,9 @@ public class OrderApiController {
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
-    @DeleteMapping("/order/{id}")
+    @DeleteMapping("/order/{orderId}")
     public ResponseDto<Integer> cancel(@PathVariable Long orderId) {
+        log.info("결제 취소 요청됨" + orderId);
         orderService.cancelOrder(orderId);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }

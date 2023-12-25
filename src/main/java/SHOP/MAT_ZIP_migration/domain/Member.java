@@ -80,8 +80,8 @@ public class Member extends DateBaseEntity {
     }
 
     public void cancelOrderPoint(Integer usedPoint, Integer addPoint) {
-        this.removePoints(addPoint);
         this.addPoints(usedPoint);
+        this.removePoints(addPoint);
     }
 
     /**
