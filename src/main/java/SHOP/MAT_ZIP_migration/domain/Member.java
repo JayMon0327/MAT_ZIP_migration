@@ -79,6 +79,11 @@ public class Member extends DateBaseEntity {
         return earnedPointsInteger;
     }
 
+    public void cancelOrderPoint(Integer usedPoint, Integer addPoint) {
+        this.removePoints(addPoint);
+        this.addPoints(usedPoint);
+    }
+
     /**
      * 회원 수정
      */
