@@ -36,4 +36,8 @@ public class Payment extends DateBaseEntity {
     private String impUid;
     private String merchantUid;
 
+    public void addCancelAmount(Integer cancelAmount) {
+        this.cancelAmount = cancelAmount;
+    }
+
 }
