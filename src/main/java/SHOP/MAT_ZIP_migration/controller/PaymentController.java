@@ -1,6 +1,6 @@
 package SHOP.MAT_ZIP_migration.controller;
 
-import SHOP.MAT_ZIP_migration.domain.Payment;
+import SHOP.MAT_ZIP_migration.dto.order.PaymentList;
 import SHOP.MAT_ZIP_migration.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,12 +25,13 @@ public class PaymentController {
         return "order/successPayment";
     }
 
-    @GetMapping("payment/{memberId}")
+    @GetMapping("/payment/detail/{memberId}")
     public String viewPayments(@PathVariable Long memberId,
                               @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
                               Model model) {
-        Page<Payment> productDetails = paymentService.getPaymentDetails(memberId,pageable);
-        model.addAttribute("payments", productDetails);
+        Page<PaymentList> paymentDetails = paymentService.getPaymentDetails(memberId,pageable);
+        model.addAttribute("payments", paymentDetails);
+        log.info("결제내역" + paymentDetails.getContent());
         return "order/list";
     }
 }

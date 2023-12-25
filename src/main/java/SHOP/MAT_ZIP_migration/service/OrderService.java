@@ -148,7 +148,7 @@ public class OrderService {
         member.cancelOrderPoint(payment.getUsedPoint(), payment.getAddPoint());
 
         //결제내역 테이블에 취소 금액 저장 - 현재 부분 취소 처리 기능 없음
-        payment.addCancelAmount(payment.getAmount());
+        payment.saveCancelAmount(payment.getAmount());
 
         //결제 취소 API로 주문 취소 처리
         portOneService.cancelPayment(payment.getImpUid(), payment.getMerchantUid(),payment.getAmount());
