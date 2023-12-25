@@ -1,6 +1,8 @@
 package SHOP.MAT_ZIP_migration.repository;
 
+import SHOP.MAT_ZIP_migration.domain.Member;
 import SHOP.MAT_ZIP_migration.domain.Payment;
+import SHOP.MAT_ZIP_migration.domain.order.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +14,6 @@ import java.util.List;
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
     Payment findByImpUid(String impUid);
     Page<Payment> findByOrderMemberId(Long memberId, Pageable pageable);
+
+    Payment findByOrderId(Long orderId);
 }

@@ -59,7 +59,7 @@ public class PaymentService {
         // 1. 응답받은 imp_uid로 결제조회 api를 호출하여 가격 검증
         PaymentDetail verifiedPayment = verifyPrice(res.getImp_uid(), res.getAmount());
 
-        // 2. 응답받은 포인트로 멤버 포인트 계산
+        // 2. 응답받은 포인트로 적립될 포인트 계산
         Integer addPoint = member.calculatePoint(res.getUsedPoint(), verifiedPayment.getResponse().getAmount());
 
         // 3. orderStatus를 Order상태로 변경
@@ -72,7 +72,7 @@ public class PaymentService {
         return createSuccessForm(res.getImp_uid());
     }
 
-    private PaymentDetail verifyPrice(String impUid, int amount) {
+    public PaymentDetail verifyPrice(String impUid, int amount) {
         PaymentDetail paymentDetails = portOneService.getPaymentDetails(impUid);
         int paidAmount = paymentDetails.getResponse().getAmount();
         if (paidAmount == amount) {

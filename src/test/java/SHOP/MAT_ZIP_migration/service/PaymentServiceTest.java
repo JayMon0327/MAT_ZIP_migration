@@ -158,6 +158,13 @@ class PaymentServiceTest {
         assertThat(successPayment.getAmount()).isEqualTo(1000);
     }
 
+    @DisplayName("회원 추가 적립금 테스트")
+    @Test
+    void memberAddPoint() {
+        Integer resultPoint = member.calculatePoint(0, 3000);
+        assertThat(resultPoint).isEqualTo(150);
+    }
+
     @DisplayName("포인트 결제 금액 검증")
     @Test
     void createReservation_ShouldVerifyPointCorrectly() {
