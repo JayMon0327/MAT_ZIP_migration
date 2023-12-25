@@ -3,6 +3,8 @@ package SHOP.MAT_ZIP_migration.domain.order;
 import SHOP.MAT_ZIP_migration.domain.baseentity.CreateDateBaseEntity;
 import SHOP.MAT_ZIP_migration.domain.Member;
 import SHOP.MAT_ZIP_migration.domain.status.OrderStatus;
+import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
+import SHOP.MAT_ZIP_migration.exception.CustomException;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -56,7 +58,10 @@ public class Order extends CreateDateBaseEntity {
 
     public void cancel() {
         if (delivery.getStatus() == DeliveryStatus.COMP) {
-            throw new IllegalStateException("이미 배송완료된 상품은 취소가 불가능합니다.");
+            throw new CustomException(CustomErrorCode.ALREADY_DELIVERY_STATUS);
+        }
+        if (status == OrderStatus.TRY || status == OrderStatus.FAIL) {
+            throw new CustomException(CustomErrorCode.NOT_NORMAL_PAYMENT_ORDER);
         }
         this.status = (OrderStatus.CANCEL);
         for (OrderItem orderItem : orderItems) {
