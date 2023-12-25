@@ -27,9 +27,9 @@ public class PaymentController {
 
     @GetMapping("/payment/detail/{memberId}")
     public String viewPayments(@PathVariable Long memberId,
-                              @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                              Model model) {
-        Page<PaymentList> paymentDetails = paymentService.getPaymentDetails(memberId,pageable);
+                               @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                               Model model) {
+        Page<PaymentList> paymentDetails = paymentService.getPaymentDetails(memberId, pageable);
         model.addAttribute("payments", paymentDetails);
         log.info("결제내역" + paymentDetails.getContent());
         return "order/list";

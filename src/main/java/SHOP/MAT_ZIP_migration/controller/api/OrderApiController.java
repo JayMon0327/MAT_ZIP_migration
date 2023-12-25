@@ -21,7 +21,7 @@ public class OrderApiController {
 
     @PostMapping("/order")
     public ResponseDto<Integer> order(@Valid @ModelAttribute RequestOrderDto dto,
-                                     @AuthenticationPrincipal PrincipalDetails principal){
+                                      @AuthenticationPrincipal PrincipalDetails principal) {
         orderService.order(dto, principal.getMember());
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }

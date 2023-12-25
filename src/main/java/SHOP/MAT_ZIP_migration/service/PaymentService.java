@@ -110,7 +110,7 @@ public class PaymentService {
     }
 
     public Page<PaymentList> getPaymentDetails(Long memberId, Pageable pageable) {
-        return paymentRepository.findByOrderMemberId(memberId,pageable);
+        return paymentRepository.findByOrderMemberId(memberId, pageable);
     }
 }
 

@@ -21,7 +21,7 @@ import java.util.UUID;
 @Primary
 @Component
 @Slf4j
-public class ProductFileStore implements FileStore<ProductImage>{
+public class ProductFileStore implements FileStore<ProductImage> {
 
     private static final String pathHeader = "file:";
     private static final String NameCriterion = ".";
@@ -31,7 +31,7 @@ public class ProductFileStore implements FileStore<ProductImage>{
     private String fileDir;
 
     @Override
-    public List<ProductImage> storeFiles(List<MultipartFile> multipartFiles){
+    public List<ProductImage> storeFiles(List<MultipartFile> multipartFiles) {
         List<ProductImage> storeFileResult = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
             if (!multipartFile.isEmpty()) {
@@ -54,7 +54,7 @@ public class ProductFileStore implements FileStore<ProductImage>{
         return fileDir + filename;
     }
 
-    private ProductImage storeProductFile(MultipartFile multipartFile){
+    private ProductImage storeProductFile(MultipartFile multipartFile) {
         String uploadFileName = multipartFile.getOriginalFilename();
         String storeFileName = createStoreFileName(uploadFileName);
         try {

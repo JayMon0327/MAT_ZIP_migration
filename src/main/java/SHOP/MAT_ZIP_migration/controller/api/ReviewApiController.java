@@ -22,7 +22,7 @@ public class ReviewApiController {
 
     @PostMapping("/review")
     public ResponseDto<Integer> save(@Valid @ModelAttribute RequestReviewDto dto,
-                                          @AuthenticationPrincipal PrincipalDetails principal) {
+                                     @AuthenticationPrincipal PrincipalDetails principal) {
         reviewService.saveReview(dto, principal.getMember());
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }

@@ -30,7 +30,7 @@ public class ReviewService {
     }
 
     @Transactional
-    public void saveReview(RequestReviewDto reviewDto, Member member){
+    public void saveReview(RequestReviewDto reviewDto, Member member) {
         Product product = productRepository.findById(reviewDto.getProductId()).orElseThrow();
         Review review = Review.builder()
                 .product(product)

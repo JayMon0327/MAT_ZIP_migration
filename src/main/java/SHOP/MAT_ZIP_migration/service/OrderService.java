@@ -46,7 +46,7 @@ public class OrderService {
 
     private List<ItemDto> itemDtoTransfer(List<ItemDto> dtos) {
         List<ItemDto> itemDtos = dtos.stream()
-                .map(item -> new ItemDto(item.getItemId(),item.getItemName(), item.getCount()))
+                .map(item -> new ItemDto(item.getItemId(), item.getItemName(), item.getCount()))
                 .collect(Collectors.toList());
         return itemDtos;
     }
@@ -139,7 +139,7 @@ public class OrderService {
         paymentService.verifyPrice(payment.getImpUid(), payment.getAmount());
 
         //재고 원복, 주문 상태 변경
-        Order order = orderRepository.findById(orderId).orElseThrow(()->
+        Order order = orderRepository.findById(orderId).orElseThrow(() ->
                 new CustomException(CustomErrorCode.NOT_FOUND_ORDER));
         order.cancel();
 
@@ -151,6 +151,6 @@ public class OrderService {
         payment.saveCancelAmount(payment.getAmount());
 
         //결제 취소 API로 주문 취소 처리
-        portOneService.cancelPayment(payment.getImpUid(), payment.getMerchantUid(),payment.getAmount());
+        portOneService.cancelPayment(payment.getImpUid(), payment.getMerchantUid(), payment.getAmount());
     }
 }

@@ -135,7 +135,7 @@ class PaymentServiceTest {
     @Test
     void createReservation_ShouldVerifyPriceCorrectly() {
         // 테스트용 결제 상세 정보 생성
-        PaymentDetail paymentDetailMock = createMockPaymentDetail(1000,testImpUid); // 결제 상세 정보의 amount를 1000으로 설정
+        PaymentDetail paymentDetailMock = createMockPaymentDetail(1000, testImpUid); // 결제 상세 정보의 amount를 1000으로 설정
         int expectedAmount = 1000;
 
         // PortOneService의 getPaymentDetails 메서드를 모의 구현
@@ -171,7 +171,7 @@ class PaymentServiceTest {
         Member newMember = createNewMember();
         Integer initialPoint = newMember.getPoint();
         // 테스트용 결제 상세 정보 생성
-        PaymentDetail paymentDetailMock = createMockPaymentDetail(1000,testImpUid); // 결제 상세 정보의 amount를 1000으로 설정
+        PaymentDetail paymentDetailMock = createMockPaymentDetail(1000, testImpUid); // 결제 상세 정보의 amount를 1000으로 설정
         int expectedAmount = 1000;
 
         // PortOneService의 getPaymentDetails 메서드를 모의 구현

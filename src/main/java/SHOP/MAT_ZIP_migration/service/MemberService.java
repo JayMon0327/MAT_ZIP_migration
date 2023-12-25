@@ -50,7 +50,7 @@ public class MemberService {
         if (persistance.getProvider() == null || persistance.getProvider().equals("")) {
             String encodePassword = memberValidator.PasswordCheck(dto.getPassword(),
                     dto.getPasswordCheck());
-            persistance.updateMember(encodePassword, dto.getNickName(), dto.getEmail(),dto.getAddress());
+            persistance.updateMember(encodePassword, dto.getNickName(), dto.getEmail(), dto.getAddress());
         }
     }
 }

@@ -67,7 +67,7 @@ class ProductServiceTest {
 
     @DisplayName("상품 등록 테스트")
     @Test
-    void save(){
+    void save() {
         Long productId = productService.saveProduct(productDto, member);
         Product savedProduct = productRepository.findById(productId).orElseThrow();
 
@@ -85,7 +85,7 @@ class ProductServiceTest {
                 .title("제목2")
                 .description("내용2")
                 .build();
-        productService.updateProduct(savedProductId,updatedto);
+        productService.updateProduct(savedProductId, updatedto);
 
         Product resultProduct = productRepository.findById(savedProductId).orElseThrow();
         assertThat(resultProduct.getTitle()).isEqualTo("제목2");
@@ -134,8 +134,8 @@ class ProductServiceTest {
         Product savedProduct = productRepository.findById(savedProductId).orElseThrow();
         Long itemId1 = savedProduct.getItems().get(0).getId();
         Long itemId2 = savedProduct.getItems().get(1).getId();
-        updateItemDtos.add(new RequestUpdateItemDto(itemId1,"Change Item 1", 30000, 12));
-        updateItemDtos.add(new RequestUpdateItemDto(itemId2,"Change Item 2", 40000, 55));
+        updateItemDtos.add(new RequestUpdateItemDto(itemId1, "Change Item 1", 30000, 12));
+        updateItemDtos.add(new RequestUpdateItemDto(itemId2, "Change Item 2", 40000, 55));
 
         RequestUpdateProductAndItemDto updateItemDto = new RequestUpdateProductAndItemDto();
         updateItemDto.setProductDto(updatedProductDto);

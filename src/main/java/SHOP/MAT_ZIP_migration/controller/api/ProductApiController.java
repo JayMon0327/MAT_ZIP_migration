@@ -30,13 +30,13 @@ public class ProductApiController {
      */
     @PostMapping("/product")
     public ResponseDto<Integer> save(@Valid @ModelAttribute RequestSaveProductAndItemDto dto,
-                                     @AuthenticationPrincipal PrincipalDetails principal){
+                                     @AuthenticationPrincipal PrincipalDetails principal) {
         Long productId = productService.saveProductAndItem(dto, principal.getMember());
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1, productId);
     }
 
     @PutMapping("/product/{id}")
-    public ResponseDto<Integer> update(@PathVariable Long id, @Valid @ModelAttribute RequestUpdateProductAndItemDto dto){
+    public ResponseDto<Integer> update(@PathVariable Long id, @Valid @ModelAttribute RequestUpdateProductAndItemDto dto) {
         Long productId = productService.updateProductAndItem(id, dto);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1, productId);
     }

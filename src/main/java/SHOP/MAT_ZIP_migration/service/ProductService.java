@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,7 @@ public class ProductService {
     }
 
     @Transactional
-    public Long saveProductAndItem(RequestSaveProductAndItemDto dto, Member member){
+    public Long saveProductAndItem(RequestSaveProductAndItemDto dto, Member member) {
         Long productId = saveProduct(dto.getProductDto(), member);
         for (RequestSaveItemDto requestSaveItemDto : dto.getItems()) {
             Item item = itemService.saveItem(productId, requestSaveItemDto);
@@ -44,7 +45,7 @@ public class ProductService {
     }
 
     @Transactional
-    public Long saveProduct(RequestProductDto dto, Member member){
+    public Long saveProduct(RequestProductDto dto, Member member) {
         Product product = Product.builder()
                 .member(member)
                 .title(dto.getTitle())
@@ -58,7 +59,7 @@ public class ProductService {
     }
 
     @Transactional
-    public Long updateProductAndItem(Long id, RequestUpdateProductAndItemDto dto){
+    public Long updateProductAndItem(Long id, RequestUpdateProductAndItemDto dto) {
         Long productId = updateProduct(id, dto.getProductDto());
         for (RequestUpdateItemDto requestUpdateItemDto : dto.getItems()) {
             itemService.updateItem(requestUpdateItemDto);
@@ -67,7 +68,7 @@ public class ProductService {
     }
 
     @Transactional
-    public Long updateProduct(Long id, RequestProductDto requestProductDto){
+    public Long updateProduct(Long id, RequestProductDto requestProductDto) {
         Product savedProduct = productRepository.findById(id).orElseThrow(() -> {
             return new IllegalArgumentException("상품 찾기 실패");
         });
@@ -121,7 +122,7 @@ public class ProductService {
 
     public List<ResponseProductDto.ItemDto> itemDtoTransfer(Product product) {
         List<ResponseProductDto.ItemDto> itemDtos = product.getItems().stream()
-                .map(item -> new ResponseProductDto.ItemDto(item.getId(),item.getName(), item.getPrice(), item.getStock()))
+                .map(item -> new ResponseProductDto.ItemDto(item.getId(), item.getName(), item.getPrice(), item.getStock()))
                 .collect(Collectors.toList());
         return itemDtos;
     }

@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @Component
 @Slf4j
-public class ReviewFileStore implements FileStore<ReviewImage>{
+public class ReviewFileStore implements FileStore<ReviewImage> {
 
     private static final String NameCriterion = ".";
     private static final int NameRange = 1;
@@ -26,7 +26,7 @@ public class ReviewFileStore implements FileStore<ReviewImage>{
     private String fileDir;
 
     @Override
-    public List<ReviewImage> storeFiles(List<MultipartFile> multipartFiles){
+    public List<ReviewImage> storeFiles(List<MultipartFile> multipartFiles) {
         List<ReviewImage> storeFileResult = new ArrayList<>();
         for (MultipartFile multipartFile : multipartFiles) {
             if (!multipartFile.isEmpty()) {

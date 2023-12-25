@@ -31,13 +31,13 @@ public class GlobalExceptionHandler {
      * validation 어노테이션 검증
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex){
+    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors()
                 .forEach(c -> {
                     errors.put(((FieldError) c).getField(), getErrorMessage(c));
                 });
-        log.info("검증오류 발생: "+ errors);
+        log.info("검증오류 발생: " + errors);
         return ResponseEntity.badRequest().body(errors);
     }
 
@@ -46,7 +46,8 @@ public class GlobalExceptionHandler {
         for (String code : codes) {
             try {
                 return messageSource.getMessage(code, error.getArguments(), Locale.KOREA);
-            } catch (NoSuchMessageException ignored) {}
+            } catch (NoSuchMessageException ignored) {
+            }
         }
         return error.getDefaultMessage();
     }
@@ -55,7 +56,7 @@ public class GlobalExceptionHandler {
      * 타입 미스매치 검증
      */
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<Map<String, String>> handleTypeMismatchExceptions(HttpMessageNotReadableException ex){
+    public ResponseEntity<Map<String, String>> handleTypeMismatchExceptions(HttpMessageNotReadableException ex) {
         Map<String, String> errors = new HashMap<>();
 
         Pattern errorFieldPattern = Pattern.compile("\\[[\"](.*?)[\"]\\]");
@@ -66,7 +67,7 @@ public class GlobalExceptionHandler {
         Matcher rightTypeMatcher = rightTypePattern.matcher(ex.getMessage());
         String rightType = rightTypeMatcher.find() ? rightTypeMatcher.group(1) : "?";
 
-        String errorMessage = messageSource.getMessage("typeMismatch", new Object[] {rightType}, Locale.KOREA);
+        String errorMessage = messageSource.getMessage("typeMismatch", new Object[]{rightType}, Locale.KOREA);
         errors.put(errorField, errorMessage);
 
         log.error(ex.toString());

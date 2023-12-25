@@ -38,7 +38,7 @@ public class ReviewServiceTest {
 
     @DisplayName("리뷰 작성 통합테스트")
     @Test
-    public void saveReviewTest(){
+    public void saveReviewTest() {
         Member member = memberRepository.findById(1L).orElseThrow();
         Product product = productRepository.findById(1L).orElseThrow();
 

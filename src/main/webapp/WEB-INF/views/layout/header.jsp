@@ -44,7 +44,7 @@
                           <li><a href="/product/saveForm" class="nav-link px-2 text-white">상품등록</a></li>
                           <li><a href="/user/updateForm" class="nav-link px-2 text-white">회원정보</a></li>
                           <li><a href="/logout" class="nav-link px-2 text-white">로그아웃</a></li>
-                          <li><a href="/order/detail" class="nav-link px-2 text-white">결제내역</a></li>
+                          <li><a href="/payment/detail/${principal.member.id}" class="nav-link px-2 text-white">결제내역</a></li>
                         </ul>
             </c:otherwise>
         </c:choose>

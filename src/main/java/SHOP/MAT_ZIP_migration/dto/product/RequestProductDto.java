@@ -26,7 +26,7 @@ public class RequestProductDto {
     private String title;
 
     @NotBlank
-    @Length(min = 10, max= 1000)
+    @Length(min = 10, max = 1000)
     private String description;
 
     @Builder.Default
