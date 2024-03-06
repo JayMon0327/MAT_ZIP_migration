@@ -37,10 +37,16 @@ public class SecurityConfig {
                         csrfConfig.disable()
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/user/**")).hasRole("USER")
                         .requestMatchers(new AntPathRequestMatcher("/seller/**")).hasRole("SELLER")
                         .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
+                        // 스웨거 경로에 대한 접근 허용
+                        .requestMatchers(
+                                new AntPathRequestMatcher("/swagger-resources/**"),
+                                new AntPathRequestMatcher("/swagger-ui/**"),
+                                new AntPathRequestMatcher("/v3/api-docs/"),
+                                new AntPathRequestMatcher("/webjars/**")
+                        ).permitAll()
                         .anyRequest().permitAll()
                 )
 
