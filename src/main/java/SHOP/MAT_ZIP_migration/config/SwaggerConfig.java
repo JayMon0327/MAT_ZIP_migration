@@ -7,6 +7,9 @@ import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.context.annotation.Configuration;
 
+
+
+
 @OpenAPIDefinition(
         info = @Info(
                 title = "mat_zip API Document",
@@ -23,9 +26,11 @@ import org.springframework.context.annotation.Configuration;
                 )
         ),
         tags = {
-                @Tag(name = "01.Common", description = "공통 기능"),
-                @Tag(name = "02.User", description = "사용자 기능"),
-                @Tag(name = "03.Undefined", description = "미정의 기능"),
+                @Tag(name = "01.Member", description = "사용자 페이지"),
+                @Tag(name = "02.Payment", description = "결제 페이지"),
+                @Tag(name = "03.Order", description = "주문 페이지"),
+                @Tag(name = "04.Product", description = "상품게시판 페이지"),
+                @Tag(name = "05.Review", description = "리뷰게시판 페이지"),
         }
 )
 @Configuration
