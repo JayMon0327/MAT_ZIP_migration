@@ -4,7 +4,18 @@
 # 🍕 맛집 migration
 ## [📚 프로젝트 작업일지](https://jaymon.notion.site/5c86177f92e649639e4fa40fa5befac1?pvs=4)
 
+# [개인프로젝트] 맛.ZIP
+💡해당 웹 사이트는 맛집 공유 및 추천을 목적으로 한 커뮤니티이며, 요식업계 사장님을 위한 맞춤 구독 서비스와 함께 제품 판매 및 구매 기능을 제공합니다. 
+기존의 스프링 레거시 프로젝트를 Spring Boot와 JPA 등 최신 기술로 성공적으로 마이그레이션하여 사용자와 관리자 모두에게 필수적인 기능들을 효율적으로 지원합니다.
 
+## [📑 API 명세](https://jaymon.notion.site/Mat-ZIP-API-9434785df71749fbbb7a1c6285f415a3?pvs=4)
+
+<br>
+
+## 1. 제작 기간
+#### `2023년 11월 27일 ~ 1월 9일 (1개월)`
+
+## 2. 기능 구현
 * 회원가입, 비밀번호 변경, 스프링 시큐리티 기반의 OAuth2 로그인(카카오, 네이버, 구글)
 * 예외처리 시 사용자 정의 예외처리 에러코드 사용
 * 전역 검증 핸들러를 작성하여 AOP를 이용한 공통 관심사 분리를 구현
@@ -17,17 +28,47 @@
 * 배송 관리
 * 포인트 적립, 포인트 사용
 
+| <img src ="https://github.com/chujaeyeong/MAT_ZIP_readme_chujy/assets/123634960/97064c73-b97d-417d-9e33-54ca1a7a96b5" width="1150" height="750" /> |
+
+<br>
+
+## 3. 사용 기술
 ### `Back-end`
 * Java 8 ➡️  Java 17
 * Spring Framework 5 ➡️  Spring Boot 3.1.6
 * Spring security 6
 * Maven ➡️  Gradle
 * Mybatis ➡️  JPA
-
-**[추가]**
 * Spring Secutiry
 * Spring Data JPA, QueryDSL
 
+<br>
+
+## 4. 주요 로직
+<br>
+
+## `결제 설계 구조`
+<img width="1185" alt="스크린샷 2024-03-10 오후 10 09 10" src="https://github.com/JayMon0327/csStudy/assets/124110982/effb8cd9-fb66-4c35-bff7-a2ed749135ba">
+
+<br>
+
+## `스프링 시큐리티 구조`
+<img width="1590" alt="스크린샷 2024-03-10 오후 10 21 04" src="https://github.com/JayMon0327/csStudy/assets/124110982/9ae91ba8-e243-48ef-a9e9-f05eb44b35b6">
+<img width="1125" alt="스크린샷 2024-03-10 오후 10 21 17" src="https://github.com/JayMon0327/csStudy/assets/124110982/ef745b1e-8d75-4076-ac9d-b092bfacb66b">
+
+<br>
+
+## `AOP를 이용한 공통 관심사 분리`
+<img width="652" alt="스크린샷 2024-03-10 오후 10 51 55" src="https://github.com/JayMon0327/csStudy/assets/124110982/db439f84-d6ef-42e2-ba21-aaabeac508da">
+<img width="924" alt="스크린샷 2024-03-10 오후 10 39 12" src="https://github.com/JayMon0327/csStudy/assets/124110982/98ec3d81-0d82-40e0-afae-8e2acf00eafa">
+
+<br>
+
+## `ERD`
+<img width="1318" alt="스크린샷 2024-03-10 오후 10 16 25" src="https://github.com/JayMon0327/csStudy/assets/124110982/99ca5e2b-9809-4217-8498-2a85fa6f819a">
+
+
+<br>
 <hr>
 
 # Docs 문서
