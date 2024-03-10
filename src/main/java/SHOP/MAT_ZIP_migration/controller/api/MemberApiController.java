@@ -25,7 +25,7 @@ public class MemberApiController {
     private final MemberService memberService;
 
     @PostMapping("/auth/joinMember")
-    @Operation(summary = "사용자 등록", description = "Oauth를 포함해 사용자를 등록한다.", tags = {"02.User", })
+    @Operation(summary = "사용자 등록", description = "Oauth를 포함해 사용자를 등록한다.")
     public ResponseDto<Integer> save(@Valid @RequestBody JoinMemberDto joinMemberDto) {
         memberService.SignUp(joinMemberDto);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);

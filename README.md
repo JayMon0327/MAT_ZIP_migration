@@ -5,12 +5,13 @@
 ## [📚 프로젝트 작업일지](https://jaymon.notion.site/5c86177f92e649639e4fa40fa5befac1?pvs=4)
 
 
-* 스프링 시큐리티 기반의 OAuth2 로그인(카카오, 네이버, 구글)
-* 전역 검증 핸들러를 이용한 사용자 정의 에러코드 사용
-* 상품 결제, 결제 취소 (PortOne API)
+* 회원가입, 비밀번호 변경, 스프링 시큐리티 기반의 OAuth2 로그인(카카오, 네이버, 구글)
+* 예외처리 시 사용자 정의 예외처리 에러코드 사용
+* 전역 검증 핸들러를 작성하여 AOP를 이용한 공통 관심사 분리를 구현
+* 상품 결제, 결제 취소, 결제내역 조회 (PortOne API)
 * 상품 등록, 수정, 삭제
-* 리뷰 등록, 수정, 삭제
-* 파일 이미지 등록
+* 리뷰 등록, 삭제
+* 파일 이미지 등록(MultipartFile)
 * 재고 관리
 * 상품 주문, 주문 취소 
 * 배송 관리
@@ -19,6 +20,7 @@
 ### `Back-end`
 * Java 8 ➡️  Java 17
 * Spring Framework 5 ➡️  Spring Boot 3.1.6
+* Spring security 6
 * Maven ➡️  Gradle
 * Mybatis ➡️  JPA
 
