@@ -19,7 +19,7 @@ public class PrincipalDetailsService implements UserDetailsService {
     private final MemberRepository memberRepository;
 
     /**
-     * loadUserByUsername 함수가 종료되면 Authentication 객체가 생성됨
+     * loadUserByUsername 함수가 종료되면 Authentication(토큰) 객체가 생성됨
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

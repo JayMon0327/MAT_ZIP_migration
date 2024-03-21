@@ -58,7 +58,15 @@
 
 <br>
 
+## `Oauth 로그인 구조`
+<img width="1087" alt="스크린샷 2024-03-20 오후 8 33 45" src="https://github.com/JayMon0327/JavaProject/assets/124110982/054ef104-414e-4f65-a161-c39daf8f43c4">
+<img width="830" alt="스크린샷 2024-03-20 오후 9 22 42" src="https://github.com/JayMon0327/JavaProject/assets/124110982/02cf6e30-d188-4f04-b295-71805eb8df3e">
+
+<br>
+
 ## `AOP를 이용한 공통 관심사 분리`
+## [📑 AOP 전역처리](https://jaymon.notion.site/Valid-AOP-6d8e721bc4c54bbe8d9631da66a332ee?pvs=4)
+<img width="765" alt="스크린샷 2024-03-20 오후 9 25 39" src="https://github.com/JayMon0327/JavaProject/assets/124110982/c57a03fd-4028-49d6-8b64-27d1682c6a84">
 <img width="652" alt="스크린샷 2024-03-10 오후 10 51 55" src="https://github.com/JayMon0327/csStudy/assets/124110982/db439f84-d6ef-42e2-ba21-aaabeac508da">
 <img width="924" alt="스크린샷 2024-03-10 오후 10 39 12" src="https://github.com/JayMon0327/csStudy/assets/124110982/98ec3d81-0d82-40e0-afae-8e2acf00eafa">
 
@@ -66,7 +74,6 @@
 
 ## `ERD`
 <img width="1318" alt="스크린샷 2024-03-10 오후 10 16 25" src="https://github.com/JayMon0327/csStudy/assets/124110982/99ca5e2b-9809-4217-8498-2a85fa6f819a">
-
 
 <br>
 <hr>
