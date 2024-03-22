@@ -67,8 +67,7 @@
 ## `AOP를 이용한 공통 관심사 분리`
 ## [📑 AOP 전역처리](https://jaymon.notion.site/Valid-AOP-6d8e721bc4c54bbe8d9631da66a332ee?pvs=4)
 <img width="765" alt="스크린샷 2024-03-20 오후 9 25 39" src="https://github.com/JayMon0327/JavaProject/assets/124110982/c57a03fd-4028-49d6-8b64-27d1682c6a84">
-<img width="652" alt="스크린샷 2024-03-10 오후 10 51 55" src="https://github.com/JayMon0327/csStudy/assets/124110982/db439f84-d6ef-42e2-ba21-aaabeac508da">
-<img width="924" alt="스크린샷 2024-03-10 오후 10 39 12" src="https://github.com/JayMon0327/csStudy/assets/124110982/98ec3d81-0d82-40e0-afae-8e2acf00eafa">
+<img width="481" alt="스크린샷 2024-03-22 오후 6 43 54" src="https://github.com/JayMon0327/JSP-SERVLET/assets/124110982/9941a199-85a9-4453-8819-b80edcb68a3e">
 
 <br>
 
