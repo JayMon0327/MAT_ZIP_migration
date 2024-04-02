@@ -1,0 +1,49 @@
+.idea
+HELP.md
+application.yml
+gradlew.bat
+settings.gradle
+gradlew
+gradle
+out
+/src/main/java/SHOP/MAT_ZIP_migration/service/PortOneApiKey.java
+/src/main/java/SHOP/MAT_ZIP_migration/service/PaymentKey.java
+/src/main/resources/META-INF
+/src/main/resources/spy.properties
+
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
