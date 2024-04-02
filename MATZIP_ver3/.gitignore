@@ -6,9 +6,8 @@ settings.gradle
 gradlew
 gradle
 out
-/src/main/java/SHOP/MAT_ZIP_migration/service/PortOneApiKey.java
-/src/main/java/SHOP/MAT_ZIP_migration/service/PaymentKey.java
-/src/main/resources/META-INF
+/src/main/java/MATZIP_ver3/service/PortOneApiKey.java
+/src/main/java/MATZIP_ver3/service/PaymentKey.java
 /src/main/resources/spy.properties
 
 .gradle
