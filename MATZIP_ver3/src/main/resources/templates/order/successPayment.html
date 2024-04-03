@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>결제 성공</title>
+</head>
+<div th:replace="~{/layout/header}"></div>
+
+<div>
+    <h3>결제 성공</h3>
+    <p>판매자: <span id="order-name"></span></p>
+    <p>결제 금액: <span id="amount"></span></p>
+    <p>구매자: <span id="buyer-name"></span></p>
+</div>
+
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        var successData = JSON.parse(sessionStorage.getItem('successData'));
+        if (successData) {
+            document.getElementById('order-name').textContent = successData.orderName;
+            document.getElementById('amount').textContent = successData.amount;
+            document.getElementById('buyer-name').textContent = successData.buyerName;
+
+            sessionStorage.removeItem('successData'); // 사용 후 데이터 삭제
+        }
+    });
+</script>
+
+
+<div th:replace="~{/layout/footer}"></div>

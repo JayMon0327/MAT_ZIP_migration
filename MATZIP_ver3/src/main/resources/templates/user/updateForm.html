@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 정보 수정</title>
+</head>
+<div th:replace="~{/layout/header}"></div>
+
+<main class="form-signin w-100 m-auto">
+    <form th:action="@{/user/update}" method="post">
+        <input type="hidden" id="id" th:value="${principal.member.id}" name="id"/>
+        <h1 class="h3 mb-3 fw-normal">회원 정보 수정</h1>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="username" th:value="${principal.member.username}" name="username" placeholder="Username" readonly>
+            <label for="username">Username</label>
+        </div>
+        <div th:if="${principal.member.provider == null}">
+            <div class="form-floating">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                <label for="password">Password</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="passwordCheck" name="passwordCheck" placeholder="Password Check">
+                <label for="passwordCheck">Password Check</label>
+            </div>
+        </div>
+        <div class="form-floating">
+            <input type="text" class="form-control" id="nickName" name="nickName" th:value="${principal.member.nickName}" placeholder="NickName" required>
+            <label for="nickName">NickName</label>
+        </div>
+        <div class="form-floating">
+            <input type="email" class="form-control" id="email" name="email" th:value="${principal.member.email}" placeholder="Email" required>
+            <label for="email">Email</label>
+        </div>
+        <div class="form-floating">
+            <input type="text" class="form-control" id="addressCity" name="addressCity" th:value="${principal.member.address?.city}" placeholder="City" required>
+            <label for="addressCity">City</label>
+        </div>
+        <div class="form-floating">
+            <input type="text" class="form-control" id="addressStreet" name="addressStreet" th:value="${principal.member.address?.street}" placeholder="Street" required>
+            <label for="addressStreet">Street</label>
+        </div>
+        <div class="form-floating">
+            <input type="text" class="form-control" id="addressZipcode" name="addressZipcode" th:value="${principal.member.address?.zipcode}" placeholder="Zipcode" required>
+            <label for="addressZipcode">Zipcode</label>
+        </div>
+
+        <button class="btn btn-primary w-100 py-2" type="submit" id="btn-update">수정완료</button>
+    </form>
+</main>
+
+<script src="/js/user.js"></script>
+<div th:replace="~{/layout/footer}"></div>

@@ -1,10 +1,12 @@
 let index ={
     init: function(){
-        $("#btn-save").on("click", ()=>{ // ()=> this를 바인딩하기 위해서 사용
+        $("#btn-save").on("click", (event)=>{ // ()=> this를 바인딩하기 위해서 사용
+            event.preventDefault();
             this.save();
         });
 
-         $("#btn-update").on("click", ()=>{ // ()=> this를 바인딩하기 위해서 사용
+         $("#btn-update").on("click", (event)=>{ // ()=> this를 바인딩하기 위해서 사용
+            event.preventDefault();
             this.update();
         });
     },

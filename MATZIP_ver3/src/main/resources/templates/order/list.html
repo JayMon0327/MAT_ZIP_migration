@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>결제 내역</title>
+</head>
+<div th:replace="~{/layout/header}"></div>
+
+<h1>결제 내역</h1>
+<table>
+    <thead>
+    <tr>
+        <th>결제 ID</th>
+        <th>주문 ID</th>
+        <th>결제 금액</th>
+        <th>결제 일시</th>
+        <th>조치</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="payment : ${payments.content}">
+        <td th:text="${payment.impUid}"></td>
+        <td th:text="${payment.orderId}"></td>
+        <td th:text="${payment.amount}"></td>
+        <td th:text="${payment.createDate}"></td>
+        <td><button class="btn-cancel-payment" th:attr="data-order-id=${payment.orderId}" id="btn-cancel-payment">주문 취소</button></td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- 페이지네이션 -->
+<div>
+    <a th:if="${payments.hasPrevious()}" th:href="@{/payment/detail/{memberId}(memberId=${memberId},page=${payments.number - 1})}">이전</a>
+
+    <span th:each="pageNum : ${#numbers.sequence(0, payments.totalPages - 1)}">
+        <a th:href="@{/payment/detail/{memberId}(memberId=${memberId},page=${pageNum})}" th:text="${pageNum + 1}"></a>
+    </span>
+
+    <a th:if="${payments.hasNext()}" th:href="@{/payment/detail/{memberId}(memberId=${memberId},page=${payments.number + 1})}">다음</a>
+</div>
+
+<script src="/js/paymentCancel.js"></script>
+<div th:replace="~{/layout/footer}"></div>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>주문 정보</title>
+</head>
+<div th:replace="~{/layout/header}"></div>
+
+<div class="container">
+    <div th:text="${principal.member.nickName} + '님'"></div>
+    <div th:text="'적립금 현황 ' + ${principal.member.point} + '원'"></div>
+    <h2>주문 정보</h2>
+
+    <form id="paymentForm" th:action="@{/order/paymentForm}" method="post">
+        <h3>배송지 정보</h3>
+        <div class="form-floating">
+            <input type="text" class="form-control" name="address.city" th:value="${order.address.city}" placeholder="Enter city" id="addressCity" required>
+            <label for="addressCity">City</label>
+        </div>
+        <div class="form-floating">
+            <input type="text" class="form-control" name="address.street" th:value="${order.address.street}" placeholder="Enter street" id="addressStreet" required>
+            <label for="addressStreet">Street</label>
+        </div>
+        <div class="form-floating">
+            <input type="text" class="form-control" name="address.zipcode" th:value="${order.address.zipcode}" placeholder="Enter zipcode" id="addressZipcode" required>
+            <label for="addressZipcode">Zipcode</label>
+        </div>
+
+        <h3>구매 정보</h3>
+        <div th:each="item, status : ${order.items}">
+            <div>
+                <label>상품명:</label>
+                <span th:text="${item.itemName}"></span>
+                <input type="hidden" th:name="|itemDtos[${status.index}].itemName|" th:value="${item.itemName}" />
+            </div>
+            <div>
+                <label>수량:</label>
+                <span th:text="${item.count}"></span>
+                <input type="hidden" th:name="|itemDtos[${status.index}].count|" th:value="${item.count}" />
+            </div>
+            <input type="hidden" th:name="|itemDtos[${status.index}].itemId|" th:value="${item.itemId}" />
+        </div>
+        <div>
+            <label>판매자:</label>
+            <span th:text="${order.storeId}"></span>
+            <input type="hidden" name="storeId" th:value="${order.storeId}" />
+        </div>
+
+        <div class="form-floating">
+            <label>사용할 포인트 입력</label>
+            <input type="text" class="form-control" name="usedPoint" id="usedPoint" placeholder="Enter point" required>
+        </div>
+
+        <input type="hidden" name="totalPrice" th:value="${order.totalPrice}" />
+        <h3>총 가격: <span th:text="${order.totalPrice} + '원'"></span></h3>
+
+        <button type="submit">결제하기</button>
+    </form>
+</div>
+
+<div th:replace="~{/layout/footer}"></div>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+</head>
+<div th:replace="~{/layout/header}"></div>
+
+<main class="form-signin w-100 m-auto">
+    <form id="joinForm">
+        <h1 class="h3 mb-3 fw-normal">회원가입</h1>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+            <label for="username">Username</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+            <label for="password">Password</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="passwordCheck" name="passwordCheck" placeholder="Password Check" required>
+            <label for="passwordCheck">Password Check</label>
+        </div>
+        <div class="form-floating">
+            <input type="text" class="form-control" id="nickName" name="nickName" placeholder="NickName" required>
+            <label for="nickName">NickName</label>
+        </div>
+        <div class="form-floating">
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+            <label for="email">Email</label>
+        </div>
+        <div class="form-floating">
+            <input type="text" class="form-control" id="addressCity" name="addressCity" placeholder="City" required>
+            <label for="addressCity">City</label>
+        </div>
+        <div class="form-floating">
+            <input type="text" class="form-control" id="addressStreet" name="addressStreet" placeholder="Street" required>
+            <label for="addressStreet">Street</label>
+        </div>
+        <div class="form-floating">
+            <input type="text" class="form-control" id="addressZipcode" name="addressZipcode" placeholder="Zipcode" required>
+            <label for="addressZipcode">Zipcode</label>
+        </div>
+    </form>
+    <button class="btn btn-primary w-100 py-2" type="button" id="btn-save">회원가입 완료</button>
+</main>
+
+<script src="/js/user.js"></script>
+<div th:replace="~{/layout/footer}"></div>

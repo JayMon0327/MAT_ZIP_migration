@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<header class="p-3 bg-dark text-white">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                <!-- Bootstrap 아이콘 SVG 혹은 로고 이미지 -->
+            </a>
+            <div>
+                <!-- 로그인된 사용자에 대한 정보 표시 -->
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="/" class="nav-link px-2 text-secondary">Home</a></li>
+                    <li sec:authorize="isAnonymous()"><a href="/loginForm" class="nav-link px-2 text-white">로그인</a></li>
+                    <li sec:authorize="isAnonymous()"><a href="/auth/joinForm" class="nav-link px-2 text-white">회원가입</a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="/product/saveForm" class="nav-link px-2 text-white">상품등록</a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="/user/updateForm" class="nav-link px-2 text-white">회원정보</a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="/logout" class="nav-link px-2 text-white">로그아웃</a></li>
+                    <li sec:authorize="isAuthenticated()" th:if="${principal?.member != null}">
+                        <a th:href="@{/payment/detail/{id}(id=${principal.member.id})}" class="nav-link px-2 text-white">결제내역</a>
+                    </li>
+                </ul>
+            </div>
+
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+            </form>
+        </div>
+    </div>
+</header>

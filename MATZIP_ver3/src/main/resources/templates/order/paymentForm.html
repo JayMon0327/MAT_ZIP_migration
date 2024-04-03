@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>결제 페이지</title>
+</head>
+<div th:replace="~{/layout/header}"></div>
+
+<script th:inline="javascript">
+    var paymentId = [[${paymentForm.paymentId}]];
+    var storeId = [[${paymentForm.storeId}]];
+    var finalPrice = [[${paymentForm.finalPrice}]];
+    var userEmail = [[${principal.member.email}]];
+    var userName = [[${principal.member.nickName}]];
+    var usedPoint = [[${paymentForm.usedPoint}]];
+    var orderId = [[${paymentForm.order.id}]];
+</script>
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script src="/js/portOne.js"></script>
+
+<h2>결제 정보</h2>
+<p>주문번호: <span th:text="${paymentForm.paymentId}"></span></p>
+<p>상점명: <span th:text="${paymentForm.storeId}"></span></p>
+
+<h2>주문 상품</h2>
+<div th:each="orderItem : ${paymentForm.orderItems}">
+    <p>상품명: <span th:text="${orderItem.item.name}"></span></p>
+    <p>수량: <span th:text="${orderItem.count}"></span></p>
+    <p>가격: <span th:text="${orderItem.orderPrice}"></span></p>
+</div>
+<p>총 주문금액: <span th:text="${paymentForm.finalPrice}"></span></p>
+
+<button onclick="requestPay()">카카오결제하기</button>
+<button onclick="requestNaverPay()">네이버결제하기</button>
+<button onclick="requestTossPay()">토스결제하기</button>
+
+<div th:replace="~{/layout/footer}"></div>

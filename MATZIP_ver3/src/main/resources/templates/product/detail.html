@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 상세정보</title>
+</head>
+<div th:replace="~{/layout/header}"></div>
+
+<div class="container">
+    <button class="btn btn-secondary" onclick="history.back()">돌아가기</button>
+
+    <div sec:authorize access="isAuthenticated() and #authentication.principal.member.id == ${products.member.id}">
+        <a th:href="@{/product/{id}/updateForm(id=${products.id})}" class="btn btn-warning">수정</a>
+        <button id="btn-delete" class="btn btn-danger">삭제</button>
+    </div>
+
+    <div>상품 번호: <span id="id" th:text="${products.id}"></span> 판매자: <span th:text="${products.member.username}"></span></div>
+    <h3 th:text="${products.title}"></h3>
+    <div th:text="${products.description}"></div>
+
+    <div th:each="image : ${products.images}">
+        <img th:src="@{/api/images/{storeFileName}(storeFileName=${image.storeFileName})}" width="300" height="300" alt="Product Image" />
+    </div>
+
+    <div th:each="item : ${products.items}">
+        <div th:text="${item.name} + ' - 가격: ' + ${item.price} + ', 재고: ' + ${item.stock}"></div>
+    </div>
+
+    <select id="productSelect">
+        <option value="">선택</option>
+        <option th:each="item : ${products.items}" th:value="${item.id}" th:text="${item.name}"></option>
+    </select>
+    <div id="selectedProducts"></div>
+
+    <form id="orderForm" th:action="@{/order}" method="post">
+        <input type="hidden" name="storeId" th:value="${products.member.username}" />
+    </form>
+    <button id="orderButton">주문하기</button>
+</div>
+
+<script src="/js/product.js"></script>
+<script src="/js/orderForm.js"></script>
+<div th:replace="~{/product/review}"></div>
+<div th:replace="~{/layout/footer}"></div>
