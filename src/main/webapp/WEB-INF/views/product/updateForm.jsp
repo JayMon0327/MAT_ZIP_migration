@@ -18,11 +18,11 @@
                 <label for="imageFiles">이미지 파일들</label>
                 <input type="file" class="form-control" id="imageFiles" name="productDto.imageFiles" multiple required>
             </div>
-
+            <!-- 아이템 정보 -->
             <c:forEach items="${products.items}" var="item" varStatus="status">
                 <div class="form-group">
-                    <label for="items[${status.index}].itemId"></label>
-                    <input type="hidden" class="form-control" id="items[${status.index}].itemId" name="items[${status.index}].itemId" value="${item.itemId}" required>
+                    <label for="items[${status.index}].id"></label>
+                    <input type="hidden" class="form-control" id="items[${status.index}].id" name="items[${status.index}].id" value="${item.id}" required>
                 </div>
                 <div class="form-group">
                     <label for="items[${status.index}].name">아이템 이름</label>

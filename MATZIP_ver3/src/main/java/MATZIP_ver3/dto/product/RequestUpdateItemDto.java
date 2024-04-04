@@ -15,7 +15,7 @@ import org.hibernate.validator.constraints.Length;
 public class RequestUpdateItemDto {
 
     @NotNull
-    private Long itemId;
+    private Long id;
 
     @NotBlank
     @Length(min = 5, max = 20)

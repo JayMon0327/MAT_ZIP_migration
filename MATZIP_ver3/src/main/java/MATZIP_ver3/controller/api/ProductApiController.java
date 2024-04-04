@@ -42,6 +42,7 @@ public class ProductApiController {
     @PutMapping("/product/{id}")
     @Operation(summary = "상품글 변경", description = "상품 변경")
     public ResponseDto<Integer> update(@PathVariable Long id, @Valid @ModelAttribute RequestUpdateProductAndItemDto dto) {
+        log.info("상품수정요청받음");
         Long productId = productService.updateProductAndItem(id, dto);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1, productId);
     }

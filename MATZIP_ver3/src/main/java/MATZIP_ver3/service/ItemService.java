@@ -38,7 +38,7 @@ public class ItemService {
     }
 
     public Item updateItem(RequestUpdateItemDto requestUpdateItemDto) {
-        Item item = itemRepository.findById(requestUpdateItemDto.getItemId())
+        Item item = itemRepository.findById(requestUpdateItemDto.getId())
                 .orElseThrow(() -> new IllegalArgumentException("아이템이 존재하지 않습니다."));
         item.change(requestUpdateItemDto.getName(), requestUpdateItemDto.getPrice(), requestUpdateItemDto.getStock());
         return item;

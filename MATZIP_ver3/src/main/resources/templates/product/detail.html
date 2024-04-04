@@ -9,9 +9,11 @@
 <div class="container">
     <button class="btn btn-secondary" onclick="history.back()">돌아가기</button>
 
-    <div sec:authorize access="isAuthenticated() and #authentication.principal.member.id == ${products.member.id}">
+    <div sec:authorize="isAuthenticated()">
+        <div th:if = "${#authentication.principal.member.id} == ${products.member.id}">
         <a th:href="@{/product/{id}/updateForm(id=${products.id})}" class="btn btn-warning">수정</a>
         <button id="btn-delete" class="btn btn-danger">삭제</button>
+        </div>
     </div>
 
     <div>상품 번호: <span id="id" th:text="${products.id}"></span> 판매자: <span th:text="${products.member.username}"></span></div>

@@ -4,43 +4,43 @@
     <meta charset="UTF-8">
     <title>update Form</title>
 </head>
-    <div th:replace="~{/layout/header}"></div>
-    <form id="update-form" enctype="multipart/form-data">
-        <input type="hidden" id="id" th:value="${products.id}" name="id"/>
+<div th:replace="~{/layout/header}"></div>
+<form id="update-form" th:action="@{/product/{id}(id=${products.id})}" th:object="${products}" method="post" enctype="multipart/form-data">
+    <input type="hidden" id="id" th:value="${products.id}" name="id"/>
+    <div class="form-group">
+        <label for="title">상품명</label>
+        <input type="text" class="form-control" id="title" name="productDto.title" th:value="${products.title}" required/>
+    </div>
+    <div class="form-group">
+        <label for="description">상품 설명</label>
+        <textarea class="form-control" id="description" name="productDto.description" required th:text="${products.description}"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="imageFiles">이미지 파일들</label>
+        <input type="file" class="form-control" id="imageFiles" name="productDto.imageFiles" multiple required/>
+    </div>
+
+    <div th:each="item, status : *{items}" id="item-group">
         <div class="form-group">
-            <label for="title">상품명</label>
-            <input type="text" class="form-control" id="title" name="productDto.title" th:value="${products.title}" required/>
+            <input type="hidden" class="form-control" th:id="'items' + ${status.index} + '.id'" th:field="*{items[__${status.index}__].id}" required/>
         </div>
         <div class="form-group">
-            <label for="description">상품 설명</label>
-            <textarea class="form-control" id="description" name="productDto.description" required th:text="${products.description}"></textarea>
+            <label th:for="'items' + ${status.index} + '.name'">아이템 이름</label>
+            <input type="text" class="form-control" th:id="'items' + ${status.index} + '.name'" th:field="*{items[__${status.index}__].name}" required/>
         </div>
         <div class="form-group">
-            <label for="imageFiles">이미지 파일들</label>
-            <input type="file" class="form-control" id="imageFiles" name="productDto.imageFiles" multiple required/>
+            <label th:for="'items' + ${status.index} + '.price'">가격</label>
+            <input type="number" class="form-control" th:id="'items' + ${status.index} + '.price'" th:field="*{items[__${status.index}__].price}" required/>
         </div>
-        <!-- 아이템 정보 -->
-        <div th:each="item, status : ${products.items}">
-            <div class="form-group">
-                <label th:for="'items[' + status.index + '].itemId'"></label>
-                <input type="hidden" class="form-control" th:id="'items[' + status.index + '].itemId'" th:name="'items[' + status.index + '].itemId'" th:value="${item.itemId}" required>
-            </div>
-            <div class="form-group">
-                <label th:for="'items[' + status.index + '].name'">아이템 이름</label>
-                <input type="text" class="form-control" th:id="'items[' + status.index + '].name'" th:name="'items[' + status.index + '].name'" th:value="${item.name}" required>
-            </div>
-            <div class="form-group">
-                <label th:for="'items[' + status.index + '].price'">가격</label>
-                <input type="number" class="form-control" th:id="'items[' + status.index + '].price'" th:name="'items[' + status.index + '].price'" th:value="${item.price}" required>
-            </div>
-            <div class="form-group">
-                <label th:for="'items[' + status.index + '].stock'">재고 수량</label>
-                <input type="number" class="form-control" th:id="'items[' + status.index + '].stock'" th:name="'items[' + status.index + '].stock'" th:value="${item.stock}" required>
-            </div>
+        <div class="form-group">
+            <label th:for="'items' + ${status.index} + '.stock'">재고 수량</label>
+            <input type="number" class="form-control" th:id="'items' + ${status.index} + '.stock'" th:field="*{items[__${status.index}__].stock}" required/>
         </div>
-    </form>
+    </div>
+</form>
 <button type="button" id="add-item">아이템 추가</button>
 <button class="btn btn-primary w-100 py-2" id="btn-update">상품 수정</button>
 
+<script src="/js/item.js"></script>
 <script src="/js/product.js"></script>
 <div th:replace="~{/layout/footer}"></div>

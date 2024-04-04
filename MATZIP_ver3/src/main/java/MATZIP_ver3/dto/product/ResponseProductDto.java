@@ -45,7 +45,7 @@ public class ResponseProductDto {
     public static class ItemDto {
 
         @NotNull
-        private Long Id;
+        private Long id;
 
         @NotBlank
         @Length(min = 5, max = 20)

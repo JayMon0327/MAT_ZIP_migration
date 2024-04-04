@@ -64,6 +64,7 @@ public class ProductService {
         for (RequestUpdateItemDto requestUpdateItemDto : dto.getItems()) {
             itemService.updateItem(requestUpdateItemDto);
         }
+        log.info("상품 수정 바인딩 완료 상품 아이디반환");
         return productId;
     }
 
