@@ -7,23 +7,23 @@
 <div th:replace="~{/layout/header}"></div>
 
 <div class="container">
-    <div th:text="${principal.member.nickName} + '님'"></div>
-    <div th:text="'적립금 현황 ' + ${principal.member.point} + '원'"></div>
+    <div th:text="${#authentication.principal.member.nickName} + '님'"></div>
+    <div th:text="'적립금 현황 ' + ${#authentication.principal.member.point} + '원'"></div>
     <h2>주문 정보</h2>
 
     <form id="paymentForm" th:action="@{/order/paymentForm}" method="post">
         <h3>배송지 정보</h3>
         <div class="form-floating">
-            <input type="text" class="form-control" name="address.city" th:value="${order.address.city}" placeholder="Enter city" id="addressCity" required>
-            <label for="addressCity">City</label>
+            <input type="text" class="form-control" th:attr="name=${'address.city'}, id=${order.address != null ? 'addressCity' : 'addressCityEmpty'}" th:value="${order.address != null ? order.address.city : ''}" placeholder="Enter city" required>
+            <label th:attr="for=${order.address != null ? 'addressCity' : 'addressCityEmpty'}">City</label>
         </div>
         <div class="form-floating">
-            <input type="text" class="form-control" name="address.street" th:value="${order.address.street}" placeholder="Enter street" id="addressStreet" required>
-            <label for="addressStreet">Street</label>
+            <input type="text" class="form-control" th:attr="name=${'address.street'}, id=${order.address != null ? 'addressStreet' : 'addressStreetEmpty'}" th:value="${order.address != null ? order.address.street : ''}" placeholder="Enter street" required>
+            <label th:attr="for=${order.address != null ? 'addressStreet' : 'addressStreetEmpty'}">Street</label>
         </div>
         <div class="form-floating">
-            <input type="text" class="form-control" name="address.zipcode" th:value="${order.address.zipcode}" placeholder="Enter zipcode" id="addressZipcode" required>
-            <label for="addressZipcode">Zipcode</label>
+            <input type="text" class="form-control" th:attr="name=${'address.zipcode'}, id=${order.address != null ? 'addressZipcode' : 'addressZipcodeEmpty'}" th:value="${order.address != null ? order.address.zipcode : ''}" placeholder="Enter zipcode" required>
+            <label th:attr="for=${order.address != null ? 'addressZipcode' : 'addressZipcodeEmpty'}">Zipcode</label>
         </div>
 
         <h3>구매 정보</h3>

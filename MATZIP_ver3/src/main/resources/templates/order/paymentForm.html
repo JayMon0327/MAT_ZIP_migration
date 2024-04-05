@@ -10,8 +10,8 @@
     var paymentId = [[${paymentForm.paymentId}]];
     var storeId = [[${paymentForm.storeId}]];
     var finalPrice = [[${paymentForm.finalPrice}]];
-    var userEmail = [[${principal.member.email}]];
-    var userName = [[${principal.member.nickName}]];
+    var userEmail = [[${#authentication.principal.member.email}]];
+    var userName = [[${#authentication.principal.member.nickName}]];
     var usedPoint = [[${paymentForm.usedPoint}]];
     var orderId = [[${paymentForm.order.id}]];
 </script>

@@ -23,7 +23,9 @@
         <td th:text="${payment.orderId}"></td>
         <td th:text="${payment.amount}"></td>
         <td th:text="${payment.createDate}"></td>
-        <td><button class="btn-cancel-payment" th:attr="data-order-id=${payment.orderId}" id="btn-cancel-payment">주문 취소</button></td>
+        <td>
+            <button class="btn-cancel-payment" th:data-order-id="${payment.orderId}">주문 취소</button>
+        </td>
     </tr>
     </tbody>
 </table>

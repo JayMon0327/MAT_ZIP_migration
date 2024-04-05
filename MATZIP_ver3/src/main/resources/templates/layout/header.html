@@ -21,8 +21,8 @@
                     <li sec:authorize="isAuthenticated()"><a href="/product/saveForm" class="nav-link px-2 text-white">상품등록</a></li>
                     <li sec:authorize="isAuthenticated()"><a href="/user/updateForm" class="nav-link px-2 text-white">회원정보</a></li>
                     <li sec:authorize="isAuthenticated()"><a href="/logout" class="nav-link px-2 text-white">로그아웃</a></li>
-                    <li sec:authorize="isAuthenticated()" th:if="${principal?.member != null}">
-                        <a th:href="@{/payment/detail/{id}(id=${principal.member.id})}" class="nav-link px-2 text-white">결제내역</a>
+                    <li sec:authorize="isAuthenticated()">
+                        <a th:href="@{/payment/detail/{id}(id=${#authentication.principal.member.id})}" class="nav-link px-2 text-white">결제내역</a>
                     </li>
                 </ul>
             </div>
