@@ -3,6 +3,7 @@ package MATZIP_ver3.service;
 import MATZIP_ver3.domain.status.Role;
 import MATZIP_ver3.domain.Member;
 import MATZIP_ver3.dto.member.JoinMemberDto;
+import MATZIP_ver3.dto.member.PasswordDto;
 import MATZIP_ver3.dto.member.UpdateMemberDto;
 import MATZIP_ver3.repository.MemberRepository;
 import MATZIP_ver3.service.validator.MemberValidator;
@@ -23,14 +24,14 @@ public class MemberService {
     private final MemberValidator memberValidator;
 
     @Transactional
-    public void SignUp(JoinMemberDto joinMemberDto) {
+    public void signUp(JoinMemberDto joinMemberDto) {
         memberValidator.DuplicatedJoinMember(joinMemberDto.getUsername(), joinMemberDto.getEmail());
-        String endPassword = memberValidator.PasswordCheck(joinMemberDto.getPassword(),
+        memberValidator.passwordCheck(joinMemberDto.getPassword(),
                 joinMemberDto.getPasswordCheck());
 
         Member member = Member.builder()
                 .username(joinMemberDto.getUsername())
-                .password(endPassword)
+                .password(joinMemberDto.getPassword())
                 .nickName(joinMemberDto.getNickName())
                 .email(joinMemberDto.getEmail())
                 .address(joinMemberDto.getAddress())
@@ -43,14 +44,19 @@ public class MemberService {
 
     @Transactional
     public void update(UpdateMemberDto dto) {
-        Member persistance = memberRepository.findById(dto.getId()).orElseThrow(() -> {
+        Member persist = memberRepository.findById(dto.getId()).orElseThrow(() -> {
             return new IllegalArgumentException("회원 찾기 실패");
         });
+        memberValidator.validateEmailUpdate(dto.getId(), dto.getEmail());
+        persist.updateMember(dto.getNickName(), dto.getEmail(), dto.getAddress());
+    }
 
-        if (persistance.getProvider() == null || persistance.getProvider().equals("")) {
-            String encodePassword = memberValidator.PasswordCheck(dto.getPassword(),
-                    dto.getPasswordCheck());
-            persistance.updateMember(encodePassword, dto.getNickName(), dto.getEmail(), dto.getAddress());
-        }
+    @Transactional
+    public void updatePassword(PasswordDto dto) {
+        Member persist = memberRepository.findById(dto.getId()).orElseThrow(() -> {
+            return new IllegalArgumentException("회원 찾기 실패");
+        });
+        memberValidator.validatePasswordChange(dto);
+        persist.updatePassword(dto.getNewPassword());
     }
 }

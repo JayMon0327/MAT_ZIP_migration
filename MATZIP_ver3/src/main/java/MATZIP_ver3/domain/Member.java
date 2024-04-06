@@ -87,11 +87,17 @@ public class Member extends DateBaseEntity {
     /**
      * 회원 수정
      */
-    public void updateMember(String password, String nickName, String email, Address address) {
-        this.password = password;
+    public void updateMember(String nickName, String email, Address address) {
         this.nickName = nickName;
         this.email = email;
         this.address = address;
+    }
+
+    /**
+     * 비밀번호 변경
+     */
+    public void updatePassword(String password) {
+        this.password = password;
     }
 
     /**

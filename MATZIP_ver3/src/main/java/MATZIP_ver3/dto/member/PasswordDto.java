@@ -1,7 +1,5 @@
 package MATZIP_ver3.dto.member;
 
-import MATZIP_ver3.domain.order.Address;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -14,18 +12,20 @@ import org.hibernate.validator.constraints.Length;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UpdateMemberDto {
+public class PasswordDto {
 
     @NotNull
     private Long id;
 
     @NotBlank
-    @Length(min = 4, max = 10)
-    private String nickName;
+    @Length(min = 10, max = 20)
+    private String currentPassword;
 
-    @Email
     @NotBlank
-    private String email;
+    @Length(min = 10, max = 20)
+    private String newPassword;
 
-    private Address address;
+    @NotBlank
+    @Length(min = 10, max = 20)
+    private String newPasswordCheck;
 }

@@ -9,6 +9,8 @@ public enum CustomErrorCode {
     USERNAME_ALREADY_EXISTS("ERP201", "유저네임이 중복입니다."),
     EMAIL_ALREADY_EXISTS("ERP202", "이메일이 중복입니다."),
     PASSWORD_NOT_EQUAL("ERP203", "비밀번호를 확인 해주세요"),
+    PASSWORD_WRONG("ERP204", "현재 비밀번호가 일치하지 않습니다."),
+    OAUTH_MEMBER_CANNOT_CHANGE("ERP205", "Oauth회원은 비밀번호 변경이 불가능합니다"),
     FILE_PROCESSING_ERROR("ERP301", "파일 처리 중 오류가 발생했습니다."),
     FILE_URL_ERROR("ERP302", "파일 URL 오류가 발생했습니다."),
     NOT_FOUND_ITEM("ERP400", "상품을 찾을 수 없습니다."),

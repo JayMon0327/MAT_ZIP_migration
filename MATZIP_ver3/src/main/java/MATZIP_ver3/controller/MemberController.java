@@ -25,6 +25,11 @@ public class MemberController {
         return "user/updateForm";
     }
 
+    @GetMapping("/user/passwordForm")
+    public String passwordForm() {
+        return "user/passwordForm";
+    }
+
 }
 
 
