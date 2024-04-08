@@ -88,9 +88,9 @@ let index ={
     password: function(){
             let data ={
                 id: $("#id").val(),
-                password: $("#currentPassword").val(),
-                password: $("#newPassword").val(),
-                passwordCheck: $("#newPasswordCheck").val(),
+                currentPassword: $("#currentPassword").val(),
+                newPassword: $("#newPassword").val(),
+                newPasswordCheck: $("#newPasswordCheck").val(),
             };
 
             $.ajax({

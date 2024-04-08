@@ -5,6 +5,9 @@ import MATZIP_ver3.domain.Product;
 import MATZIP_ver3.domain.Review;
 import MATZIP_ver3.domain.ReviewImage;
 import MATZIP_ver3.dto.product.RequestReviewDto;
+import MATZIP_ver3.exception.CustomErrorCode;
+import MATZIP_ver3.exception.CustomException;
+import MATZIP_ver3.repository.OrderRepository;
 import MATZIP_ver3.repository.ProductRepository;
 import MATZIP_ver3.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,27 +23,39 @@ public class ReviewService {
 
     private final ProductRepository productRepository;
     private final ReviewRepository reviewRepository;
+    private final OrderRepository orderRepository;
     private final FileStore<ReviewImage> fileStore;
 
     public ReviewService(ProductRepository productRepository, ReviewRepository reviewRepository,
-                         @Qualifier("reviewFileStore") FileStore<ReviewImage> fileStore) {
+                         @Qualifier("reviewFileStore") FileStore<ReviewImage> fileStore, OrderRepository orderRepository) {
         this.productRepository = productRepository;
         this.reviewRepository = reviewRepository;
+        this.orderRepository = orderRepository;
         this.fileStore = fileStore;
     }
 
     @Transactional
-    public void saveReview(RequestReviewDto reviewDto, Member member) {
-        Product product = productRepository.findById(reviewDto.getProductId()).orElseThrow();
+    public boolean saveReview(RequestReviewDto dto, Member member) {
+        if (!hasPurchasedProduct(member, dto.getProductId())) {
+            throw new CustomException(CustomErrorCode.NOT_ORDER_MEMBER);
+        }
+        Product product = productRepository.findById(dto.getProductId()).orElseThrow(
+                () -> new CustomException(CustomErrorCode.NOT_FOUND_PRODUCT));
         Review review = Review.builder()
                 .product(product)
                 .member(member)
-                .content(reviewDto.getContent())
-                .rating(reviewDto.getRating())
+                .content(dto.getContent())
+                .rating(dto.getRating())
                 .build();
-        List<ReviewImage> reviewImages = fileStore.storeFiles(reviewDto.getImageFiles());
+        List<ReviewImage> reviewImages = fileStore.storeFiles(dto.getImageFiles());
         reviewImages.forEach(review::addImage);
         reviewRepository.save(review);
+        return true;
+    }
+
+    @Transactional(readOnly = true)
+    public boolean hasPurchasedProduct(Member member, Long productId) {
+        return orderRepository.existsByMemberAndProductId(member, productId);
     }
 
     @Transactional
