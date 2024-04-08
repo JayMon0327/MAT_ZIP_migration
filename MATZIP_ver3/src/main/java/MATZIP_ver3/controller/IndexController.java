@@ -20,7 +20,7 @@ public class IndexController {
     private final ProductService productService;
 
     @GetMapping({"/", ""})
-    public String index(Model model, @PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC)
+    public String index(Model model, @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC)
     Pageable pageable) {
         Page<Product> products = productService.productAll(pageable);
         model.addAttribute("products", products);

@@ -20,11 +20,11 @@
 
     <!-- 페이지네이션 -->
     <ul class="pagination justify-content-center">
-        <li th:class="${products.first} ? 'page-item disabled' : 'page-item'">
-            <a class="page-link" th:href="@{?page=${products.number-1}}">Previous</a>
+        <li th:classappend="${products.first} ? 'disabled'">
+            <a class="page-link" th:href="@{|?page=${products.number - 1}|}">Previous</a>
         </li>
-        <li th:class="${products.last} ? 'page-item disabled' : 'page-item'">
-            <a class="page-link" th:href="@{?page=${products.number+1}}">Next</a>
+        <li th:classappend="${products.last} ? 'disabled'">
+            <a class="page-link" th:href="@{|?page=${products.number + 1}|}">Next</a>
         </li>
     </ul>
 </div>
