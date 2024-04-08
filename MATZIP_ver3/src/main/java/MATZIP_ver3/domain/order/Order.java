@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -36,21 +37,31 @@ public class Order extends CreateDateBaseEntity {
     private Delivery delivery;
 
     @Builder.Default
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     /**
      * 주문 로직
      */
     public static Order createOrder(Member member, Delivery delivery, List<OrderItem> orderItems) {
-        Order order = Order.builder()
-                .member(member)
-                .delivery(delivery)
-                .orderItems(orderItems)
-                .status(OrderStatus.TRY)
-                .build();
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        order.setStatus(OrderStatus.TRY);
+
+        // 각 OrderItem에 대해 Order 설정
+        for (OrderItem orderItem : orderItems) {
+            order.addOrderItem(orderItem);
+        }
+
         return order;
     }
+
+    public void addOrderItem(OrderItem orderItem) {
+        this.orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
 
     public void changeOrderStatus(OrderStatus status) {
         this.status = status;

@@ -2,14 +2,11 @@ package MATZIP_ver3.domain.order;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import static jakarta.persistence.FetchType.*;
 
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -37,4 +34,9 @@ public class OrderItem {
     public void cancel() {
         getItem().addStock(count);
     }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
 }
