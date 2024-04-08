@@ -5,6 +5,8 @@ import MATZIP_ver3.domain.Member;
 import MATZIP_ver3.dto.member.JoinMemberDto;
 import MATZIP_ver3.dto.member.PasswordDto;
 import MATZIP_ver3.dto.member.UpdateMemberDto;
+import MATZIP_ver3.exception.CustomErrorCode;
+import MATZIP_ver3.exception.CustomException;
 import MATZIP_ver3.repository.MemberRepository;
 import MATZIP_ver3.service.validator.MemberValidator;
 import lombok.RequiredArgsConstructor;
@@ -24,17 +26,15 @@ public class MemberService {
     private final MemberValidator memberValidator;
 
     @Transactional
-    public void signUp(JoinMemberDto joinMemberDto) {
-        memberValidator.DuplicatedJoinMember(joinMemberDto.getUsername(), joinMemberDto.getEmail());
-        memberValidator.passwordCheck(joinMemberDto.getPassword(),
-                joinMemberDto.getPasswordCheck());
+    public void signUp(JoinMemberDto dto) {
+        String encodedPassword = memberValidator.validateSignup(dto);
 
         Member member = Member.builder()
-                .username(joinMemberDto.getUsername())
-                .password(joinMemberDto.getPassword())
-                .nickName(joinMemberDto.getNickName())
-                .email(joinMemberDto.getEmail())
-                .address(joinMemberDto.getAddress())
+                .username(dto.getUsername())
+                .password(encodedPassword)
+                .nickName(dto.getNickName())
+                .email(dto.getEmail())
+                .address(dto.getAddress())
                 .role(Role.USER)
                 .point(defaultPoint)
                 .build();
@@ -44,19 +44,19 @@ public class MemberService {
 
     @Transactional
     public void update(UpdateMemberDto dto) {
-        Member persist = memberRepository.findById(dto.getId()).orElseThrow(() -> {
-            return new IllegalArgumentException("회원 찾기 실패");
+        Member member = memberRepository.findById(dto.getId()).orElseThrow(() -> {
+            throw new CustomException(CustomErrorCode.NOT_FOUND_MEMBER);
         });
         memberValidator.validateEmailUpdate(dto.getId(), dto.getEmail());
-        persist.updateMember(dto.getNickName(), dto.getEmail(), dto.getAddress());
+        member.updateMember(dto.getNickName(), dto.getEmail(), dto.getAddress());
     }
 
     @Transactional
     public void updatePassword(PasswordDto dto) {
-        Member persist = memberRepository.findById(dto.getId()).orElseThrow(() -> {
-            return new IllegalArgumentException("회원 찾기 실패");
+        Member member = memberRepository.findById(dto.getId()).orElseThrow(() -> {
+            throw new CustomException(CustomErrorCode.NOT_FOUND_MEMBER);
         });
-        memberValidator.validatePasswordChange(dto);
-        persist.updatePassword(dto.getNewPassword());
+        String encodedPassword = memberValidator.validatePasswordChange(dto);
+        member.updatePassword(encodedPassword);
     }
 }

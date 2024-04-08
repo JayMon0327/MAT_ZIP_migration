@@ -1,6 +1,7 @@
 package MATZIP_ver3.service.validator;
 
 import MATZIP_ver3.domain.Member;
+import MATZIP_ver3.dto.member.JoinMemberDto;
 import MATZIP_ver3.dto.member.PasswordDto;
 import MATZIP_ver3.exception.CustomErrorCode;
 import MATZIP_ver3.exception.CustomException;
@@ -18,7 +19,13 @@ public class MemberValidator {
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder encoder;
 
-    public void DuplicatedJoinMember(String username, String email) {
+    public String validateSignup(JoinMemberDto dto) {
+        duplicatedJoinMember(dto.getUsername(), dto.getEmail());
+        passwordCheck(dto.getPassword(), dto.getPasswordCheck());
+        return encoder.encode(dto.getPassword());
+    }
+
+    public void duplicatedJoinMember(String username, String email) {
         if (memberRepository.existsByUsername(username)) {
             throw new CustomException(CustomErrorCode.USERNAME_ALREADY_EXISTS);
         }
@@ -27,6 +34,15 @@ public class MemberValidator {
         }
     }
 
+    public void passwordCheck(String password, String passwordCheck) {
+        if (!password.equals(passwordCheck)) {
+            throw new CustomException(CustomErrorCode.PASSWORD_NOT_EQUAL);
+        }
+    }
+
+    /**
+     * 이메일 변경 시 검증
+     */
     public void validateEmailUpdate(Long userId, String email) {
         Optional<Member> member = memberRepository.findByEmail(email);
         if (member.isPresent()) {
@@ -38,37 +54,31 @@ public class MemberValidator {
     }
 
     /**
-     * 아래 메서드 4개는 비밀번호 관련
+     * 비밀번호 변경 관련 아래 3개
      */
-    public void passwordCheck(String password, String passwordCheck) {
-        if (!password.equals(passwordCheck)) {
-            throw new CustomException(CustomErrorCode.PASSWORD_NOT_EQUAL);
-        }
-    }
-
-    public void validatePasswordChange(PasswordDto dto) {
+    public String validatePasswordChange(PasswordDto dto) {
         validateProviderMember(dto.getId());
         validateCurrentPassword(dto.getId(), dto.getCurrentPassword());
         passwordCheck(dto.getNewPassword(), dto.getNewPasswordCheck());
+        return encoder.encode(dto.getNewPassword());
     }
 
     public void validateCurrentPassword(Long userId, String currentPassword) {
-        Optional<Member> member = memberRepository.findById(userId);
-        if (member.isPresent()) {
-            if (!member.get().getPassword().equals(currentPassword)) {
-                throw new CustomException(CustomErrorCode.PASSWORD_WRONG);
-            }
+        Member member = memberRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("회원 찾기 실패"));
+        // 입력된 현재 비밀번호와 저장된 비밀번호 해시가 일치하는지 확인
+        if (!encoder.matches(currentPassword, member.getPassword())) {
+            throw new CustomException(CustomErrorCode.NOT_EQUAL_PASSWORD);
         }
     }
+
     //일반 유저인지 체크, Oauth유저는 비밀번호 변경 불가
     public void validateProviderMember(Long userId) {
-        Optional<Member> member = memberRepository.findById(userId);
-        if (member.isPresent()) {
-            if (member.get().getProvider() != null || !member.get().getProvider().equals("")) {
-                throw new CustomException(CustomErrorCode.OAUTH_MEMBER_CANNOT_CHANGE);
-            }
+        Member member = memberRepository.findById(userId).orElseThrow(() -> {
+            throw new CustomException(CustomErrorCode.NOT_FOUND_MEMBER);
+        });
+        if (member.getProvider() != null && !member.getProvider().isEmpty()) {
+            throw new CustomException(CustomErrorCode.OAUTH_MEMBER_CANNOT_CHANGE);
         }
     }
-
-
 }
