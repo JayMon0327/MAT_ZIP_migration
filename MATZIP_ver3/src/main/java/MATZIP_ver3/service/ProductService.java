@@ -3,6 +3,8 @@ package MATZIP_ver3.service;
 import MATZIP_ver3.domain.*;
 import MATZIP_ver3.domain.order.Item;
 import MATZIP_ver3.dto.product.*;
+import MATZIP_ver3.exception.CustomErrorCode;
+import MATZIP_ver3.exception.CustomException;
 import MATZIP_ver3.repository.ItemRepository;
 import MATZIP_ver3.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -36,6 +38,7 @@ public class ProductService {
 
     @Transactional
     public Long saveProductAndItem(RequestSaveProductAndItemDto dto, Member member) {
+        log.info(String.valueOf(dto.getProductDto().getImageFiles()));
         Long productId = saveProduct(dto.getProductDto(), member);
         for (RequestSaveItemDto requestSaveItemDto : dto.getItems()) {
             Item item = itemService.saveItem(productId, requestSaveItemDto);
@@ -64,14 +67,13 @@ public class ProductService {
         for (RequestUpdateItemDto requestUpdateItemDto : dto.getItems()) {
             itemService.updateItem(requestUpdateItemDto);
         }
-        log.info("상품 수정 바인딩 완료 상품 아이디반환");
         return productId;
     }
 
     @Transactional
     public Long updateProduct(Long id, RequestProductDto requestProductDto) {
         Product savedProduct = productRepository.findById(id).orElseThrow(() -> {
-            return new IllegalArgumentException("상품 찾기 실패");
+            return new CustomException(CustomErrorCode.NOT_FOUND_PRODUCT);
         });
         savedProduct.updateProduct(requestProductDto.getTitle(), requestProductDto.getDescription());
 
@@ -93,7 +95,7 @@ public class ProductService {
 
     public ResponseProductDto getProductDetails(Long productId) {
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new EntityNotFoundException("상품을 찾을 수 없습니다."));
+                .orElseThrow(() -> new CustomException(CustomErrorCode.NOT_FOUND_PRODUCT));
 
         ResponseProductDto dto = ResponseProductDto.builder()
                 .id(productId)
