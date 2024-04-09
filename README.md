@@ -75,6 +75,13 @@
 <img width="1318" alt="스크린샷 2024-03-10 오후 10 16 25" src="https://github.com/JayMon0327/csStudy/assets/124110982/99ca5e2b-9809-4217-8498-2a85fa6f819a">
 
 <br>
+
+## `APACHE JMeter로 측정한 성능테스트 결과`
+## [📑 성능테스트 측정방법](https://jaymon0327.tistory.com/6)
+<img width="708" alt="스크린샷 2024-04-09 오후 11 43 54" src="https://github.com/JayMon0327/JSP-SERVLET/assets/124110982/98e06e1b-8f9b-4755-ae0f-690ff493f8ad">
+<img width="1808" alt="스크린샷 2024-04-09 오후 11 47 31" src="https://github.com/JayMon0327/JSP-SERVLET/assets/124110982/5598eb98-4f95-4f26-b4e8-f8db23ea4322">
+
+<br>
 <hr>
 
 # Docs 문서
