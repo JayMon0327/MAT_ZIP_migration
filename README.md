@@ -42,8 +42,9 @@ APACHE JMeter 측정 조건(프로젝트 각 12,000건)
   | Apdex                  | 0.002   | 0.974 | 48,600% 향상    |
 
 <br>
-
+<u>**기존 프로젝트**</u>
 <img width="1793" alt="레거시프로젝트0410성능" src="https://github.com/JayMon0327/JSP-SERVLET/assets/124110982/eee0f9b9-0f2e-4827-b870-43d7b5571055">
+<u>**현재 프로젝트**</u>
 <img width="1791" alt="현재프로젝트0410성능" src="https://github.com/JayMon0327/JSP-SERVLET/assets/124110982/3cc53f14-9a97-4004-a04c-06d00b43b5c9">
 <img width="1864" alt="스크린샷 2024-04-10 오후 3 04 25" src="https://github.com/JayMon0327/JSP-SERVLET/assets/124110982/7f89f3df-4493-4297-9984-ab7d080607f4">
 
