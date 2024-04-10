@@ -30,18 +30,23 @@ APACHE JMeter 측정 조건(프로젝트 각 12,000건)
 * Number of Threads(users): 100
 * Ramp-up period(sec): 1
 * Loop Count: 30
+
 <br>
+
+  | 지표                    | 기존      | 현재    | 향상된 비율 (%)    |
+  |-----------------------|---------|-------|------------------|
+  | Response time (AVG/ms) | 2007ms  | 151ms | 92.48% 감소     |
+  | Response time (Max/ms) | 13,184ms | 1,334ms | 89.88% 감소     |
+  | TPS (sec)               | 13건    | 107건  | 723.08% 향상    |
+  | Network (KB/sec)       | 69,583KB | 1,539KB | 97.79% 감소     |
+  | Apdex                  | 0.002   | 0.974 | 48,600% 향상    |
+
+<br>
+
 <img width="1793" alt="레거시프로젝트0410성능" src="https://github.com/JayMon0327/JSP-SERVLET/assets/124110982/eee0f9b9-0f2e-4827-b870-43d7b5571055">
 <img width="1791" alt="현재프로젝트0410성능" src="https://github.com/JayMon0327/JSP-SERVLET/assets/124110982/3cc53f14-9a97-4004-a04c-06d00b43b5c9">
 <img width="1864" alt="스크린샷 2024-04-10 오후 3 04 25" src="https://github.com/JayMon0327/JSP-SERVLET/assets/124110982/7f89f3df-4493-4297-9984-ab7d080607f4">
 
-| 지표                    | 기존      | 현재    | 향상된 비율 (%)    |
-|-----------------------|---------|-------|------------------|
-| Response time (AVG/ms) | 2007ms  | 151ms | 92.48% 감소     |
-| Response time (Max/ms) | 13,184ms | 1,334ms | 89.88% 감소     |
-| TPS (sec)               | 13건    | 107건  | 723.08% 향상    |
-| Network (KB/sec)       | 69,583KB | 1,539KB | 97.79% 감소     |
-| Apdex                  | 0.002   | 0.974 | 48,600% 향상    |
 
 <br>
 
