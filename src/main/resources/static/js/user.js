@@ -1,11 +1,18 @@
 let index ={
     init: function(){
-        $("#btn-save").on("click", ()=>{ // ()=> this를 바인딩하기 위해서 사용
+        $("#btn-save").on("click", (event)=>{ // ()=> this를 바인딩하기 위해서 사용
+            event.preventDefault();
             this.save();
         });
 
-         $("#btn-update").on("click", ()=>{ // ()=> this를 바인딩하기 위해서 사용
+         $("#btn-update").on("click", (event)=>{ // ()=> this를 바인딩하기 위해서 사용
+            event.preventDefault();
             this.update();
+        });
+
+        $("#btn-password").on("click", (event)=>{ // ()=> this를 바인딩하기 위해서 사용
+            event.preventDefault();
+            this.password();
         });
     },
 
@@ -48,9 +55,6 @@ let index ={
     update: function(){
             let data ={
                 id: $("#id").val(),
-                username: $("#username").val(),
-                password: $("#password").val(),
-                passwordCheck: $("#passwordCheck").val(),
                 nickName: $("#nickName").val(),
                 email: $("#email").val(),
                 address: {
@@ -77,6 +81,35 @@ let index ={
                     alert(error.responseText);
                 } else {
                     alert("회원정보 수정에 실패하였습니다.");
+                }
+            });
+        },
+
+    password: function(){
+            let data ={
+                id: $("#id").val(),
+                currentPassword: $("#currentPassword").val(),
+                newPassword: $("#newPassword").val(),
+                newPasswordCheck: $("#newPasswordCheck").val(),
+            };
+
+            $.ajax({
+                type: "PUT",
+                url: "/user/password",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            }).done(function(resp){
+                    alert("비밀번호 변경이 완료되었습니다.");
+                    location.href = "/";
+            }).fail(function(error){
+                console.log(error);
+                if (error.responseJSON && error.responseJSON.message) {
+                        alert(error.responseJSON.message);
+                } else if (error.responseText) {
+                    alert(error.responseText);
+                } else {
+                    alert("비밀번호 변경에 실패하였습니다.");
                 }
             });
         }

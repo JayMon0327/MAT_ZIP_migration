@@ -7,6 +7,7 @@ import MATZIP_ver3.dto.order.portone.TokenResponse;
 import MATZIP_ver3.exception.CustomErrorCode;
 import MATZIP_ver3.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -21,6 +22,7 @@ public class PortOneService {
     public PortOneService(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder.baseUrl("https://api.iamport.kr").build();
     }
+
 
     /**
      * 액세스 토큰 발급

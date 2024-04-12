@@ -1,29 +1,21 @@
-$(document).ready(function() {
-    let index = {
-        init: function() {
-            $("#btn-save").on("click", (event) => {
-                event.preventDefault(); // 폼 제출을 막음
-                this.save();
+let index = {
+		init: function(){
+			$("#btn-save").on("click", ()=>{
+				this.save();
+			});
+			$("#btn-delete").on("click", ()=>{
+				this.deleteById();
+			});
+			$("#btn-update").on("click", ()=>{
+				this.update();
+			});
+			$("#btn-review-save").on("click", ()=>{
+				this.reviewSave();
+			});
+			$("#btn-review-delete").on("click", ()=>{
+                this.reviewDelete();
             });
-            $("#btn-delete").on("click", (event) => {
-                event.preventDefault(); // 폼 제출을 막음
-                this.deleteById();
-            });
-            $("#btn-update").on("click", (event) => {
-                event.preventDefault(); // 폼 제출을 막음
-                this.update();
-            });
-            $("#btn-review-save").on("click", (event) => {
-                event.preventDefault(); // 폼 제출을 막음
-                this.reviewSave();
-            });
-            // reviewDelete 버튼은 동적으로 생성되므로, 이벤트 위임을 사용
-            $(document).on("click", ".btn-review-delete", (event) => {
-                let reviewId = $(event.target).data("review-id");
-                let productId = $("#productId").val();
-                this.reviewDelete(productId, reviewId);
-            });
-        },
+		},
 
 		save: function(){
 			let formData = new FormData(document.getElementById("save-form"));
@@ -108,7 +100,6 @@ $(document).ready(function() {
 				alert(JSON.stringify(error));
 			});
 		},
-    }
+}
 
-    index.init();
-});
+index.init();
