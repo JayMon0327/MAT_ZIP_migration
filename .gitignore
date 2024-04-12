@@ -6,29 +6,43 @@ settings.gradle
 gradlew
 gradle
 out
-/src/main/java/SHOP/MAT_ZIP_migration/service/PortOneApiKey.java
-/src/main/java/SHOP/MAT_ZIP_migration/service/PaymentKey.java
-/src/main/resources/META-INF
+/src/main/java/MATZIP_ver3/service/PortOneApiKey.java
+/src/main/java/MATZIP_ver3/service/PaymentKey.java
 /src/main/resources/spy.properties
 
 .gradle
-**/build/
-!src/**/build/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-# Ignore Gradle GUI config
-gradle-app.setting
-
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle-wrapper.jar
-
-# Avoid ignore Gradle wrappper properties
-!gradle-wrapper.properties
-
-# Cache of project
-.gradletasknamecache
-
-# Eclipse Gradle plugin generated files
-# Eclipse Core
-.project
-# JDT-specific (Eclipse Java Development Tools)
+### STS ###
+.apt_generated
 .classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
