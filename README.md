@@ -25,7 +25,7 @@
 ## 3. 성능테스트
 
 ## `기존 프로젝트와 성능 비교분석 결과`
-## [📑 APACHE JMeter 부하테스트 측정](https://jaymon0327.tistory.com/6)
+## [📑 APACHE JMeter 부하테스트 측정](https://jaymon0327.tistory.com/7)
 APACHE JMeter 측정 조건(프로젝트 각 12,000건)
 * Number of Threads(users): 100
 * Ramp-up period(sec): 1
