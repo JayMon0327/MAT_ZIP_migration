@@ -95,8 +95,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }} #IAM 액세스키
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }} #IAM 시크릿키
-          application_name: matZip-v3 #엘라스틱빈스톡 애플리케이션 이름
-          environment_name: MatZip-v3 #엘라스틱빈스톡 환경 이름
-          version_label: matZip-v3-${{steps.current-time.outputs.formattedTime}}
+          application_name: matZip-v4 #엘라스틱빈스톡 애플리케이션 이름
+          environment_name: MatZip-v4-env #엘라스틱빈스톡 환경 이름
+          version_label: matZip-v4-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
           deployment_package: deploy/deploy.zip
