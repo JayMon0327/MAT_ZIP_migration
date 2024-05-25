@@ -81,8 +81,7 @@ jobs:
 
       - name: Generate deployment package
         run: |
-          sudo chmod -R 777 .
-          mkdir -p deploy/
+          mkdir deploy
           cp build/libs/*.jar deploy/application.jar
           cp Procfile deploy/Procfile
           cp -r .ebextensions deploy/.ebextensions
