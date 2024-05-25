@@ -23,7 +23,7 @@ jobs:
 
       - name: Build and Test with Gradle
         env:
-          SPRING_PROFILES_ACTIVE: test
+          SPRING_PROFILES_ACTIVE: test #테스트환경 테스트
           PORTONE_API_KEY: ${{ secrets.PORTONE_API_KEY }}
           PORTONE_API_SECRET_KEY: ${{ secrets.PORTONE_API_SECRET_KEY }}
         run: ./gradlew clean build
@@ -46,7 +46,7 @@ jobs:
 
       - name: Build for Deployment
         env:
-          SPRING_PROFILES_ACTIVE: dev
+          SPRING_PROFILES_ACTIVE: prod
           PORTONE_API_KEY: ${{ secrets.PORTONE_API_KEY }}
           PORTONE_API_SECRET_KEY: ${{ secrets.PORTONE_API_SECRET_KEY }}
         run: ./gradlew clean build
