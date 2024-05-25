@@ -53,7 +53,7 @@ jobs:
 
       - name: Build for Deployment
         env:
-          SPRING_PROFILES_ACTIVE: test
+          SPRING_PROFILES_ACTIVE: prod
           PORTONE_API_KEY: ${{ secrets.PORTONE_API_KEY }}
           PORTONE_API_SECRET_KEY: ${{ secrets.PORTONE_API_SECRET_KEY }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
@@ -65,10 +65,9 @@ jobs:
           KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
         run: ./gradlew clean build
 
-      # UTC가 기준이기 때문에 한국시간으로 맞추려면 +9시간 해야 한다
       - name: Get current time
         uses: 1466587594/get-current-time@v2
-        id: current-time #current-time 이란 변수에 시간이 담긴다.
+        id: current-time
         with:
           format: YYYY-MM-DDTHH-mm-ss
           utcOffset: "+09:00"
@@ -76,10 +75,10 @@ jobs:
       - name: Show Current Time
         run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}"
 
-      - name: Check if jar file exists # jar 파일 존재 확인(로그)
+      - name: Check if jar file exists
         run: ls -al build/libs
 
-      - name: Check if Procfile exists #Procfile 존재 확인(로그)
+      - name: Check if Procfile exists
         run: |
           if [ ! -f Procfile ]; then
             echo "web: java -jar build/libs/MAT_ZIP_migration-0.0.1-SNAPSHOT.jar" > Procfile
@@ -96,10 +95,10 @@ jobs:
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v21
         with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }} #IAM 액세스키
-          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }} #IAM 시크릿키
-          application_name: matZip-v3 #엘라스틱빈스톡 애플리케이션 이름
-          environment_name: MatZip-v3 #엘라스틱빈스톡 환경 이름
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+          application_name: matZip-v3
+          environment_name: MatZip-v3
           version_label: matZip-v3-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
           deployment_package: deploy/deploy.zip
