@@ -1,7 +1,6 @@
 .idea
 HELP.md
 application.yml
-gradle
 out
 /src/main/java/MATZIP_ver3/service/PortOneApiKey.java
 /src/main/java/MATZIP_ver3/service/PaymentKey.java
