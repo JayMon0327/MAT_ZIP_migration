@@ -83,23 +83,21 @@ jobs:
         run: |
           echo "web: /sbin/appstart" > Procfile
           mkdir -p .ebextensions
-          cat <<EOT > .ebextensions/00-makefile.config
-files:
-  "/sbin/appstart":
-    mode: "000755"
-    owner: webapp
-    group: webapp
-    content: |
-      #!/usr/bin/env bash
-      JAR_PATH=/var/app/current/application.jar
+          echo 'files:
+        "/sbin/appstart":
+          mode: "000755"
+          owner: webapp
+          group: webapp
+          content: |
+            #!/usr/bin/env bash
+            JAR_PATH=/var/app/current/application.jar
 
-      # run app
-      java -Dspring.profiles.active=prod -Dfile.encoding=UTF-8 -jar \$JAR_PATH
+            # run app
+            java -Dspring.profiles.active=prod -Dfile.encoding=UTF-8 -jar $JAR_PATH
 
-container_commands:
-  01_start_application:
-    command: "/sbin/appstart"
-EOT
+      container_commands:
+        01_start_application:
+          command: "/sbin/appstart"' > .ebextensions/00-makefile.config
 
       - name: Generate deployment package
         run: |
