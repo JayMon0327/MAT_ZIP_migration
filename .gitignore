@@ -3,7 +3,6 @@ HELP.md
 application.yml
 gradlew.bat
 settings.gradle
-gradlew
 gradle
 out
 /src/main/java/MATZIP_ver3/service/PortOneApiKey.java
