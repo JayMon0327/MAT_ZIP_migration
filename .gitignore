@@ -9,6 +9,7 @@ out
 
 .gradle
 build/
+!build/Procfile
 !**/src/main/**/build/
 !**/src/test/**/build/
 

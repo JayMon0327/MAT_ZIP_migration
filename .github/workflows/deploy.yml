@@ -80,7 +80,10 @@ jobs:
         run: ls -al build/libs
 
       - name: Check if Procfile exists #Procfile 존재 확인(로그)
-        run: test -f Procfile
+        run: |
+          if [ ! -f Procfile ]; then
+            echo "web: java -jar build/libs/your-application.jar" > Procfile
+          fi
 
       - name: Generate deployment package
         run: |
