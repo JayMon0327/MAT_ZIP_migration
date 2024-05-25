@@ -1,12 +1,11 @@
 name: matZip-v3
-
 on:
   push:
     branches:
       - main
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
