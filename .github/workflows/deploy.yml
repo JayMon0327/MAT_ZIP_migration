@@ -79,6 +79,12 @@ jobs:
       - name: Check if jar file exists # jar 파일 존재 확인(로그)
         run: ls -al build/libs
 
+      - name: Create Procfile and .ebextensions
+        run: |
+          echo "web: /sbin/appstart" > Procfile
+          mkdir -p .ebextensions
+          echo "files:\n    \"/sbin/appstart\":\n        mode: \"000755\"\n        owner: webapp\n        group: webapp\n        content: |\n            #!/usr/bin/env bash\n            JAR_PATH=/var/app/current/application.jar\n\n            # run app\n            java -Dspring.profiles.active=prod -Dfile.encoding=UTF-8 -jar $JAR_PATH\n\ncontainer_commands:\n    01_start_application:\n        command: \"/sbin/appstart\"" > .ebextensions/00-makefile.config
+
       - name: Generate deployment package
         run: |
           mkdir -p deploy
