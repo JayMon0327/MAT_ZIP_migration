@@ -1,8 +1,6 @@
 .idea
 HELP.md
 application.yml
-gradlew.bat
-settings.gradle
 gradle
 out
 /src/main/java/MATZIP_ver3/service/PortOneApiKey.java
@@ -11,7 +9,6 @@ out
 
 .gradle
 build/
-!gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 
