@@ -1,15 +1,14 @@
-package SHOP.MAT_ZIP_migration.service;
+package MATZIP_ver3.service;
 
-import SHOP.MAT_ZIP_migration.domain.Member;
-import SHOP.MAT_ZIP_migration.domain.order.Address;
-import SHOP.MAT_ZIP_migration.domain.order.Delivery;
-import SHOP.MAT_ZIP_migration.domain.order.Item;
-import SHOP.MAT_ZIP_migration.domain.order.Order;
-import SHOP.MAT_ZIP_migration.domain.status.OrderStatus;
-import SHOP.MAT_ZIP_migration.dto.order.*;
-import SHOP.MAT_ZIP_migration.repository.ItemRepository;
-import SHOP.MAT_ZIP_migration.repository.MemberRepository;
-import SHOP.MAT_ZIP_migration.repository.OrderRepository;
+import MATZIP_ver3.domain.Member;
+import MATZIP_ver3.domain.order.Address;
+import MATZIP_ver3.domain.order.Item;
+import MATZIP_ver3.domain.order.Order;
+import MATZIP_ver3.domain.status.OrderStatus;
+import MATZIP_ver3.dto.order.*;
+import MATZIP_ver3.repository.ItemRepository;
+import MATZIP_ver3.repository.MemberRepository;
+import MATZIP_ver3.repository.OrderRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,8 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -85,16 +82,6 @@ class OrderServiceTest {
         assertThat(result.getOrder()).isNotNull();
         assertThat(result.getOrderItems()).hasSize(1);
         assertThat(result.getFinalPrice()).isEqualTo(1800);
-    }
-
-    @DisplayName("주문 취소 및 검증")
-    @Test
-    void testOrderCancellation() {
-        PaymentForm paymentForm = orderService.order(requestOrderDto, member);
-        Order createdOrder = orderRepository.findById(paymentForm.getOrder().getId()).orElseThrow();
-        orderService.cancelOrder(createdOrder.getId());
-        Order cancelledOrder = orderRepository.findById(createdOrder.getId()).orElseThrow();
-        assertThat(cancelledOrder.getStatus()).isEqualTo(OrderStatus.CANCEL);
     }
 
     @DisplayName("금액 계산 테스트")

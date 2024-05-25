@@ -103,7 +103,7 @@ APACHE JMeter 측정 조건(프로젝트 각 12,000건)
 ## `AOP를 이용한 공통 관심사 분리`
 ## [📑 AOP 전역처리](https://jaymon.notion.site/Valid-AOP-6d8e721bc4c54bbe8d9631da66a332ee?pvs=4)
 <img width="1087" alt="AOP1" src="https://github.com/JayMon0327/SpringStudy/assets/124110982/72cfd194-ceaa-4c66-9439-d49f4628a4a4">
-<img width="1087" alt="AOP2" src="https://github.com/JayMon0327/SpringStudy/assets/124110982/72cfd194-ceaa-4c66-9439-d49f4628a4a4">
+<img width="1087" alt="AOP2" src="https://github.com/JayMon0327/SpringStudy/assets/124110982/4ef4a9b9-179c-43f9-8b3e-28b8ed096552">
 
 <br>
 <br>

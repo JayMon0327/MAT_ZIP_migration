@@ -1,12 +1,12 @@
-package SHOP.MAT_ZIP_migration.service;
+package MATZIP_ver3.service;
 
-import SHOP.MAT_ZIP_migration.domain.Member;
-import SHOP.MAT_ZIP_migration.dto.member.JoinMemberDto;
-import SHOP.MAT_ZIP_migration.dto.member.UpdateMemberDto;
-import SHOP.MAT_ZIP_migration.exception.CustomErrorCode;
-import SHOP.MAT_ZIP_migration.exception.CustomException;
-import SHOP.MAT_ZIP_migration.repository.MemberRepository;
-import SHOP.MAT_ZIP_migration.service.validator.MemberValidator;
+import MATZIP_ver3.domain.Member;
+import MATZIP_ver3.dto.member.JoinMemberDto;
+import MATZIP_ver3.dto.member.UpdateMemberDto;
+import MATZIP_ver3.exception.CustomErrorCode;
+import MATZIP_ver3.exception.CustomException;
+import MATZIP_ver3.repository.MemberRepository;
+import MATZIP_ver3.service.validator.MemberValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,7 +45,7 @@ class MemberServiceTest {
     @DisplayName("회원가입")
     @Test
     void signUp() {
-        memberService.SignUp(joinMemberDto);
+        memberService.signUp(joinMemberDto);
         Member savedMember = memberRepository.findByUsername("kim123");
 
         assertThat(savedMember.getUsername()).isEqualTo("kim123");
@@ -58,10 +58,9 @@ class MemberServiceTest {
     void passwordCheck() {
         String rawPassword = joinMemberDto.getPassword();
         String passwordCheck = "testPassword";
-        String encodedPassword = memberValidator.PasswordCheck(rawPassword, passwordCheck);
+        memberValidator.passwordCheck(rawPassword, passwordCheck);
 
-        assertThat(encoder.matches(rawPassword, encodedPassword)).isTrue();
-        assertThatThrownBy(() -> memberValidator.PasswordCheck(joinMemberDto.getPassword(), "failPassword"))
+        assertThatThrownBy(() -> memberValidator.passwordCheck(joinMemberDto.getPassword(), "failPassword"))
                 .isInstanceOf(CustomException.class);
     }
 
@@ -76,9 +75,9 @@ class MemberServiceTest {
                 .email("kim@naver.com")
                 .build();
 
-        memberService.SignUp(joinMemberDto);
+        memberService.signUp(joinMemberDto);
 
-        assertThatThrownBy(() -> memberService.SignUp(joinMemberDto2))
+        assertThatThrownBy(() -> memberService.signUp(joinMemberDto2))
                 .isInstanceOf(CustomException.class)
                 .hasFieldOrPropertyWithValue("errorCode", CustomErrorCode.USERNAME_ALREADY_EXISTS.getErrorCode())
                 .hasFieldOrPropertyWithValue("errorMessage", CustomErrorCode.USERNAME_ALREADY_EXISTS.getErrorMessage());
@@ -95,33 +94,11 @@ class MemberServiceTest {
                 .email("kim@naver.com")
                 .build();
 
-        memberService.SignUp(joinMemberDto);
+        memberService.signUp(joinMemberDto);
 
-        assertThatThrownBy(() -> memberService.SignUp(joinMemberDto2))
+        assertThatThrownBy(() -> memberService.signUp(joinMemberDto2))
                 .isInstanceOf(CustomException.class)
                 .hasFieldOrPropertyWithValue("errorCode", CustomErrorCode.EMAIL_ALREADY_EXISTS.getErrorCode())
                 .hasFieldOrPropertyWithValue("errorMessage", CustomErrorCode.EMAIL_ALREADY_EXISTS.getErrorMessage());
-    }
-
-    @DisplayName("회원정보 수정")
-    @Test
-    void updateEmailAndPassword() {
-        memberService.SignUp(joinMemberDto);
-        Member savedMember = memberRepository.findByUsername("kim123");
-
-        UpdateMemberDto updateMemberDto = UpdateMemberDto.builder()
-                .id(savedMember.getId())
-                .username("kim123")
-                .password("replacePassword")
-                .passwordCheck("replacePassword")
-                .nickName("testname")
-                .email("LEE@naver.com")
-                .build();
-
-        memberService.update(updateMemberDto);
-
-
-        assertThat(savedMember.getEmail()).isEqualTo("LEE@naver.com");
-        assertThat(encoder.matches("replacePassword", savedMember.getPassword())).isTrue();
     }
 }

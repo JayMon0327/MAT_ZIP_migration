@@ -1,11 +1,11 @@
-package SHOP.MAT_ZIP_migration.service;
+package MATZIP_ver3.service;
 
-import SHOP.MAT_ZIP_migration.domain.Member;
-import SHOP.MAT_ZIP_migration.domain.Product;
-import SHOP.MAT_ZIP_migration.dto.product.*;
-import SHOP.MAT_ZIP_migration.repository.ItemRepository;
-import SHOP.MAT_ZIP_migration.repository.MemberRepository;
-import SHOP.MAT_ZIP_migration.repository.ProductRepository;
+import MATZIP_ver3.domain.Member;
+import MATZIP_ver3.domain.Product;
+import MATZIP_ver3.dto.product.*;
+import MATZIP_ver3.repository.ItemRepository;
+import MATZIP_ver3.repository.MemberRepository;
+import MATZIP_ver3.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

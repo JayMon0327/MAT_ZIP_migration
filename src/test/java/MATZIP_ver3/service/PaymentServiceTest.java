@@ -1,10 +1,23 @@
 package MATZIP_ver3.service;
 
 import MATZIP_ver3.domain.Member;
+import MATZIP_ver3.domain.Payment;
+import MATZIP_ver3.domain.order.Address;
+import MATZIP_ver3.domain.order.Delivery;
+import MATZIP_ver3.domain.order.Item;
+import MATZIP_ver3.domain.order.Order;
+import MATZIP_ver3.domain.status.OrderStatus;
+import MATZIP_ver3.dto.order.ItemDto;
+import MATZIP_ver3.dto.order.PaymentForm;
+import MATZIP_ver3.dto.order.RequestOrderDto;
+import MATZIP_ver3.dto.order.SuccessPayment;
+import MATZIP_ver3.dto.order.portone.PaymentAnnotation;
+import MATZIP_ver3.dto.order.portone.PaymentDetail;
+import MATZIP_ver3.dto.order.portone.ResponsePortOne;
 import MATZIP_ver3.repository.ItemRepository;
+import MATZIP_ver3.repository.MemberRepository;
 import MATZIP_ver3.repository.OrderRepository;
 import MATZIP_ver3.repository.PaymentRepository;
-import MATZIP_ver3.service.PaymentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
