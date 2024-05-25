@@ -76,6 +76,9 @@ jobs:
       - name: Show Current Time
         run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}"
 
+      - name: Check if jar file exists
+        run: ls -al build/libs
+
       - name: Generate deployment package
         run: |
           mkdir -p deploy
