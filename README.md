@@ -14,11 +14,11 @@
 <br>
 
 ## 1. 제작 기간
-#### `2023년 11월 27일 ~ 1월 9일 (1개월)`
+#### `2023년 11월 27일 ~ 2월 9일`
 
 ## 2. 배포 아키텍쳐 구조
 #### `엘라스틱빈스톡 + RDS + ALB + NLB + IAM + GithubActions`
-<img width="1377" alt="배포아키텍처" src="https://github.com/JayMon0327/JSP-SERVLET/assets/124110982/3e197aac-63a0-4e92-ac65-2c980115a9d7">
+<img width="1377" alt="배포아키텍처" src="https://github.com/JayMon0327/SpringStudy/assets/124110982/0640f5c6-1892-4994-bd5b-f9f932961eff">
 
 <br>
 
@@ -44,13 +44,13 @@ APACHE JMeter 측정 조건(프로젝트 각 12,000건)
 <br>
 
 **기존 프로젝트**
-<img width="1793" alt="레거시프로젝트0410성능" src="https://github.com/JayMon0327/JSP-SERVLET/assets/124110982/eee0f9b9-0f2e-4827-b870-43d7b5571055">
+<img width="1793" alt="기존성능" src="https://github.com/JayMon0327/SpringStudy/assets/124110982/2244709f-d097-4b14-8a09-1d0610fac1d5">
 
 <br>
 
 **현재 프로젝트**
-<img width="1791" alt="현재프로젝트0410성능" src="https://github.com/JayMon0327/JSP-SERVLET/assets/124110982/3cc53f14-9a97-4004-a04c-06d00b43b5c9">
-<img width="1864" alt="스크린샷 2024-04-10 오후 3 04 25" src="https://github.com/JayMon0327/JSP-SERVLET/assets/124110982/7f89f3df-4493-4297-9984-ab7d080607f4">
+<img width="1791" alt="현재성능" src="https://github.com/JayMon0327/SpringStudy/assets/124110982/325e5ecd-de44-41da-b6ff-328ce8fe14ee">
+<img width="1864" alt="성능그래프" src="https://github.com/JayMon0327/SpringStudy/assets/124110982/7789d094-9b3d-4f41-baa0-f39bd159b8cf">
 
 
 <br>
@@ -80,7 +80,7 @@ APACHE JMeter 측정 조건(프로젝트 각 12,000건)
 * Maven ➡️  Gradle
 * Mybatis ➡️  JPA
 * Spring Secutiry
-* Spring Data JPA, QueryDSL
+* Spring Data JPA
 
 <br>
 
@@ -88,35 +88,28 @@ APACHE JMeter 측정 조건(프로젝트 각 12,000건)
 <br>
 
 ## `결제 설계 구조`
-<img width="1185" alt="스크린샷 2024-03-10 오후 10 09 10" src="https://github.com/JayMon0327/csStudy/assets/124110982/effb8cd9-fb66-4c35-bff7-a2ed749135ba">
-
-<br>
-<br>
-
-## `스프링 시큐리티 구조`
-<img width="1590" alt="스크린샷 2024-03-10 오후 10 21 04" src="https://github.com/JayMon0327/csStudy/assets/124110982/9ae91ba8-e243-48ef-a9e9-f05eb44b35b6">
-<img width="1125" alt="스크린샷 2024-03-10 오후 10 21 17" src="https://github.com/JayMon0327/csStudy/assets/124110982/ef745b1e-8d75-4076-ac9d-b092bfacb66b">
+<img width="1185" alt="결제구조" src="https://github.com/JayMon0327/SpringStudy/assets/124110982/d0c644d5-6ef6-4f25-8b77-ba6ffe61eff6">
 
 <br>
 <br>
 
 ## `Oauth 로그인 구조`
-<img width="1087" alt="스크린샷 2024-03-20 오후 8 33 45" src="https://github.com/JayMon0327/JavaProject/assets/124110982/054ef104-414e-4f65-a161-c39daf8f43c4">
-<img width="830" alt="스크린샷 2024-03-20 오후 9 22 42" src="https://github.com/JayMon0327/JavaProject/assets/124110982/02cf6e30-d188-4f04-b295-71805eb8df3e">
+<img width="1087" alt="로그인구조1" src="https://github.com/JayMon0327/SpringStudy/assets/124110982/2dcccfaf-a3ad-4291-ba43-79d0984ca7ed">
+<img width="830" alt="로그인구조2" src="https://github.com/JayMon0327/SpringStudy/assets/124110982/177c7aed-ed7b-4d50-b131-3a4c0c86678c">
 
 <br>
 <br>
 
 ## `AOP를 이용한 공통 관심사 분리`
 ## [📑 AOP 전역처리](https://jaymon.notion.site/Valid-AOP-6d8e721bc4c54bbe8d9631da66a332ee?pvs=4)
-<img width="765" alt="스크린샷 2024-03-20 오후 9 25 39" src="https://github.com/JayMon0327/JavaProject/assets/124110982/c57a03fd-4028-49d6-8b64-27d1682c6a84">
-<img width="481" alt="스크린샷 2024-03-22 오후 6 43 54" src="https://github.com/JayMon0327/JSP-SERVLET/assets/124110982/9941a199-85a9-4453-8819-b80edcb68a3e">
+<img width="1087" alt="AOP1" src="https://github.com/JayMon0327/SpringStudy/assets/124110982/72cfd194-ceaa-4c66-9439-d49f4628a4a4">
+<img width="1087" alt="AOP2" src="https://github.com/JayMon0327/SpringStudy/assets/124110982/72cfd194-ceaa-4c66-9439-d49f4628a4a4">
 
 <br>
 <br>
 
 ## `ERD`
-<img width="1318" alt="스크린샷 2024-03-10 오후 10 16 25" src="https://github.com/JayMon0327/csStudy/assets/124110982/99ca5e2b-9809-4217-8498-2a85fa6f819a">
+<img width="1318" alt="ERD" src="https://github.com/JayMon0327/SpringStudy/assets/124110982/690a6d29-90c7-43aa-88fd-befdfb56405d">
 
 <br>
 <br>
