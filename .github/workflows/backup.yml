@@ -35,17 +35,6 @@ jobs:
           KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
         run: ./gradlew clean build
 
-      # UTC가 기준이기 때문에 한국시간으로 맞추려면 +9시간 해야 한다
-      - name: Get current time
-        uses: 1466587594/get-current-time@v2
-        id: current-time #current-time 이란 변수에 시간이 담긴다.
-        with:
-          format: YYYY-MM-DDTHH-mm-ss
-          utcOffset: "+09:00"
-
-      - name: Show Current Time
-        run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}"
-
   deploy:
     runs-on: ubuntu-latest
     needs: build-and-test
@@ -64,7 +53,7 @@ jobs:
 
       - name: Build for Deployment
         env:
-          SPRING_PROFILES_ACTIVE: prod
+          SPRING_PROFILES_ACTIVE: test
           PORTONE_API_KEY: ${{ secrets.PORTONE_API_KEY }}
           PORTONE_API_SECRET_KEY: ${{ secrets.PORTONE_API_SECRET_KEY }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
@@ -87,16 +76,15 @@ jobs:
       - name: Show Current Time
         run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}"
 
-      #EB에 CD하기 위해 추가 작성
-      - name: Check if jar file exists #jar 파일 존재 체크
+      - name: Check if jar file exists
         run: ls -al build/libs
 
       - name: Generate deployment package
         run: |
           mkdir -p deploy
-          cp build/libs/*.jar deploy/application.jar
-          cp Procfile deploy/Procfile
-          cp -r .ebextensions deploy/.ebextensions
+          cp build/libs/*.jar deploy/
+          cp Procfile deploy/
+          cp -r .ebextensions deploy/
           cd deploy && zip -r deploy.zip .
 
       - name: Deploy to EB
