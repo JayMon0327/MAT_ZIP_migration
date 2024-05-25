@@ -83,8 +83,8 @@ jobs:
         run: |
           mkdir -p deploy
           cp build/libs/*.jar deploy/
-          cp Procfile deploy/Procfile
-          cp -r .ebextensions deploy/.ebextensions
+          cp Procfile deploy/
+          cp -r .ebextensions deploy/
           cd deploy && zip -r deploy.zip .
 
       - name: Deploy to EB
