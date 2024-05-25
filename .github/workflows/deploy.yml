@@ -79,6 +79,9 @@ jobs:
       - name: Check if jar file exists # jar 파일 존재 확인(로그)
         run: ls -al build/libs
 
+      - name: Check if Procfile exists # jar 파일 존재 확인(로그)
+        run: ls -al
+
       - name: Generate deployment package
         run: |
           mkdir -p deploy
