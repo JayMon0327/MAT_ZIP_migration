@@ -23,12 +23,18 @@ public class PortOneService {
         this.webClient = webClientBuilder.baseUrl("https://api.iamport.kr").build();
     }
 
+    @Value("${PORTONE_API_KEY}")
+    private String apiKey;
+
+    @Value("${PORTONE_API_SECRET_KEY}")
+    private String apiSecretKey;
+
 
     /**
      * 액세스 토큰 발급
      */
     public String getAccessToken() {
-        TokenRequest tokenRequest = new TokenRequest(PortOneApiKey.RestAPIKey, PortOneApiKey.RestAPISecretKey);
+        TokenRequest tokenRequest = new TokenRequest(apiKey, apiSecretKey);
 
         TokenResponse tokenResponse = webClient.post()
                 .uri("/users/getToken")
