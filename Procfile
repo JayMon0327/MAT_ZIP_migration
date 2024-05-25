@@ -1,1 +1,1 @@
-web: appstart
+springapp: appstart
