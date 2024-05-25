@@ -12,6 +12,7 @@ import MATZIP_ver3.repository.OrderRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,7 @@ import java.util.List;
 
 @SpringBootTest
 @Transactional
+@ActiveProfiles("test")
 class OrderServiceTest {
 
     @Autowired

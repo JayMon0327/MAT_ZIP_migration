@@ -2,6 +2,9 @@
 HELP.md
 application.yml
 application-local.yml
+application-test.yml
+application-dev.yml
+portone.env
 out
 /src/main/java/MATZIP_ver3/service/PortOneApiKey.java
 /src/main/java/MATZIP_ver3/service/PaymentKey.java
