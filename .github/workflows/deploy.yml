@@ -53,7 +53,7 @@ jobs:
 
       - name: Build for Deployment
         env:
-          SPRING_PROFILES_ACTIVE: test
+          SPRING_PROFILES_ACTIVE: prod
           PORTONE_API_KEY: ${{ secrets.PORTONE_API_KEY }}
           PORTONE_API_SECRET_KEY: ${{ secrets.PORTONE_API_SECRET_KEY }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
