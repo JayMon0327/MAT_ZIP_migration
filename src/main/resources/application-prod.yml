@@ -17,12 +17,11 @@ springdoc:
     display-request-duration: true
 
 spring:
-  spring:
-    datasource:
-      url: jdbc:mysql://${rds.hostname}:${rds.port}/${rds.db.name}?allowPublicKeyRetrieval=true&useSSL=false
-      driver-class-name: org.mysql.jdbc.Driver
-      username: ${rds.username}
-      password: ${rds.password}
+  datasource:
+    url: jdbc:mysql://${rds.hostname}:${rds.port}/${rds.db.name}?allowPublicKeyRetrieval=true&useSSL=false
+    driver-class-name: org.mysql.jdbc.Driver
+    username: ${rds.username}
+    password: ${rds.password}
 
   jpa:
     hibernate:

@@ -20,7 +20,7 @@ build/
 .settings
 .springBeans
 .sts4-cache
-bin/
+bin/가
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
