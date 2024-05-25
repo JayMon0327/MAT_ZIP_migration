@@ -76,16 +76,10 @@ jobs:
       - name: Show Current Time
         run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}"
 
-      - name: Check if jar file exists # jar 파일 존재 확인(로그)
-        run: ls -al build/libs
-
-      - name: Check if Procfile exists # jar 파일 존재 확인(로그)
-        run: ls -al
-
       - name: Generate deployment package
         run: |
           mkdir -p deploy
-          cp build/libs/MAT_ZIP_migration-0.0.1-SNAPSHOT.jar deploy/application.jar
+          cp build/libs/*.jar deploy/application.jar
           cp Procfile deploy/Procfile
           cp -r .ebextensions deploy/.ebextensions
           cd deploy && zip -r deploy.zip .

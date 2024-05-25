@@ -60,3 +60,7 @@ tasks.named('test') {
 	useJUnitPlatform()
 	include 'MATZIP_ver3/service/**'
 }
+
+jar {
+	enabled = false //plain.jar 생성제한
+}
