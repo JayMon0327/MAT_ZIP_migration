@@ -24,15 +24,15 @@ jobs:
       - name: Build for Deployment
         env:
           SPRING_PROFILES_ACTIVE: prod
-          PORTONE_API_KEY: ${{ secrets.PORTONE_API_KEY }}
-          PORTONE_API_SECRET_KEY: ${{ secrets.PORTONE_API_SECRET_KEY }}
-          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-          FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID }}
-          FACEBOOK_CLIENT_SECRET: ${{ secrets.FACEBOOK_CLIENT_SECRET }}
-          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
-          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
-          KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
+          spring.portone.api-key: ${{ secrets.PORTONE_API_KEY }}
+          spring.portone.api-secret-key: ${{ secrets.PORTONE_API_SECRET_KEY }}
+          spring.security.oauth2.registration.google.client-id: ${{ secrets.GOOGLE_CLIENT_ID }}
+          spring.security.oauth2.registration.google.client-secret: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          spring.security.oauth2.registration.facebook.client-id: ${{ secrets.FACEBOOK_CLIENT_ID }}
+          spring.security.oauth2.registration.facebook.client-secret: ${{ secrets.FACEBOOK_CLIENT_SECRET }}
+          spring.security.oauth2.registration.naver.client-id: ${{ secrets.NAVER_CLIENT_ID }}
+          spring.security.oauth2.registration.naver.client-secret: ${{ secrets.NAVER_CLIENT_SECRET }}
+          spring.security.oauth2.registration.kakao.client-id: ${{ secrets.KAKAO_CLIENT_ID }}
         run: ./gradlew clean build
 
       # UTC가 기준이기 때문에 한국시간으로 맞추려면 +9시간 해야 한다
