@@ -23,10 +23,10 @@ public class PortOneService {
         this.webClient = webClientBuilder.baseUrl("https://api.iamport.kr").build();
     }
 
-    @Value("${PORTONE_API_KEY}")
+    @Value("${spring.portone.api-key}")
     private String apiKey;
 
-    @Value("${PORTONE_API_SECRET_KEY}")
+    @Value("${spring.portone.api-secret-key}")
     private String apiSecretKey;
 
 
