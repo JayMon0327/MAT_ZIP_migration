@@ -1,4 +1,4 @@
-name: matZip-v5
+name: matZip-v1
 
 on:
   push:
@@ -10,13 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: 17
-          distribution: zulu
+          distribution: julu
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
@@ -59,8 +59,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }} #IAM 액세스키
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }} #IAM 시크릿키
-          application_name: matZip-v5 #엘라스틱빈스톡 애플리케이션 이름
-          environment_name: MatZip-v5-env #엘라스틱빈스톡 환경 이름
+          application_name: matZip-v1 #엘라스틱빈스톡 애플리케이션 이름
+          environment_name: MatZip-v1-env #엘라스틱빈스톡 환경 이름
           version_label: matZip-v5-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
           deployment_package: deploy/deploy.zip
