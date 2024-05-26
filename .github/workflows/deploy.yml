@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+env:
+  RESOURCE_PATH: /src/main/resources/application-prod.yml
 
 jobs:
   build:
@@ -21,7 +23,10 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      - name: Build for Deployment
+      - name: Set yml file
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: ${{ env.RESOURCE_PATH }}
         env:
           SPRING_PROFILES_ACTIVE: prod
           spring.portone.api-key: ${{ secrets.PORTONE_API_KEY }}
@@ -33,6 +38,8 @@ jobs:
           spring.security.oauth2.client.registration.naver.client-id: ${{ secrets.NAVER_CLIENT_ID }}
           spring.security.oauth2.client.registration.naver.client-secret: ${{ secrets.NAVER_CLIENT_SECRET }}
           spring.security.oauth2.client.registration.kakao.client-id: ${{ secrets.KAKAO_CLIENT_ID }}
+
+      - name: Build for Deployment
         run: ./gradlew clean build
 
       # UTC가 기준이기 때문에 한국시간으로 맞추려면 +9시간 해야 한다
