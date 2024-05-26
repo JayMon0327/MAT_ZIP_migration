@@ -1,4 +1,4 @@
-name: matZip-v3
+name: matZip-v5
 
 on:
   push:
@@ -63,7 +63,7 @@ jobs:
           NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
           NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
           KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
-        run: ./gradlew clean build
+        run: ./gradlew clean build -Pprod
 
       # UTC가 기준이기 때문에 한국시간으로 맞추려면 +9시간 해야 한다
       - name: Get current time
@@ -76,21 +76,12 @@ jobs:
       - name: Show Current Time
         run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}"
 
-      - name: Check if jar file exists # jar 파일 존재 확인(로그)
-        run: ls -al build/libs
-
-      - name: Check if Procfile exists #Procfile 존재 확인(로그)
-        run: |
-          if [ ! -f Procfile ]; then
-            echo "web: java -jar build/libs/MAT_ZIP_migration-0.0.1-SNAPSHOT.jar" > Procfile
-          fi
-
       - name: Generate deployment package
         run: |
           mkdir -p deploy
-          cp build/libs/MAT_ZIP_migration-0.0.1-SNAPSHOT.jar deploy/application.jar
-          cp Procfile deploy/
-          cp -r .ebextensions deploy/
+          cp build/libs/*.jar deploy/application.jar
+          cp Procfile deploy/Procfile
+          cp -r .ebextensions deploy/.ebextensions
           cd deploy && zip -r deploy.zip .
 
       - name: Deploy to EB
@@ -98,8 +89,9 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }} #IAM 액세스키
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }} #IAM 시크릿키
-          application_name: matZip-v3 #엘라스틱빈스톡 애플리케이션 이름
-          environment_name: MatZip-v3 #엘라스틱빈스톡 환경 이름
-          version_label: matZip-v3-${{steps.current-time.outputs.formattedTime}}
+          application_name: matZip-v5 #엘라스틱빈스톡 애플리케이션 이름
+          environment_name: MatZip-v5-env #엘라스틱빈스톡 환경 이름
+          version_label: matZip-v5-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
           deployment_package: deploy/deploy.zip
+          wait_for_environment_recovery: 180
