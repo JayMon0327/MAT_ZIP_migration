@@ -17,12 +17,12 @@ springdoc:
     display-request-duration: true
 
 spring:
-  portone:
+  portone: #깃허브 시크릿키 환경변수
     api-key: ${PORTONE_API_KEY}
     api-secret-key: ${PORTONE_API_SECRET_KEY}
 
   datasource: #엘라스틱빈스톡 환경변수
-    url: jdbc:mysql://${rds.hostname}:${rds._port}/${rds.db.name} #?allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://${rds.hostname}:${rds.port}/${rds.db.name}?allowPublicKeyRetrieval=true&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${rds.username}
     password: ${rds.password}
@@ -95,7 +95,7 @@ logging.level:
   org.hibernate.orm.jdbc.bind: trace
 
 file:
-  dir: /Users/jaymon/desktop/fileupload/
+  dir: /
 
 
 
