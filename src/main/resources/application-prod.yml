@@ -19,7 +19,7 @@ springdoc:
 spring:
   datasource:
     url: jdbc:mysql://${rds.hostname}:${rds.port}/${rds.db.name}?allowPublicKeyRetrieval=true&useSSL=false
-    driver-class-name: org.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${rds.username}
     password: ${rds.password}
 
@@ -29,6 +29,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        dialect: org.hibernate.dialect.MySQL5Dialect
 
   security:
     oauth2:

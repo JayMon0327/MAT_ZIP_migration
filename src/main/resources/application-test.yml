@@ -19,16 +19,17 @@ springdoc:
 spring:
   profiles: test
   datasource:
-    url: jdbc:mysql://${rds.hostname}:${rds.port}/testdb?allowPublicKeyRetrieval=true&useSSL=false
-    driver-class-name: org.mysql.jdbc.Driver
-    username: ${rds.username}
-    password: ${rds.password}
+    url: jdbc:mysql://localhost:3306/matzip_ver3?serverTimezone=Asia/Seoul
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1234
   jpa:
     hibernate:
       ddl-auto: create-drop
     properties:
       hibernate:
         format_sql: true
+        dialect: org.hibernate.dialect.MySQL5Dialect
 
 logging.level:
   org.hibernate.SQL: debug
