@@ -5,7 +5,7 @@
     <title>Product List</title>
 </head>
 <!-- header.html 템플릿 포함 -->
-<div th:replace="~{/layout/header}"></div>
+<div th:replace="layout/header :: header"></div>
 
 <div class="container">
     <!-- 제품 목록 반복 -->
@@ -29,5 +29,5 @@
     </ul>
 </div>
 
-<div th:replace="~{/layout/footer}"></div>
+<div th:replace="layout/header :: footer"></div>
 
