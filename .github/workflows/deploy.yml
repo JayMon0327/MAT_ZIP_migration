@@ -92,5 +92,5 @@ jobs:
           application_name: matZip-v5 #엘라스틱빈스톡 애플리케이션 이름
           environment_name: MatZip-v5-env #엘라스틱빈스톡 환경 이름
           version_label: matZip-v5-${{steps.current-time.outputs.formattedTime}}
-          region: ap-northeast-2a
+          region: ap-northeast-2
           deployment_package: deploy/deploy.zip
