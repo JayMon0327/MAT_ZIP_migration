@@ -6,7 +6,7 @@
 </head>
 <body>
 <!-- header.html 템플릿 포함 -->
-<div th:replace="~{layout/header :: header}"></div>
+<div th:replace="~{/layout/header}"></div>
 
 <div class="container">
     <!-- 제품 목록 반복 -->
@@ -31,6 +31,4 @@
 </div>
 
 <!-- footer.html 템플릿 포함 -->
-<div th:replace="~{layout/footer :: footer}"></div>
-</body>
-</html>
+<div th:replace="~{/layout/footer}"></div>
