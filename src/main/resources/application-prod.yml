@@ -22,7 +22,7 @@ spring:
     api-secret-key: ${PORTONE_API_SECRET_KEY}
 
   datasource:
-    url: jdbc:mysql://${RDS_HOSTNAME}:${RDS_PORT}/${RDS_DB_NAME}?allowPublicKeyRetrieval=true&useSSL=false
+    url: ${RDS_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${RDS_USERNAME}
     password: ${RDS_PASSWORD}
