@@ -17,7 +17,7 @@ springdoc:
     display-request-duration: true
 
 spring:
-  datasource:
+  datasource: #엘라스틱빈스톡 환경변수
     url: jdbc:mysql://${RDS_HOSTNAME}:${RDS_PORT}/${RDS_DB_NAME}?allowPublicKeyRetrieval=true&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${RDS_USERNAME}
