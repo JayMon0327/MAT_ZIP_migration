@@ -16,10 +16,21 @@
 ## 1. 제작 기간
 #### `2023년 11월 27일 ~ 2월 9일`
 
+<br>
+<br>
+
 ## 2. 배포 아키텍쳐 구조
 #### `엘라스틱빈스톡 + RDS + ALB + NLB + IAM + GithubActions`
 <img width="1377" alt="배포아키텍처" src="https://github.com/JayMon0327/SpringStudy/assets/124110982/0640f5c6-1892-4994-bd5b-f9f932961eff">
 
+<br>
+
+* GitHub Actions, Elastic Beanstalk, RDS, ALB, NLB, IAM 사용
+* 무중단 배포를 위해 로드밸런싱 전략으로 블루/그린 배포 전략 도입(인스턴스 최소 2/ 최대 4)
+* 고정된 IP주소 확보와 외부 접근으로부터 보안성을 위해 NLB를 추가하여 ElasticIP를 할당하고 리스너, 포워딩 규칙 설정
+* API키 보안과 RDS 접속보안을 위해 Github Actions 워크플로우로 환경변수 관리
+
+<br>
 <br>
 
 ## 3. 성능테스트
@@ -83,6 +94,7 @@ APACHE JMeter 측정 조건(프로젝트 각 12,000건)
 
 </details>
 
+<br>
 <br>
 
 ## 4. 기능 구현
