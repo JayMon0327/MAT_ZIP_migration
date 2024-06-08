@@ -24,6 +24,7 @@
 <img width="1377" alt="배포아키텍처" src="https://github.com/JayMon0327/SpringStudy/assets/124110982/0640f5c6-1892-4994-bd5b-f9f932961eff">
 
 <br>
+<br>
 
 * GitHub Actions, Elastic Beanstalk, RDS, ALB, NLB, IAM 사용
 * 무중단 배포를 위해 로드밸런싱 전략으로 블루/그린 배포 전략 도입(인스턴스 최소 2/ 최대 4)
